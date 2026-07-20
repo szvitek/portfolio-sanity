@@ -5,6 +5,7 @@ export interface ClientConfig {
   projectId: string
   dataset?: string
   apiVersion?: string
+  token?: string
 }
 
 export function getClient(config: ClientConfig): SanityClient {
@@ -12,6 +13,7 @@ export function getClient(config: ClientConfig): SanityClient {
     projectId: config.projectId,
     dataset: config.dataset ?? "production",
     apiVersion: config.apiVersion ?? "2024-01-01",
-    useCdn: true,
+    useCdn: !config.token,
+    token: config.token,
   })
 }

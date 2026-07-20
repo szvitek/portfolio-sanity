@@ -33,6 +33,7 @@ pnpm install
 cp apps/studio/.env.example apps/studio/.env
 cp apps/nextjs/.env.example apps/nextjs/.env.local
 # Edit both files with your Sanity project ID and dataset
+# If your dataset is private, also add a Sanity API token to apps/nextjs/.env.local
 
 A combined `.env.example` is also available at the repo root as a reference.
 ```

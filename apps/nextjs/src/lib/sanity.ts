@@ -27,12 +27,13 @@ function getConfig() {
   return {
     projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ?? "",
     dataset: process.env.NEXT_PUBLIC_SANITY_DATASET ?? "production",
+    token: process.env.SANITY_API_TOKEN,
   }
 }
 
 function createClient() {
-  const { projectId, dataset } = getConfig()
-  return getClient({ projectId, dataset })
+  const { projectId, dataset, token } = getConfig()
+  return getClient({ projectId, dataset, token })
 }
 
 const client = createClient()
