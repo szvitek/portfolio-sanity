@@ -6,6 +6,8 @@
   "references": [
     { "path": "packages/tailwind-config" },
     { "path": "packages/sanity" },
-    { "path": "apps/studio" }
+    { "path": "packages/ui" },
+    { "path": "apps/studio" },
+    { "path": "apps/nextjs" }
   ]
 }

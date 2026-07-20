@@ -3,8 +3,11 @@
   "private": true,
   "scripts": {
     "dev": "pnpm --filter @portfolio/studio dev",
+    "dev:nextjs": "pnpm --filter @portfolio/nextjs dev",
     "build": "pnpm -r build",
-    "typecheck": "pnpm -r typecheck"
+    "typecheck": "pnpm -r typecheck",
+    "test": "pnpm --filter @portfolio/nextjs test",
+    "test:watch": "pnpm --filter @portfolio/nextjs test:watch"
   },
   "engines": {
     "node": ">=18"
