@@ -4,7 +4,7 @@
 
 **Blocked by:** 01 — Monorepo foundation + Sanity Studio
 
-**Status:** done
+**Status:** completed
 
 - [x] `apps/nextjs` scaffold with Next.js, TypeScript, Tailwind, GridCN components installed (GridCN components not available as npm package; uses Tailwind utility classes matching the theme preset)
 - [x] GROQ query for Profile in `packages/sanity/queries/` (already exists from ticket 01)
