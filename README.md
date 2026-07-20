@@ -30,9 +30,11 @@ cd portfolio-sanity
 pnpm install
 
 # 3. Configure environment variables
-cp .env.example apps/studio/.env
-cp .env.example apps/nextjs/.env.local
+cp apps/studio/.env.example apps/studio/.env
+cp apps/nextjs/.env.example apps/nextjs/.env.local
 # Edit both files with your Sanity project ID and dataset
+
+A combined `.env.example` is also available at the repo root as a reference.
 ```
 
 ## Running the Studio
