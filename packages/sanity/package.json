@@ -1,0 +1,25 @@
+{
+  "name": "@portfolio/sanity",
+  "version": "0.1.0",
+  "private": true,
+  "exports": {
+    ".": "./src/index.ts",
+    "./schemas": "./src/schemas/index.ts",
+    "./client": "./src/client.ts",
+    "./queries": "./src/queries/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@sanity/client": "^6.24.0",
+    "groq": "^3.68.0"
+  },
+  "devDependencies": {
+    "sanity": "^3.68.0",
+    "typescript": "^5.4.0"
+  },
+  "peerDependencies": {
+    "sanity": "^3.68.0"
+  }
+}

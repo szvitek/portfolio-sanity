@@ -1,0 +1,12 @@
+{
+  "name": "portfolio-sanity",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --filter @portfolio/studio dev",
+    "build": "pnpm -r build",
+    "typecheck": "pnpm -r typecheck"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
