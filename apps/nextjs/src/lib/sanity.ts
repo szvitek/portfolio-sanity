@@ -19,8 +19,83 @@ export interface ProfileData {
   socialLinks?: SocialLinkData[]
 }
 
+export interface SkillData {
+  _id: string
+  name: string
+  image?: SanityImageSource
+  category: string
+  order: number
+  publishedAt: string
+}
+
+export interface JobSkillRef {
+  _id: string
+  name: string
+  image?: SanityImageSource
+  category: string
+}
+
+export interface JobData {
+  _id: string
+  company: string
+  role: string
+  startDate: string
+  endDate?: string
+  description?: PortableTextBlock[]
+  website?: string
+  skills?: JobSkillRef[]
+  order: number
+  publishedAt: string
+}
+
+export interface StudyData {
+  _id: string
+  institution: string
+  field: string
+  startDate: string
+  endDate?: string
+  description?: string
+  order: number
+  publishedAt: string
+}
+
+export interface CertificationData {
+  _id: string
+  name: string
+  date: string
+  url?: string
+  thumbnail?: SanityImageSource
+  order: number
+  publishedAt: string
+}
+
+export interface ProjectSkillRef {
+  _id: string
+  name: string
+  image?: SanityImageSource
+  category: string
+}
+
+export interface ProjectData {
+  _id: string
+  title: string
+  description?: PortableTextBlock[]
+  thumbnail?: SanityImageSource
+  skills?: ProjectSkillRef[]
+  liveUrl?: string
+  githubUrl?: string
+  featured: boolean
+  order: number
+  publishedAt: string
+}
+
 export interface HomePageData {
   profile: ProfileData | null
+  skills: SkillData[]
+  jobs: JobData[]
+  studies: StudyData[]
+  certifications: CertificationData[]
+  projects: ProjectData[]
 }
 
 function getConfig() {

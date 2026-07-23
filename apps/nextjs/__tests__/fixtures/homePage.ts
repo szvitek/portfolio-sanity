@@ -36,4 +36,9 @@ export const mockHomePageData: HomePageData = {
       { platform: "linkedin", url: "https://linkedin.com/in/johndoe" },
     ],
   },
+  skills: [],
+  jobs: [],
+  studies: [],
+  certifications: [],
+  projects: [],
 }
