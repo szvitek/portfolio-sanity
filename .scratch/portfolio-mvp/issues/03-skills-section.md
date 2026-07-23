@@ -6,10 +6,10 @@
 
 **Blocked by:** 02 — Home page shell + Profile section, 10 — Theme system
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] GROQ query for Skills in `packages/sanity/queries/`
-- [ ] Install `@thegridcn/logo-cloud` component
-- [ ] Skills section using `LogoCloud` with skill icons as marquee items, grouped by category heading
-- [ ] Skills section added to the home page (second position after Profile)
-- [ ] Integration test updated with Skills fixture and assertions
+- [x] GROQ query for Skills in `packages/sanity/queries/` — already existed
+- [x] Install `@thegridcn/logo-cloud` component — already existed as local component
+- [x] Skills section using `LogoCloud` with skill icons as marquee items, grouped by category heading
+- [x] Skills section added to the home page (second position after Profile)
+- [x] Integration test updated with Skills fixture and assertions

@@ -3,6 +3,7 @@ import type { PortableTextBlock } from "@portabletext/react"
 import { getHomePageData, urlFor, cvUrlFor } from "@/lib/sanity"
 import type { ProfileData, SkillData, JobData, StudyData, CertificationData, ProjectData } from "@/lib/sanity"
 import { HeroSection } from "@/components/thegridcn/hero-section"
+import { LogoCloud } from "@/components/thegridcn/logo-cloud"
 import { NavBar } from "@/components/NavBar"
 import { StatusBar } from "@/components/thegridcn/status-bar"
 import { SocialLinkIcon } from "@portfolio/ui"
@@ -112,10 +113,33 @@ export default function HomePage({ profile, skills, jobs, studies, certification
           <div className="mx-auto max-w-5xl">
             <h2 className="mb-8 font-mono text-xs uppercase tracking-widest text-foreground/50">Skills</h2>
             {skills.length > 0 ? (
-              <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-                {skills.map((skill) => (
-                  <div key={skill._id} className="rounded border border-border/30 bg-card/50 p-4 text-center font-mono text-sm text-foreground/80">
-                    {skill.name}
+              <div className="space-y-12">
+                {Object.entries(
+                  skills.reduce<Record<string, SkillData[]>>((acc, skill) => {
+                    ;(acc[skill.category] ??= []).push(skill)
+                    return acc
+                  }, {})
+                ).map(([category, categorySkills], i) => (
+                  <div key={category}>
+                    <h3 className="mb-4 font-mono text-xs uppercase tracking-widest text-primary/60">
+                      {category}
+                    </h3>
+                    <LogoCloud
+                      logos={categorySkills.map((skill) => ({
+                        name: skill.name,
+                        icon: skill.image
+                          ? (
+                            <img
+                              src={urlFor(skill.image).width(48).height(48).url()}
+                              alt=""
+                              className="h-12 w-12 object-contain"
+                            />
+                          )
+                          : undefined,
+                      }))}
+                      speed="slow"
+                      direction={i % 2 === 0 ? "left" : "right"}
+                    />
                   </div>
                 ))}
               </div>

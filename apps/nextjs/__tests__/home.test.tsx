@@ -148,11 +148,45 @@ describe("Home page", () => {
     }
   })
 
+  it("renders skills section in second position after profile", async () => {
+    const props = await getPageProps()
+    const { container } = render(<HomePage {...props} />)
+
+    const main = container.querySelector("main")
+    const sectionElements = main?.querySelectorAll("section") ?? []
+    expect(sectionElements.length).toBeGreaterThanOrEqual(2)
+    expect(sectionElements[0]).toHaveAttribute("id", "profile")
+    expect(sectionElements[1]).toHaveAttribute("id", "skills")
+  })
+
+  it("renders skills grouped by category in LogoCloud", async () => {
+    const props = await getPageProps()
+    const { container } = render(<HomePage {...props} />)
+
+    expect(container.querySelector('[data-slot="tron-logo-cloud"]')).toBeInTheDocument()
+
+    const allReact = screen.getAllByText("React")
+    expect(allReact.length).toBeGreaterThan(0)
+
+    const allNext = screen.getAllByText("Next.js")
+    expect(allNext.length).toBeGreaterThan(0)
+
+    const allNode = screen.getAllByText("Node.js")
+    expect(allNode.length).toBeGreaterThan(0)
+
+    const allPython = screen.getAllByText("Python")
+    expect(allPython.length).toBeGreaterThan(0)
+
+    expect(screen.getByText("Frontend")).toBeInTheDocument()
+    expect(screen.getByText("Backend")).toBeInTheDocument()
+    expect(screen.getByText("Languages")).toBeInTheDocument()
+  })
+
   it("renders section placeholder text when sections have no data", async () => {
     const props = await getPageProps()
     render(<HomePage {...props} />)
 
     const placeholders = screen.getAllByText(/content coming soon/i)
-    expect(placeholders.length).toBeGreaterThanOrEqual(5)
+    expect(placeholders.length).toBeGreaterThanOrEqual(4)
   })
 })
