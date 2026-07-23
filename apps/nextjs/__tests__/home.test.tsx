@@ -104,6 +104,16 @@ describe("Home page", () => {
     expect(main).toBeInTheDocument()
   })
 
+  it("renders hero section with correct structure", async () => {
+    const props = await getPageProps()
+    const { container } = render(<HomePage {...props} />)
+
+    const hero = container.querySelector('[data-slot="tron-hero-section"]')
+    expect(hero).toBeInTheDocument()
+    expect(screen.getByText("PORTFOLIO")).toBeInTheDocument()
+    expect(screen.getByText("John Doe")).toBeInTheDocument()
+  })
+
   it("renders navigation bar with section links", async () => {
     const props = await getPageProps()
     render(<HomePage {...props} />)

@@ -28,7 +28,7 @@ export interface SkillData {
   publishedAt: string
 }
 
-export interface JobSkillRef {
+export interface SkillRef {
   _id: string
   name: string
   image?: SanityImageSource
@@ -43,7 +43,7 @@ export interface JobData {
   endDate?: string
   description?: PortableTextBlock[]
   website?: string
-  skills?: JobSkillRef[]
+  skills?: SkillRef[]
   order: number
   publishedAt: string
 }
@@ -69,19 +69,12 @@ export interface CertificationData {
   publishedAt: string
 }
 
-export interface ProjectSkillRef {
-  _id: string
-  name: string
-  image?: SanityImageSource
-  category: string
-}
-
 export interface ProjectData {
   _id: string
   title: string
   description?: PortableTextBlock[]
   thumbnail?: SanityImageSource
-  skills?: ProjectSkillRef[]
+  skills?: SkillRef[]
   liveUrl?: string
   githubUrl?: string
   featured: boolean

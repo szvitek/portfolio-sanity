@@ -1,5 +1,5 @@
 import type { GetStaticProps, InferGetStaticPropsType } from "next"
-import { PortableText } from "@portabletext/react"
+import type { PortableTextBlock } from "@portabletext/react"
 import { getHomePageData, urlFor, cvUrlFor } from "@/lib/sanity"
 import type { ProfileData, SkillData, JobData, StudyData, CertificationData, ProjectData } from "@/lib/sanity"
 import { HeroSection } from "@/components/thegridcn/hero-section"
@@ -30,11 +30,11 @@ export const getStaticProps: GetStaticProps<{
   }
 }
 
-function extractText(blocks: unknown): string {
-  if (!blocks || !Array.isArray(blocks)) return ""
-  const firstBlock = blocks[0] as { children?: { text?: string }[] } | undefined
+function extractText(blocks: PortableTextBlock[] | undefined | null): string {
+  if (!blocks) return ""
+  const firstBlock = blocks[0]
   if (!firstBlock?.children) return ""
-  return firstBlock.children.map((c) => c.text ?? "").join(" ")
+  return firstBlock.children.map((c) => ("text" in c ? c.text ?? "" : "")).join(" ")
 }
 
 export default function HomePage({ profile, skills, jobs, studies, certifications, projects }: Props) {
