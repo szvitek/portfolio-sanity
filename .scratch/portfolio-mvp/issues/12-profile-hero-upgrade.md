@@ -8,8 +8,12 @@ The `HeroSection` component lives in the upstream repo at `github.com/educlopez/
 
 **Blocked by:** 10 — Theme system
 
-**Status:** ready-for-agent
+**Status:** resolved
 
-- [ ] Copy `hero-section.tsx` and its CSS from upstream GridCN GitHub repo into the project
-- [ ] Replace `ProfileCard` with `HeroSection` composed with avatar, title, subtitle, bio, social link icons, CV download button
-- [ ] Integration test updated with new hero profile assertions
+- [x] Copy `hero-section.tsx` and its CSS from upstream GridCN GitHub repo into the project
+- [x] Replace `ProfileCard` with `HeroSection` composed with avatar, title, subtitle, bio, social link icons, CV download button
+- [x] Integration test updated with new hero profile assertions
+
+## Comments
+
+Implemented in commit 1f205a9 — "feat: NavBar + StatusBar page chrome and HeroSection profile upgrade (#11, #12)"

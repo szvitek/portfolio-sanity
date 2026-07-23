@@ -6,12 +6,16 @@
 
 **Blocked by:** 02 — Home page shell + Profile section
 
-**Status:** ready-for-agent
+**Status:** resolved
 
-- [ ] `ThemeProvider` context with `useReducer` (theme, intensity, darkMode) in `packages/ui`
-- [ ] Flash-prevention inline script in `apps/nextjs` `_document.tsx` for localStorage theme restore
-- [ ] 6 theme CSS blocks (`[data-theme="tron"]`, etc.) in globals.css with `oklch()` variables
-- [ ] 4 glow intensity CSS blocks (`[data-tron-intensity]`) for component glow overrides
-- [ ] Dark mode via `.dark` class on `<html>` with `--primary-rgb` fallback vars
-- [ ] Theme/intensity/dark mode switcher component (floating panel, can be hidden later)
-- [ ] `packages/tailwind-config` updated with GridCN theme token presets
+- [x] `ThemeProvider` context with `useReducer` (theme, intensity, darkMode) in `packages/ui`
+- [x] Flash-prevention inline script in `apps/nextjs` `_document.tsx` for localStorage theme restore
+- [x] 6 theme CSS blocks (`[data-theme="tron"]`, etc.) in globals.css with `oklch()` variables
+- [x] 4 glow intensity CSS blocks (`[data-tron-intensity]`) for component glow overrides
+- [x] Dark mode via `.dark` class on `<html>` with `--primary-rgb` fallback vars
+- [x] Theme/intensity/dark mode switcher component (floating panel, can be hidden later)
+- [x] `packages/tailwind-config` updated with GridCN theme token presets
+
+## Comments
+
+Implemented in commit 626f1d6 — "feat: GridCN theme system with 6 themes, glow levels, and switcher (#10)"
