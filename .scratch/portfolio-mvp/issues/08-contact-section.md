@@ -1,11 +1,14 @@
 # 08 — Contact section
 
-**What to build:** The Contact section on the home page, rendering a mailto link using the email address from the Profile. The section sits at the bottom of the page.
+**What to build:** The Contact section at the bottom of the home page, using a full-width call-to-action banner with a mailto link from the Profile email, plus social link icons.
 
-**Blocked by:** 02 — Home page shell + Profile section
+**GridCN components from prototype:** `cta-banner`
+
+**Blocked by:** 02 — Home page shell + Profile section, 10 — Theme system
 
 **Status:** ready-for-agent
 
-- [ ] ContactSection component in `packages/ui` (mailto link using Profile email)
+- [ ] Install `@thegridcn/cta-banner` component
+- [ ] Contact section using `CTABanner` with mailto CTA button and social link icons
 - [ ] Contact section added to the home page (final position)
 - [ ] Integration test updated with Contact section assertion

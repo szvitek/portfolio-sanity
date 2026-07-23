@@ -1,13 +1,15 @@
 # 07 — Certifications section
 
-**What to build:** The Certifications section on the home page, fetching Certifications from Sanity. Each certification shows title, issuer, date earned, thumbnail, and a verification link.
+**What to build:** The Certifications section on the home page, fetching Certifications from Sanity. Each certification shows thumbnail, title, issuer, date earned, and a verification link in a card grid.
 
-**Blocked by:** 02 — Home page shell + Profile section
+**GridCN components from prototype:** `feature-card`
+
+**Blocked by:** 02 — Home page shell + Profile section, 10 — Theme system
 
 **Status:** ready-for-agent
 
 - [ ] GROQ query for Certifications in `packages/sanity/queries/`
-- [ ] CertificationCard component in `packages/ui`
-- [ ] CertificationGrid component in `packages/ui`
+- [ ] Install `@thegridcn/feature-card` component
+- [ ] Certifications section using a grid of `FeatureCard`s with thumbnail, title, issuer, date, and verification link
 - [ ] Certifications section added to the home page (sixth position)
 - [ ] Integration test updated with Certifications fixture and assertions

@@ -1,13 +1,15 @@
 # 03 — Skills section
 
-**What to build:** The Skills section on the home page, fetching Skills from Sanity and displaying them grouped by category with icons. Includes a SkillBadge component and a carousel or grid layout for the section.
+**What to build:** The Skills section on the home page, fetching Skills from Sanity and displaying them grouped by category in a looping `LogoCloud` marquee with 48×48 skill icons.
 
-**Blocked by:** 02 — Home page shell + Profile section
+**GridCN components from prototype:** `logo-cloud`, `tag`
+
+**Blocked by:** 02 — Home page shell + Profile section, 10 — Theme system
 
 **Status:** ready-for-agent
 
 - [ ] GROQ query for Skills in `packages/sanity/queries/`
-- [ ] SkillBadge component in `packages/ui`
-- [ ] SkillCarousel or SkillGrid component in `packages/ui`
+- [ ] Install `@thegridcn/logo-cloud` component
+- [ ] Skills section using `LogoCloud` with skill icons as marquee items, grouped by category heading
 - [ ] Skills section added to the home page (second position after Profile)
 - [ ] Integration test updated with Skills fixture and assertions
