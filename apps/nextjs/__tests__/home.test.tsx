@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react"
+import { fireEvent, render, screen } from "@testing-library/react"
 import { describe, it, expect, vi, beforeEach } from "vitest"
 import type { GetStaticPropsResult } from "next"
 import HomePage, { getStaticProps } from "@/pages/index"
@@ -159,11 +159,12 @@ describe("Home page", () => {
     expect(sectionElements[1]).toHaveAttribute("id", "skills")
   })
 
-  it("renders skills grouped by category in LogoCloud", async () => {
+  it("renders skills in a single LogoCloud with colored items per category", async () => {
     const props = await getPageProps()
     const { container } = render(<HomePage {...props} />)
 
-    expect(container.querySelector('[data-slot="tron-logo-cloud"]')).toBeInTheDocument()
+    const logoCloud = container.querySelector('[data-slot="tron-logo-cloud"]')
+    expect(logoCloud).toBeInTheDocument()
 
     const allReact = screen.getAllByText("React")
     expect(allReact.length).toBeGreaterThan(0)
@@ -176,10 +177,28 @@ describe("Home page", () => {
 
     const allPython = screen.getAllByText("Python")
     expect(allPython.length).toBeGreaterThan(0)
+  })
 
-    expect(screen.getByText("Frontend")).toBeInTheDocument()
-    expect(screen.getByText("Backend")).toBeInTheDocument()
-    expect(screen.getByText("Languages")).toBeInTheDocument()
+  it("renders category filter buttons and filters skills on click", async () => {
+    const props = await getPageProps()
+    const { container } = render(<HomePage {...props} />)
+
+    const allButton = screen.getByText("All")
+    expect(allButton).toBeInTheDocument()
+
+    const frontendButton = screen.getByText("Frontend")
+    expect(frontendButton).toBeInTheDocument()
+
+    const backendButton = screen.getByText("Backend")
+    expect(backendButton).toBeInTheDocument()
+
+    fireEvent.click(frontendButton)
+
+    const frontendSkills = screen.getAllByText(/React|Next\.js/)
+    expect(frontendSkills.length).toBeGreaterThan(0)
+
+    const nodeItems = screen.queryAllByText("Node.js")
+    expect(nodeItems.length).toBe(0)
   })
 
   it("renders section placeholder text when sections have no data", async () => {

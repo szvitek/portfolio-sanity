@@ -2,8 +2,14 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 import { Marquee } from "./marquee"
 
+export interface LogoItem {
+  name: string
+  icon?: React.ReactNode
+  className?: string
+}
+
 interface LogoCloudProps extends React.HTMLAttributes<HTMLDivElement> {
-  logos: { name: string; icon?: React.ReactNode }[]
+  logos: LogoItem[]
   label?: string
   speed?: "slow" | "normal" | "fast"
   pauseOnHover?: boolean
@@ -47,9 +53,12 @@ export function LogoCloud({
         {logos.map((logo, i) => (
           <div
             key={i}
-            className="flex shrink-0 items-center gap-2 rounded border border-primary/10 bg-primary/5 px-5 py-2.5 font-mono text-xs uppercase tracking-widest text-foreground/50 transition-colors hover:border-primary/30 hover:text-foreground/70"
+            className={cn(
+              "flex shrink-0 items-center gap-2 rounded border px-4 py-2 font-mono text-xs uppercase tracking-widest text-foreground/50 transition-colors hover:text-foreground/70",
+              logo.className
+            )}
           >
-            {logo.icon && <span className="text-primary/60">{logo.icon}</span>}
+            {logo.icon && <span className="shrink-0">{logo.icon}</span>}
             <span>{logo.name}</span>
           </div>
         ))}
