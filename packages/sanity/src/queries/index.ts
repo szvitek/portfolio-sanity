@@ -22,15 +22,18 @@ export const skillsQuery = groq`*[_type == "skill"] | order(order asc){
   publishedAt
 }`
 
-export const jobsQuery = groq`*[_type == "job"] | order(order asc){
+export const jobsQuery = groq`*[_type == "job"] | order(startDate asc){
   _id,
   company,
   role,
   startDate,
   endDate,
   description,
+  image,
+  location,
   website,
   skills[]->{ _id, name, image, category },
+  highlights,
   order,
   publishedAt
 }`

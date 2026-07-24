@@ -34,6 +34,17 @@ export const job = defineType({
       type: "blockContent",
     }),
     defineField({
+      name: "image",
+      title: "Company Logo",
+      type: "image",
+      options: { hotspot: true },
+    }),
+    defineField({
+      name: "location",
+      title: "Location",
+      type: "string",
+    }),
+    defineField({
       name: "website",
       title: "Website",
       type: "url",
@@ -43,6 +54,13 @@ export const job = defineType({
       title: "Skills",
       type: "array",
       of: [{ type: "reference", to: [{ type: "skill" }] }],
+    }),
+    defineField({
+      name: "highlights",
+      title: "Highlights",
+      type: "array",
+      of: [{ type: "string" }],
+      options: { layout: "tags" },
     }),
     defineField({
       name: "order",

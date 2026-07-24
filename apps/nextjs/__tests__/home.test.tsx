@@ -48,7 +48,7 @@ describe("Home page", () => {
     renderWithTheme(<HomePage {...props} />)
 
     expect(screen.getByText("John Doe")).toBeInTheDocument()
-    expect(screen.getByText("Full-Stack Developer")).toBeInTheDocument()
+    expect(screen.getAllByText("Full-Stack Developer").length).toBeGreaterThanOrEqual(1)
   })
 
   it("renders bio content", async () => {
@@ -202,8 +202,12 @@ describe("Home page", () => {
     const frontendSkills = screen.getAllByText(/React|Next\.js/)
     expect(frontendSkills.length).toBeGreaterThan(0)
 
-    const nodeItems = screen.queryAllByText("Node.js")
-    expect(nodeItems.length).toBe(0)
+    const skillsSection = container.querySelector('#skills')
+    const nodeItems = skillsSection?.querySelectorAll("text") ?? []
+    const nodeTexts = Array.from(skillsSection?.querySelectorAll("*") ?? []).filter(
+      (el) => el.textContent === "Node.js" && el.children.length === 0
+    )
+    expect(nodeTexts.length).toBe(0)
   })
 
   it("renders section placeholder text when sections have no data", async () => {
@@ -211,6 +215,102 @@ describe("Home page", () => {
     renderWithTheme(<HomePage {...props} />)
 
     const placeholders = screen.getAllByText(/content coming soon/i)
-    expect(placeholders.length).toBeGreaterThanOrEqual(4)
+    expect(placeholders.length).toBeGreaterThanOrEqual(3)
+  })
+
+  it("renders jobs section with job cards", async () => {
+    const props = await getPageProps()
+    renderWithTheme(<HomePage {...props} />)
+
+    expect(screen.getByText("Experience")).toBeInTheDocument()
+    expect(screen.getByText("Acme Corp")).toBeInTheDocument()
+    expect(screen.getByText("TechStart")).toBeInTheDocument()
+  })
+
+  it("renders job company logos", async () => {
+    const props = await getPageProps()
+    renderWithTheme(<HomePage {...props} />)
+
+    const logo = screen.getByAltText("Acme Corp logo")
+    expect(logo).toBeInTheDocument()
+  })
+
+  it("renders job locations", async () => {
+    const props = await getPageProps()
+    renderWithTheme(<HomePage {...props} />)
+
+    expect(screen.getByText("San Francisco, CA")).toBeInTheDocument()
+    expect(screen.getByText("Remote")).toBeInTheDocument()
+  })
+
+  it("renders job date ranges", async () => {
+    const props = await getPageProps()
+    renderWithTheme(<HomePage {...props} />)
+
+    expect(screen.getByText(/Jan 2022/)).toBeInTheDocument()
+    expect(screen.getByText(/Jun 2024/)).toBeInTheDocument()
+  })
+
+  it("renders job roles", async () => {
+    const props = await getPageProps()
+    renderWithTheme(<HomePage {...props} />)
+
+    expect(screen.getByText("Senior Developer")).toBeInTheDocument()
+    expect(screen.getAllByText("Full-Stack Developer").length).toBeGreaterThanOrEqual(1)
+  })
+
+  it("renders job website links", async () => {
+    const props = await getPageProps()
+    renderWithTheme(<HomePage {...props} />)
+
+    const websiteLink = screen.getByText("Website")
+    expect(websiteLink).toHaveAttribute("href", "https://acme.example.com")
+    expect(websiteLink).toHaveAttribute("target", "_blank")
+  })
+
+  it("renders job skill badges", async () => {
+    const props = await getPageProps()
+    renderWithTheme(<HomePage {...props} />)
+
+    const reactBadges = screen.getAllByText("React")
+    expect(reactBadges.length).toBeGreaterThan(0)
+
+    const nodeBadges = screen.getAllByText("Node.js")
+    expect(nodeBadges.length).toBeGreaterThan(0)
+  })
+
+  it("renders job highlights", async () => {
+    const props = await getPageProps()
+    renderWithTheme(<HomePage {...props} />)
+
+    expect(screen.getByText("Reduced API latency by 40%")).toBeInTheDocument()
+    expect(screen.getByText("Mentored team of 5 developers")).toBeInTheDocument()
+  })
+
+  it("renders job descriptions", async () => {
+    const props = await getPageProps()
+    renderWithTheme(<HomePage {...props} />)
+
+    expect(screen.getByText("Led development of microservices platform.")).toBeInTheDocument()
+    expect(screen.getByText("Built and maintained core product features.")).toBeInTheDocument()
+  })
+
+  it("renders job cards with correct data-slot", async () => {
+    const props = await getPageProps()
+    const { container } = renderWithTheme(<HomePage {...props} />)
+
+    const jobCards = container.querySelectorAll('[data-slot="job-card"]')
+    expect(jobCards.length).toBe(2)
+  })
+
+  it("renders jobs section in correct position", async () => {
+    const props = await getPageProps()
+    const { container } = renderWithTheme(<HomePage {...props} />)
+
+    const main = container.querySelector("main")
+    const sectionElements = main?.querySelectorAll("section") ?? []
+    const sectionIds = Array.from(sectionElements).map((s) => s.getAttribute("id"))
+    const jobsIndex = sectionIds.indexOf("jobs")
+    expect(jobsIndex).toBeGreaterThan(0)
   })
 })

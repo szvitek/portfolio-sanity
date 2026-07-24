@@ -70,7 +70,75 @@ export const mockHomePageData: HomePageData = {
       publishedAt: "2024-01-01T00:00:00Z",
     },
   ],
-  jobs: [],
+  jobs: [
+    {
+      _id: "job-1",
+      company: "Acme Corp",
+      role: "Senior Developer",
+      startDate: "2022-01-01",
+      endDate: "2024-06-30",
+      description: [
+        {
+          _type: "block",
+          _key: "job1-desc",
+          style: "normal",
+          children: [
+            {
+              _type: "span",
+              _key: "job1-span",
+              text: "Led development of microservices platform.",
+              marks: [],
+            },
+          ],
+        },
+      ],
+      image: {
+        _type: "image",
+        asset: { _ref: "image-acme-96x96-png" },
+      },
+      location: "San Francisco, CA",
+      website: "https://acme.example.com",
+      skills: [
+        { _id: "skill-react", name: "React", category: "Frontend" },
+        { _id: "skill-node", name: "Node.js", category: "Backend" },
+      ],
+      highlights: [
+        "Reduced API latency by 40%",
+        "Mentored team of 5 developers",
+      ],
+      order: 1,
+      publishedAt: "2024-01-01T00:00:00Z",
+    },
+    {
+      _id: "job-2",
+      company: "TechStart",
+      role: "Full-Stack Developer",
+      startDate: "2019-03-01",
+      endDate: "2021-12-31",
+      description: [
+        {
+          _type: "block",
+          _key: "job2-desc",
+          style: "normal",
+          children: [
+            {
+              _type: "span",
+              _key: "job2-span",
+              text: "Built and maintained core product features.",
+              marks: [],
+            },
+          ],
+        },
+      ],
+      location: "Remote",
+      skills: [
+        { _id: "skill-nextjs", name: "Next.js", category: "Frontend" },
+        { _id: "skill-python", name: "Python", category: "Languages" },
+      ],
+      order: 2,
+      publishedAt: "2022-01-01T00:00:00Z",
+    },
+  ],
   studies: [],
   certifications: [],
   projects: [],

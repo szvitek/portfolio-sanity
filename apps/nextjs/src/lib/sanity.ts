@@ -42,8 +42,11 @@ export interface JobData {
   startDate: string
   endDate?: string
   description?: PortableTextBlock[]
+  image?: SanityImageSource
+  location?: string
   website?: string
   skills?: SkillRef[]
+  highlights?: string[]
   order: number
   publishedAt: string
 }

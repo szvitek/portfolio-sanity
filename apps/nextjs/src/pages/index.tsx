@@ -5,11 +5,13 @@ import { getHomePageData, urlFor, cvUrlFor } from "@/lib/sanity"
 import type { ProfileData, SkillData, JobData, StudyData, CertificationData, ProjectData } from "@/lib/sanity"
 import { HeroSection } from "@/components/thegridcn/hero-section"
 import { LogoCloud } from "@/components/thegridcn/logo-cloud"
+import { JobCard } from "@/components/JobCard"
 import { NavBar } from "@/components/NavBar"
 import { StatusBar } from "@/components/thegridcn/status-bar"
 import { SocialLinkIcon } from "@portfolio/ui"
 import { ThemeDots, IntensityDots } from "@/components/ThemeDots"
 import { cn } from "@/lib/utils"
+import { skillCategoryClasses } from "@/lib/skill-colors"
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -32,15 +34,6 @@ export const getStaticProps: GetStaticProps<{
       projects: data.projects ?? [],
     },
   }
-}
-
-const CARD_COLORS: Record<string, string> = {
-  Frontend: "border-sky-500/40 bg-sky-500/10 hover:border-sky-500/60 hover:bg-sky-500/20",
-  Backend: "border-emerald-500/40 bg-emerald-500/10 hover:border-emerald-500/60 hover:bg-emerald-500/20",
-  DevOps: "border-purple-500/40 bg-purple-500/10 hover:border-purple-500/60 hover:bg-purple-500/20",
-  Languages: "border-amber-500/40 bg-amber-500/10 hover:border-amber-500/60 hover:bg-amber-500/20",
-  Tools: "border-rose-500/40 bg-rose-500/10 hover:border-rose-500/60 hover:bg-rose-500/20",
-  Databases: "border-cyan-500/40 bg-cyan-500/10 hover:border-cyan-500/60 hover:bg-cyan-500/20",
 }
 
 const CATEGORY_BTN: Record<string, { active: string; inactive: string }> = {
@@ -203,7 +196,7 @@ export default function HomePage({ profile, skills, jobs, studies, certification
                   key={activeCategory ?? "all"}
                   logos={filteredSkills.map((skill) => ({
                     name: skill.name,
-                    className: CARD_COLORS[skill.category] ?? "",
+                    className: skillCategoryClasses(skill.category),
                     icon: skill.image
                       ? (
                         <img
@@ -246,10 +239,19 @@ export default function HomePage({ profile, skills, jobs, studies, certification
             {jobs.length > 0 ? (
               <div className="space-y-6">
                 {jobs.map((job) => (
-                  <div key={job._id} className="rounded border border-border/30 bg-card/50 p-6">
-                    <h3 className="font-mono text-sm font-bold uppercase tracking-wider text-foreground">{job.role}</h3>
-                    <p className="mt-1 font-mono text-xs text-foreground/60">{job.company}</p>
-                  </div>
+                  <JobCard
+                    key={job._id}
+                    company={job.company}
+                    role={job.role}
+                    startDate={job.startDate}
+                    endDate={job.endDate}
+                    description={job.description}
+                    image={job.image}
+                    location={job.location}
+                    website={job.website}
+                    skills={job.skills}
+                    highlights={job.highlights}
+                  />
                 ))}
               </div>
             ) : (
