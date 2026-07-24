@@ -4,6 +4,11 @@ import type { GetStaticPropsResult } from "next"
 import HomePage, { getStaticProps } from "@/pages/index"
 import { mockHomePageData } from "./fixtures/homePage"
 import type { ProfileData, SkillData, JobData, StudyData, CertificationData, ProjectData } from "@/lib/sanity"
+import { ThemeProvider } from "@portfolio/ui"
+
+function renderWithTheme(ui: React.ReactElement) {
+  return render(<ThemeProvider>{ui}</ThemeProvider>)
+}
 
 type PageProps = {
   profile: ProfileData | null
@@ -40,7 +45,7 @@ beforeEach(() => {
 describe("Home page", () => {
   it("renders profile title from Sanity data", async () => {
     const props = await getPageProps()
-    render(<HomePage {...props} />)
+    renderWithTheme(<HomePage {...props} />)
 
     expect(screen.getByText("John Doe")).toBeInTheDocument()
     expect(screen.getByText("Full-Stack Developer")).toBeInTheDocument()
@@ -48,14 +53,14 @@ describe("Home page", () => {
 
   it("renders bio content", async () => {
     const props = await getPageProps()
-    render(<HomePage {...props} />)
+    renderWithTheme(<HomePage {...props} />)
 
     expect(screen.getByText("I build things for the web.")).toBeInTheDocument()
   })
 
   it("renders social link icons", async () => {
     const props = await getPageProps()
-    render(<HomePage {...props} />)
+    renderWithTheme(<HomePage {...props} />)
 
     const githubLink = screen.getByLabelText("github")
     expect(githubLink).toHaveAttribute("href", "https://github.com/johndoe")
@@ -66,7 +71,7 @@ describe("Home page", () => {
 
   it("renders CV download button", async () => {
     const props = await getPageProps()
-    render(<HomePage {...props} />)
+    renderWithTheme(<HomePage {...props} />)
 
     const cvLink = screen.getByText("Download CV")
     expect(cvLink).toBeInTheDocument()
@@ -75,7 +80,7 @@ describe("Home page", () => {
 
   it("renders avatar image with correct alt text", async () => {
     const props = await getPageProps()
-    render(<HomePage {...props} />)
+    renderWithTheme(<HomePage {...props} />)
 
     const avatar = screen.getByAltText("John Doe")
     expect(avatar).toBeInTheDocument()
@@ -91,14 +96,14 @@ describe("Home page", () => {
       projects: [],
     })
     const props = await getPageProps()
-    render(<HomePage {...props} />)
+    renderWithTheme(<HomePage {...props} />)
 
     expect(screen.getByText("No profile content found.")).toBeInTheDocument()
   })
 
   it("renders main content container", async () => {
     const props = await getPageProps()
-    const { container } = render(<HomePage {...props} />)
+    const { container } = renderWithTheme(<HomePage {...props} />)
 
     const main = container.querySelector("main")
     expect(main).toBeInTheDocument()
@@ -106,7 +111,7 @@ describe("Home page", () => {
 
   it("renders hero section with correct structure", async () => {
     const props = await getPageProps()
-    const { container } = render(<HomePage {...props} />)
+    const { container } = renderWithTheme(<HomePage {...props} />)
 
     const hero = container.querySelector('[data-slot="tron-hero-section"]')
     expect(hero).toBeInTheDocument()
@@ -116,7 +121,7 @@ describe("Home page", () => {
 
   it("renders navigation bar with section links", async () => {
     const props = await getPageProps()
-    render(<HomePage {...props} />)
+    renderWithTheme(<HomePage {...props} />)
 
     const nav = screen.getByTestId("navbar")
     expect(nav).toBeInTheDocument()
@@ -130,7 +135,7 @@ describe("Home page", () => {
 
   it("renders top and bottom status bars", async () => {
     const props = await getPageProps()
-    render(<HomePage {...props} />)
+    renderWithTheme(<HomePage {...props} />)
 
     expect(screen.getByTestId("top-statusbar")).toBeInTheDocument()
     expect(screen.getByTestId("bottom-statusbar")).toBeInTheDocument()
@@ -140,7 +145,7 @@ describe("Home page", () => {
 
   it("renders section IDs for navigation anchor targets", async () => {
     const props = await getPageProps()
-    const { container } = render(<HomePage {...props} />)
+    const { container } = renderWithTheme(<HomePage {...props} />)
 
     const sections = ["profile", "skills", "projects", "jobs", "studies", "certifications", "contact"]
     for (const sectionId of sections) {
@@ -150,7 +155,7 @@ describe("Home page", () => {
 
   it("renders skills section in second position after profile", async () => {
     const props = await getPageProps()
-    const { container } = render(<HomePage {...props} />)
+    const { container } = renderWithTheme(<HomePage {...props} />)
 
     const main = container.querySelector("main")
     const sectionElements = main?.querySelectorAll("section") ?? []
@@ -161,7 +166,7 @@ describe("Home page", () => {
 
   it("renders skills in a single LogoCloud with colored items per category", async () => {
     const props = await getPageProps()
-    const { container } = render(<HomePage {...props} />)
+    const { container } = renderWithTheme(<HomePage {...props} />)
 
     const logoCloud = container.querySelector('[data-slot="tron-logo-cloud"]')
     expect(logoCloud).toBeInTheDocument()
@@ -181,7 +186,7 @@ describe("Home page", () => {
 
   it("renders category filter buttons and filters skills on click", async () => {
     const props = await getPageProps()
-    const { container } = render(<HomePage {...props} />)
+    const { container } = renderWithTheme(<HomePage {...props} />)
 
     const allButton = screen.getByText("All")
     expect(allButton).toBeInTheDocument()
@@ -203,7 +208,7 @@ describe("Home page", () => {
 
   it("renders section placeholder text when sections have no data", async () => {
     const props = await getPageProps()
-    render(<HomePage {...props} />)
+    renderWithTheme(<HomePage {...props} />)
 
     const placeholders = screen.getAllByText(/content coming soon/i)
     expect(placeholders.length).toBeGreaterThanOrEqual(4)

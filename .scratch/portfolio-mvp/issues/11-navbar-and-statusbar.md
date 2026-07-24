@@ -14,7 +14,10 @@
 - [x] `StatusBar` at top of page (above nav) with decorative/chrome elements
 - [x] `StatusBar` at page footer
 - [x] Integration test updated with nav assertion
+- [x] Theme selector (colored dots) in top StatusBar
+- [x] Intensity selector (fill-level dots) in top StatusBar
 
 ## Comments
 
-Implemented in commit 1f205a9 — "feat: NavBar + StatusBar page chrome and HeroSection profile upgrade (#11, #12)"
+- Initial implementation in commit 1f205a9 — "feat: NavBar + StatusBar page chrome and HeroSection profile upgrade (#11, #12)"
+- ThemeDots/IntensityDots added in commit 14ce3f7 — "feat: add ThemeDots and IntensityDots selectors to StatusBar (#11)"

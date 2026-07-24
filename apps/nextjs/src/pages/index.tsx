@@ -8,6 +8,7 @@ import { LogoCloud } from "@/components/thegridcn/logo-cloud"
 import { NavBar } from "@/components/NavBar"
 import { StatusBar } from "@/components/thegridcn/status-bar"
 import { SocialLinkIcon } from "@portfolio/ui"
+import { ThemeDots, IntensityDots } from "@/components/ThemeDots"
 import { cn } from "@/lib/utils"
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>
@@ -98,7 +99,17 @@ export default function HomePage({ profile, skills, jobs, studies, certification
           </span>
         }
         rightContent={
-          <span>PORTFOLIO v1.0</span>
+          <span className="flex items-center gap-4">
+            <span className="flex items-center gap-2">
+              <span className="text-[10px] text-foreground/50">Theme:</span>
+              <ThemeDots />
+            </span>
+            <span className="flex items-center gap-2">
+              <span className="text-[10px] text-foreground/50">Intensity:</span>
+              <IntensityDots />
+            </span>
+            <span className="text-foreground/80">PORTFOLIO v1.0</span>
+          </span>
         }
         data-testid="top-statusbar"
       />
