@@ -161,6 +161,26 @@ export const mockHomePageData: HomePageData = {
       publishedAt: "2021-06-01T00:00:00Z",
     },
   ],
-  certifications: [],
+  certifications: [
+    {
+      _id: "cert-1",
+      name: "AWS Solutions Architect",
+      date: "2023-06-15",
+      url: "https://aws.amazon.com/certification/aws-solutions-architect",
+      thumbnail: {
+        _type: "image",
+        asset: { _ref: "image-aws-192x192-png" },
+      },
+      order: 1,
+      publishedAt: "2023-06-15T00:00:00Z",
+    },
+    {
+      _id: "cert-2",
+      name: "Google Cloud Professional",
+      date: "2022-11-20",
+      order: 2,
+      publishedAt: "2022-11-20T00:00:00Z",
+    },
+  ],
   projects: [],
 }

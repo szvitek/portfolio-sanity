@@ -215,7 +215,7 @@ describe("Home page", () => {
     renderWithTheme(<HomePage {...props} />)
 
     const placeholders = screen.getAllByText(/content coming soon/i)
-    expect(placeholders.length).toBeGreaterThanOrEqual(2)
+    expect(placeholders.length).toBeGreaterThanOrEqual(1)
   })
 
   it("renders jobs section with job cards", async () => {
@@ -378,5 +378,63 @@ describe("Home page", () => {
     const studiesIndex = sectionIds.indexOf("studies")
     const jobsIndex = sectionIds.indexOf("jobs")
     expect(studiesIndex).toBeGreaterThan(jobsIndex)
+  })
+
+  it("renders certifications section with certification cards", async () => {
+    const props = await getPageProps()
+    renderWithTheme(<HomePage {...props} />)
+
+    const certHeadings = screen.getAllByText("Certifications")
+    expect(certHeadings.length).toBeGreaterThanOrEqual(2)
+    expect(screen.getByText("AWS Solutions Architect")).toBeInTheDocument()
+    expect(screen.getByText("Google Cloud Professional")).toBeInTheDocument()
+  })
+
+  it("renders certification year dates", async () => {
+    const props = await getPageProps()
+    renderWithTheme(<HomePage {...props} />)
+
+    expect(screen.getByText("2023")).toBeInTheDocument()
+    expect(screen.getByText("2022")).toBeInTheDocument()
+  })
+
+  it("renders certification thumbnail", async () => {
+    const props = await getPageProps()
+    renderWithTheme(<HomePage {...props} />)
+
+    const thumbnail = screen.getByAltText("AWS Solutions Architect thumbnail")
+    expect(thumbnail).toBeInTheDocument()
+  })
+
+  it("renders certification link", async () => {
+    const props = await getPageProps()
+    renderWithTheme(<HomePage {...props} />)
+
+    const certLink = screen.getByText("View Certificate")
+    expect(certLink).toHaveAttribute(
+      "href",
+      "https://aws.amazon.com/certification/aws-solutions-architect"
+    )
+    expect(certLink).toHaveAttribute("target", "_blank")
+  })
+
+  it("renders certification cards with correct data-slot", async () => {
+    const props = await getPageProps()
+    const { container } = renderWithTheme(<HomePage {...props} />)
+
+    const certCards = container.querySelectorAll('[data-slot="certification-card"]')
+    expect(certCards.length).toBe(2)
+  })
+
+  it("renders certifications section in correct position", async () => {
+    const props = await getPageProps()
+    const { container } = renderWithTheme(<HomePage {...props} />)
+
+    const main = container.querySelector("main")
+    const sectionElements = main?.querySelectorAll("section") ?? []
+    const sectionIds = Array.from(sectionElements).map((s) => s.getAttribute("id"))
+    const certIndex = sectionIds.indexOf("certifications")
+    const studiesIndex = sectionIds.indexOf("studies")
+    expect(certIndex).toBeGreaterThan(studiesIndex)
   })
 })

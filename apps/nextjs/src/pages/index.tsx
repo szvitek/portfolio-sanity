@@ -7,6 +7,7 @@ import { HeroSection } from "@/components/thegridcn/hero-section"
 import { LogoCloud } from "@/components/thegridcn/logo-cloud"
 import { JobCard } from "@/components/JobCard"
 import { StudyCard } from "@/components/StudyCard"
+import { CertificationCard } from "@/components/CertificationCard"
 import { NavBar } from "@/components/NavBar"
 import { StatusBar } from "@/components/thegridcn/status-bar"
 import { SocialLinkIcon } from "@portfolio/ui"
@@ -289,9 +290,13 @@ export default function HomePage({ profile, skills, jobs, studies, certification
             {certifications.length > 0 ? (
               <div className="grid gap-6 md:grid-cols-3">
                 {certifications.map((cert) => (
-                  <div key={cert._id} className="rounded border border-border/30 bg-card/50 p-6">
-                    <h3 className="font-mono text-sm font-bold uppercase tracking-wider text-foreground">{cert.name}</h3>
-                  </div>
+                  <CertificationCard
+                    key={cert._id}
+                    name={cert.name}
+                    date={cert.date}
+                    url={cert.url}
+                    thumbnail={cert.thumbnail}
+                  />
                 ))}
               </div>
             ) : (
