@@ -15,6 +15,7 @@ import { SocialLinkIcon } from "@portfolio/ui"
 import { ThemeDots, IntensityDots } from "@/components/ThemeDots"
 import { cn } from "@/lib/utils"
 import { skillCategoryClasses } from "@/lib/skill-colors"
+import { MOCK_PROJECTS } from "@/lib/mock-data"
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -34,7 +35,7 @@ export const getStaticProps: GetStaticProps<{
       jobs: data.jobs ?? [],
       studies: data.studies ?? [],
       certifications: data.certifications ?? [],
-      projects: data.projects ?? [],
+      projects: data.projects?.length ? data.projects : MOCK_PROJECTS,
     },
   }
 }
