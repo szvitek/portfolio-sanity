@@ -8,6 +8,7 @@ import { LogoCloud } from "@/components/thegridcn/logo-cloud"
 import { JobCard } from "@/components/JobCard"
 import { StudyCard } from "@/components/StudyCard"
 import { CertificationCard } from "@/components/CertificationCard"
+import { ProjectCard } from "@/components/ProjectCard"
 import { NavBar } from "@/components/NavBar"
 import { StatusBar } from "@/components/thegridcn/status-bar"
 import { SocialLinkIcon } from "@portfolio/ui"
@@ -224,9 +225,16 @@ export default function HomePage({ profile, skills, jobs, studies, certification
             {projects.length > 0 ? (
               <div className="grid gap-6 md:grid-cols-2">
                 {projects.map((project) => (
-                  <div key={project._id} className="rounded border border-border/30 bg-card/50 p-6">
-                    <h3 className="font-mono text-sm font-bold uppercase tracking-wider text-foreground">{project.title}</h3>
-                  </div>
+                  <ProjectCard
+                    key={project._id}
+                    title={project.title}
+                    description={project.description}
+                    thumbnail={project.thumbnail}
+                    skills={project.skills}
+                    liveUrl={project.liveUrl}
+                    githubUrl={project.githubUrl}
+                    featured={project.featured}
+                  />
                 ))}
               </div>
             ) : (

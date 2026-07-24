@@ -210,12 +210,12 @@ describe("Home page", () => {
     expect(nodeTexts.length).toBe(0)
   })
 
-  it("renders section placeholder text when sections have no data", async () => {
+  it("renders no placeholder text when all sections have data", async () => {
     const props = await getPageProps()
     renderWithTheme(<HomePage {...props} />)
 
-    const placeholders = screen.getAllByText(/content coming soon/i)
-    expect(placeholders.length).toBeGreaterThanOrEqual(1)
+    const placeholders = screen.queryAllByText(/content coming soon/i)
+    expect(placeholders.length).toBe(0)
   })
 
   it("renders jobs section with job cards", async () => {
@@ -436,5 +436,94 @@ describe("Home page", () => {
     const certIndex = sectionIds.indexOf("certifications")
     const studiesIndex = sectionIds.indexOf("studies")
     expect(certIndex).toBeGreaterThan(studiesIndex)
+  })
+
+  it("renders projects section with project cards", async () => {
+    const props = await getPageProps()
+    const { container } = renderWithTheme(<HomePage {...props} />)
+
+    const projectsSection = container.querySelector("#projects")
+    expect(projectsSection).toBeInTheDocument()
+    expect(screen.getByText("Portfolio Site")).toBeInTheDocument()
+    expect(screen.getByText("Task Manager API")).toBeInTheDocument()
+    expect(screen.getByText("Cloud Deploy Tool")).toBeInTheDocument()
+  })
+
+  it("renders project thumbnails", async () => {
+    const props = await getPageProps()
+    renderWithTheme(<HomePage {...props} />)
+
+    const thumbnail = screen.getByAltText("Portfolio Site thumbnail")
+    expect(thumbnail).toBeInTheDocument()
+  })
+
+  it("renders project descriptions", async () => {
+    const props = await getPageProps()
+    renderWithTheme(<HomePage {...props} />)
+
+    expect(screen.getByText(/personal portfolio built with Next\.js/)).toBeInTheDocument()
+    expect(screen.getByText(/RESTful API for task management/)).toBeInTheDocument()
+    expect(screen.getByText(/CLI tool for automated deployments/)).toBeInTheDocument()
+  })
+
+  it("renders project skill badges", async () => {
+    const props = await getPageProps()
+    renderWithTheme(<HomePage {...props} />)
+
+    const reactBadges = screen.getAllByText("React")
+    expect(reactBadges.length).toBeGreaterThan(0)
+
+    const nodeBadges = screen.getAllByText("Node.js")
+    expect(nodeBadges.length).toBeGreaterThan(0)
+  })
+
+  it("renders project featured badges for featured projects", async () => {
+    const props = await getPageProps()
+    renderWithTheme(<HomePage {...props} />)
+
+    const featuredBadges = screen.getAllByText("Featured")
+    expect(featuredBadges.length).toBe(2)
+  })
+
+  it("renders project live demo links", async () => {
+    const props = await getPageProps()
+    renderWithTheme(<HomePage {...props} />)
+
+    const liveDemoLinks = screen.getAllByText("Live Demo")
+    expect(liveDemoLinks.length).toBe(2)
+
+    expect(liveDemoLinks[0]).toHaveAttribute("href", "https://portfolio.example.com")
+    expect(liveDemoLinks[0]).toHaveAttribute("target", "_blank")
+  })
+
+  it("renders project GitHub links", async () => {
+    const props = await getPageProps()
+    renderWithTheme(<HomePage {...props} />)
+
+    const githubLinks = screen.getAllByText("GitHub")
+    expect(githubLinks.length).toBe(3)
+
+    expect(githubLinks[0]).toHaveAttribute("href", "https://github.com/johndoe/portfolio")
+    expect(githubLinks[0]).toHaveAttribute("target", "_blank")
+  })
+
+  it("renders project cards with correct data-slot", async () => {
+    const props = await getPageProps()
+    const { container } = renderWithTheme(<HomePage {...props} />)
+
+    const projectCards = container.querySelectorAll('[data-slot="project-card"]')
+    expect(projectCards.length).toBe(3)
+  })
+
+  it("renders projects section in correct position", async () => {
+    const props = await getPageProps()
+    const { container } = renderWithTheme(<HomePage {...props} />)
+
+    const main = container.querySelector("main")
+    const sectionElements = main?.querySelectorAll("section") ?? []
+    const sectionIds = Array.from(sectionElements).map((s) => s.getAttribute("id"))
+    const projectsIndex = sectionIds.indexOf("projects")
+    const skillsIndex = sectionIds.indexOf("skills")
+    expect(projectsIndex).toBeGreaterThan(skillsIndex)
   })
 })
