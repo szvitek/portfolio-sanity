@@ -215,7 +215,7 @@ describe("Home page", () => {
     renderWithTheme(<HomePage {...props} />)
 
     const placeholders = screen.getAllByText(/content coming soon/i)
-    expect(placeholders.length).toBeGreaterThanOrEqual(3)
+    expect(placeholders.length).toBeGreaterThanOrEqual(2)
   })
 
   it("renders jobs section with job cards", async () => {
@@ -312,5 +312,71 @@ describe("Home page", () => {
     const sectionIds = Array.from(sectionElements).map((s) => s.getAttribute("id"))
     const jobsIndex = sectionIds.indexOf("jobs")
     expect(jobsIndex).toBeGreaterThan(0)
+  })
+
+  it("renders studies section with study cards", async () => {
+    const props = await getPageProps()
+    renderWithTheme(<HomePage {...props} />)
+
+    expect(screen.getByText("Education")).toBeInTheDocument()
+    expect(screen.getByText("University of California, Berkeley")).toBeInTheDocument()
+    expect(screen.getByText("Stanford University")).toBeInTheDocument()
+  })
+
+  it("renders study institutions as card titles", async () => {
+    const props = await getPageProps()
+    renderWithTheme(<HomePage {...props} />)
+
+    const ucBerkeley = screen.getByText("University of California, Berkeley")
+    expect(ucBerkeley).toBeInTheDocument()
+
+    const stanford = screen.getByText("Stanford University")
+    expect(stanford).toBeInTheDocument()
+  })
+
+  it("renders study fields", async () => {
+    const props = await getPageProps()
+    renderWithTheme(<HomePage {...props} />)
+
+    expect(screen.getByText("Computer Science")).toBeInTheDocument()
+    expect(screen.getByText("Software Engineering")).toBeInTheDocument()
+  })
+
+  it("renders study date ranges", async () => {
+    const props = await getPageProps()
+    renderWithTheme(<HomePage {...props} />)
+
+    expect(screen.getByText(/Aug 2015/)).toBeInTheDocument()
+    expect(screen.getByText(/May 2019/)).toBeInTheDocument()
+    expect(screen.getByText(/Sep 2019/)).toBeInTheDocument()
+    expect(screen.getByText(/Jun 2021/)).toBeInTheDocument()
+  })
+
+  it("renders study descriptions", async () => {
+    const props = await getPageProps()
+    renderWithTheme(<HomePage {...props} />)
+
+    expect(screen.getByText("Bachelor of Science in Computer Science with focus on distributed systems.")).toBeInTheDocument()
+    expect(screen.getByText("Master of Science in Software Engineering.")).toBeInTheDocument()
+  })
+
+  it("renders study cards with correct data-slot", async () => {
+    const props = await getPageProps()
+    const { container } = renderWithTheme(<HomePage {...props} />)
+
+    const studyCards = container.querySelectorAll('[data-slot="study-card"]')
+    expect(studyCards.length).toBe(2)
+  })
+
+  it("renders studies section in correct position", async () => {
+    const props = await getPageProps()
+    const { container } = renderWithTheme(<HomePage {...props} />)
+
+    const main = container.querySelector("main")
+    const sectionElements = main?.querySelectorAll("section") ?? []
+    const sectionIds = Array.from(sectionElements).map((s) => s.getAttribute("id"))
+    const studiesIndex = sectionIds.indexOf("studies")
+    const jobsIndex = sectionIds.indexOf("jobs")
+    expect(studiesIndex).toBeGreaterThan(jobsIndex)
   })
 })

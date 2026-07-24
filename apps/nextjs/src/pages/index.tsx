@@ -6,6 +6,7 @@ import type { ProfileData, SkillData, JobData, StudyData, CertificationData, Pro
 import { HeroSection } from "@/components/thegridcn/hero-section"
 import { LogoCloud } from "@/components/thegridcn/logo-cloud"
 import { JobCard } from "@/components/JobCard"
+import { StudyCard } from "@/components/StudyCard"
 import { NavBar } from "@/components/NavBar"
 import { StatusBar } from "@/components/thegridcn/status-bar"
 import { SocialLinkIcon } from "@portfolio/ui"
@@ -266,10 +267,14 @@ export default function HomePage({ profile, skills, jobs, studies, certification
             {studies.length > 0 ? (
               <div className="space-y-6">
                 {studies.map((study) => (
-                  <div key={study._id} className="rounded border border-border/30 bg-card/50 p-6">
-                    <h3 className="font-mono text-sm font-bold uppercase tracking-wider text-foreground">{study.field}</h3>
-                    <p className="mt-1 font-mono text-xs text-foreground/60">{study.institution}</p>
-                  </div>
+                  <StudyCard
+                    key={study._id}
+                    institution={study.institution}
+                    field={study.field}
+                    startDate={study.startDate}
+                    endDate={study.endDate}
+                    description={study.description}
+                  />
                 ))}
               </div>
             ) : (

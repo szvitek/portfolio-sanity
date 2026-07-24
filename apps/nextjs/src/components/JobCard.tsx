@@ -4,17 +4,7 @@ import type { SanityImageSource } from "@sanity/image-url/lib/types/types"
 import { urlFor } from "@/lib/sanity"
 import { cn } from "@/lib/utils"
 import { skillBadgeClasses } from "@/lib/skill-colors"
-
-function formatDate(dateStr: string): string {
-  const date = new Date(dateStr)
-  return date.toLocaleDateString("en-US", { month: "short", year: "numeric" })
-}
-
-function dateRange(startDate: string, endDate?: string): string {
-  const from = formatDate(startDate)
-  const to = endDate ? formatDate(endDate) : "Present"
-  return `${from} — ${to}`
-}
+import { dateRange } from "@/lib/date-utils"
 
 interface SkillRef {
   _id: string
