@@ -80,7 +80,7 @@ export function HeroSection({
         className={cn(
           "relative z-10",
           rightContent
-            ? "grid grid-cols-1 items-center gap-8 lg:grid-cols-2"
+            ? "grid grid-cols-1 items-center gap-8 lg:grid-cols-[7fr_3fr]"
             : "flex flex-col gap-4",
           !rightContent && alignmentClasses[align]
         )}

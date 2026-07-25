@@ -134,7 +134,7 @@ describe("Home page", () => {
     const hero = container.querySelector('[data-slot="tron-hero-section"]')
     const grid = hero?.querySelector(".grid")
     expect(grid).toBeInTheDocument()
-    expect(grid).toHaveClass("lg:grid-cols-2")
+    expect(grid).toHaveClass("lg:grid-cols-[7fr_3fr]")
   })
 
   it("renders availability indicator in hero", async () => {

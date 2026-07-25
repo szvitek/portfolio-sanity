@@ -138,7 +138,10 @@ export default function HomePage({ profile, skills, jobs, studies, certification
                   />
                 )}
                 {profile.availability && (
-                  <AvailabilityIndicator availability={profile.availability} />
+                  <AvailabilityIndicator
+                    availability={profile.availability}
+                    className="w-48 md:w-56"
+                  />
                 )}
               </>
             }
