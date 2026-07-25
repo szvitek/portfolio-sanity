@@ -97,7 +97,6 @@ export function ProjectCard({
                 return (
                   <span
                     key={skill._id}
-                    data-slot="badge"
                     className={cn(
                       "inline-flex items-center gap-1.5 rounded border px-2 py-0.5 font-mono text-[9px] uppercase tracking-widest",
                       colors.border,
