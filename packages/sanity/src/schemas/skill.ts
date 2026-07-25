@@ -33,6 +33,12 @@ export const skill = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: "featured",
+      title: "Featured",
+      type: "boolean",
+      initialValue: false,
+    }),
+    defineField({
       name: "order",
       title: "Order",
       type: "number",

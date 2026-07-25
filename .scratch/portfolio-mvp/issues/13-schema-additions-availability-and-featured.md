@@ -4,9 +4,9 @@
 
 **Blocked by:** 10 — Theme system
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Add `availability` field to Profile schema: enum with values `"available"` (ready to work / green), `"limited"` (small projects only / yellow), `"unavailable"` (not available / red)
-- [ ] Add `featured` boolean field to Skill schema (default false)
-- [ ] Update GROQ queries for Profile and Skills if needed to include new fields
-- [ ] Update TypeScript types in `packages/sanity` / `apps/nextjs` to reflect new fields
+- [x] Add `availability` field to Profile schema: enum with values `"available"` (ready to work / green), `"limited"` (small projects only / yellow), `"unavailable"` (not available / red)
+- [x] Add `featured` boolean field to Skill schema (default false)
+- [x] Update GROQ queries for Profile and Skills if needed to include new fields
+- [x] Update TypeScript types in `packages/sanity` / `apps/nextjs` to reflect new fields

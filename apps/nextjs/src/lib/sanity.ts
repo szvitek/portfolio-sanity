@@ -9,6 +9,8 @@ export interface SocialLinkData {
   url: string
 }
 
+export type Availability = "available" | "limited" | "unavailable"
+
 export interface ProfileData {
   title: string
   subtitle?: string
@@ -17,6 +19,7 @@ export interface ProfileData {
   email?: string
   cv?: { asset: { _ref: string } }
   socialLinks?: SocialLinkData[]
+  availability?: Availability
 }
 
 export interface SkillData {
@@ -24,6 +27,7 @@ export interface SkillData {
   name: string
   image?: SanityImageSource
   category: string
+  featured: boolean
   order: number
   publishedAt: string
 }

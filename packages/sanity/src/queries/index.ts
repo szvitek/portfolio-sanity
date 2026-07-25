@@ -10,7 +10,8 @@ export const profileQuery = groq`*[_type == "profile"][0]{
   socialLinks[]{
     platform,
     url
-  }
+  },
+  availability
 }`
 
 export const skillsQuery = groq`*[_type == "skill"] | order(order asc){
@@ -18,6 +19,7 @@ export const skillsQuery = groq`*[_type == "skill"] | order(order asc){
   name,
   image,
   category,
+  featured,
   order,
   publishedAt
 }`

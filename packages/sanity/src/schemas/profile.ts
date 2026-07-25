@@ -42,5 +42,18 @@ export const profile = defineType({
       type: "array",
       of: [{ type: "socialLink" }],
     }),
+    defineField({
+      name: "availability",
+      title: "Availability",
+      type: "string",
+      options: {
+        list: [
+          { title: "Available", value: "available" },
+          { title: "Limited", value: "limited" },
+          { title: "Unavailable", value: "unavailable" },
+        ],
+      },
+      initialValue: "available",
+    }),
   ],
 })
