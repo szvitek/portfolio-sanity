@@ -35,16 +35,16 @@ export function AvailabilityIndicator({
     <div
       data-slot="tron-availability-indicator"
       className={cn(
-        "flex w-full flex-col gap-1 rounded border border-primary/30 bg-card/80 px-3 py-2 backdrop-blur-sm",
+        "flex w-full flex-col items-center gap-1 rounded border border-primary/30 bg-card/80 px-3 py-2 text-center backdrop-blur-sm",
         className
       )}
       {...props}
     >
       <div className="flex items-center gap-2">
-        <span className={cn("h-2 w-2 shrink-0 rounded-full", config.dot)} />
         <span className="font-mono text-[10px] uppercase tracking-widest text-foreground/60">
           Status:
         </span>
+        <span className={cn("h-2 w-2 shrink-0 animate-pulse rounded-full", config.dot)} />
       </div>
       <span className={cn("font-mono text-[10px] uppercase tracking-widest", config.text)}>
         {config.label}

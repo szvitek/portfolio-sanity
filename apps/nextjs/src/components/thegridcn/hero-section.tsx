@@ -100,15 +100,15 @@ export function HeroSection({
             </div>
           )}
 
+          <h1 className="max-w-4xl font-display text-3xl font-bold uppercase tracking-wider text-foreground md:text-5xl lg:text-6xl">
+            {title}
+          </h1>
+
           {subtitle && (
             <div className="font-mono text-[10px] uppercase tracking-widest text-foreground/50">
               {subtitle}
             </div>
           )}
-
-          <h1 className="max-w-4xl font-display text-3xl font-bold uppercase tracking-wider text-foreground md:text-5xl lg:text-6xl">
-            {title}
-          </h1>
 
           <div
             className={cn(

@@ -156,17 +156,17 @@ export default function HomePage({ profile, skills, jobs, studies, certification
                     className="text-foreground/60 transition-colors hover:text-primary"
                   />
                 ))}
-              </div>
-            )}
 
-            {cvUrl && (
-              <a
-                href={cvUrl}
-                download
-                className="inline-flex items-center rounded border border-primary/30 bg-primary/10 px-5 py-2 font-mono text-xs uppercase tracking-widest text-primary transition-colors hover:bg-primary/20"
-              >
-                Download CV
-              </a>
+                {cvUrl && (
+                  <a
+                    href={cvUrl}
+                    download
+                    className="inline-flex items-center rounded border border-primary/30 bg-primary/10 px-5 py-2 font-mono text-xs uppercase tracking-widest text-primary transition-colors hover:bg-primary/20"
+                  >
+                    Download CV
+                  </a>
+                )}
+              </div>
             )}
           </HeroSection>
           )}
