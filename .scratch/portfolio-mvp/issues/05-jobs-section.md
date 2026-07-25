@@ -6,9 +6,9 @@
 
 **Blocked by:** 02 — Home page shell + Profile section, 10 — Theme system
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] GROQ query for Jobs (chronological order) in `packages/sanity/queries/`
-- [ ] Jobs section using stacked `DataCard`s with company logo (48×48), name, role, dates, description, website link, and Skill tags
-- [ ] Jobs section added to the home page (fourth position)
-- [ ] Integration test updated with Jobs fixture and assertions
+- [x] GROQ query for Jobs (chronological order) in `packages/sanity/queries/`
+- [x] Jobs section using stacked `JobCard`s with company logo (48×48), name, role, dates, description, website link, and Skill tags
+- [x] Jobs section added to the home page (fourth position)
+- [x] Integration test updated with Jobs fixture and assertions
