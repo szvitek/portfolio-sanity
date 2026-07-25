@@ -4,6 +4,7 @@ import type { PortableTextBlock } from "@portabletext/react"
 import { getHomePageData, urlFor, cvUrlFor } from "@/lib/sanity"
 import type { ProfileData, SkillData, JobData, StudyData, CertificationData, ProjectData } from "@/lib/sanity"
 import { HeroSection } from "@/components/thegridcn/hero-section"
+import { AvailabilityIndicator } from "@/components/thegridcn/availability-indicator"
 import { LogoCloud } from "@/components/thegridcn/logo-cloud"
 import { JobCard } from "@/components/JobCard"
 import { StudyCard } from "@/components/StudyCard"
@@ -114,9 +115,9 @@ export default function HomePage({ profile, skills, jobs, studies, certification
       <NavBar />
 
       <main>
-        <section id="profile" className="scroll-mt-16 px-4 py-8 md:py-16">
+        <section id="profile" className="scroll-mt-16 flex min-h-screen items-center px-4">
           {!hasProfile ? (
-            <div className="flex min-h-[40vh] items-center justify-center">
+            <div className="flex min-h-[40vh] w-full items-center justify-center">
               <p className="text-sm text-foreground/50">No profile content found.</p>
             </div>
           ) : (
@@ -125,18 +126,24 @@ export default function HomePage({ profile, skills, jobs, studies, certification
             subtitle={profile.subtitle}
             description={bioText}
             badge="PORTFOLIO"
-            align="center"
+            align="left"
+            rightContent={
+              <>
+                {avatarUrl && (
+                  <img
+                    src={avatarUrl}
+                    alt={profile?.title ?? "Avatar"}
+                    className="h-32 w-32 rounded-full border-2 border-primary/30 object-cover ring-2 ring-primary/10 md:h-40 md:w-40"
+                  />
+                )}
+                {profile.availability && (
+                  <AvailabilityIndicator availability={profile.availability} />
+                )}
+              </>
+            }
           >
-            {avatarUrl && (
-              <img
-                src={avatarUrl}
-                alt={profile?.title ?? "Avatar"}
-                className="h-24 w-24 rounded-full border-2 border-primary/30 object-cover ring-2 ring-primary/10"
-              />
-            )}
-
             {profile?.socialLinks && profile.socialLinks.length > 0 && (
-              <div className="mt-2 flex w-full items-center justify-center gap-4">
+              <div className="flex w-full items-center gap-4">
                 {profile.socialLinks.map((link) => (
                   <SocialLinkIcon
                     key={link.platform}

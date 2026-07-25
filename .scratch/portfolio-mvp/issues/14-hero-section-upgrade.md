@@ -8,11 +8,11 @@ Keep the existing portfolio badge from the prototype as-is.
 
 **Blocked by:** 13 — Schema additions
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Restructure hero to 2-column layout (left: title, subtitle, description, buttons; right: avatar + status indicator)
-- [ ] Availability status indicator component: green dot + "Ready to work" / yellow + "Small projects only" / red + "Not available" based on `Profile.availability`
-- [ ] Hero takes full viewport height (`min-h-screen`)
-- [ ] All non-hero sections wrapped in a consistent `max-w-5xl mx-auto` container
-- [ ] Keep existing portfolio badge styling as-is
-- [ ] Integration test updated with new hero structure
+- [x] Restructure hero to 2-column layout (left: title, subtitle, description, buttons; right: avatar + status indicator)
+- [x] Availability status indicator component: green dot + "Ready to work" / yellow + "Small projects only" / red + "Not available" based on `Profile.availability`
+- [x] Hero takes full viewport height (`min-h-screen`)
+- [x] All non-hero sections wrapped in a consistent `max-w-5xl mx-auto` container
+- [x] Keep existing portfolio badge styling as-is
+- [x] Integration test updated with new hero structure

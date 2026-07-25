@@ -9,6 +9,7 @@ interface HeroSectionProps extends React.HTMLAttributes<HTMLDivElement> {
   description?: string
   badge?: string
   align?: "left" | "center" | "right"
+  rightContent?: React.ReactNode
 }
 
 export function HeroSection({
@@ -17,6 +18,7 @@ export function HeroSection({
   description,
   badge,
   align = "center",
+  rightContent,
   children,
   className,
   ...props
@@ -76,50 +78,66 @@ export function HeroSection({
 
       <div
         className={cn(
-          "relative z-10 flex flex-col gap-4",
-          alignmentClasses[align]
+          "relative z-10",
+          rightContent
+            ? "grid grid-cols-1 items-center gap-8 lg:grid-cols-2"
+            : "flex flex-col gap-4",
+          !rightContent && alignmentClasses[align]
         )}
       >
-        {badge && (
-          <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 shadow-[0_0_12px_rgba(var(--primary-rgb,0,180,255),0.1)]">
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
-            <span className="font-mono text-[10px] uppercase tracking-widest text-primary">
-              {badge}
-            </span>
-          </div>
-        )}
-
-        {subtitle && (
-          <div className="font-mono text-[10px] uppercase tracking-widest text-foreground/50">
-            {subtitle}
-          </div>
-        )}
-
-        <h1 className="max-w-4xl font-display text-3xl font-bold uppercase tracking-wider text-foreground md:text-5xl lg:text-6xl">
-          {title}
-        </h1>
-
         <div
           className={cn(
-            "flex gap-1",
-            align === "center" && "justify-center",
-            align === "right" && "justify-end"
+            "flex flex-col gap-4",
+            alignmentClasses[align]
           )}
         >
-          <div className="h-px w-12 bg-primary/60" />
-          <div className="h-px w-6 bg-primary/30" />
-          <div className="h-px w-3 bg-primary/15" />
+          {badge && (
+            <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 shadow-[0_0_12px_rgba(var(--primary-rgb,0,180,255),0.1)]">
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
+              <span className="font-mono text-[10px] uppercase tracking-widest text-primary">
+                {badge}
+              </span>
+            </div>
+          )}
+
+          {subtitle && (
+            <div className="font-mono text-[10px] uppercase tracking-widest text-foreground/50">
+              {subtitle}
+            </div>
+          )}
+
+          <h1 className="max-w-4xl font-display text-3xl font-bold uppercase tracking-wider text-foreground md:text-5xl lg:text-6xl">
+            {title}
+          </h1>
+
+          <div
+            className={cn(
+              "flex gap-1",
+              align === "center" && "justify-center",
+              align === "right" && "justify-end"
+            )}
+          >
+            <div className="h-px w-12 bg-primary/60" />
+            <div className="h-px w-6 bg-primary/30" />
+            <div className="h-px w-3 bg-primary/15" />
+          </div>
+
+          {description && (
+            <p className="max-w-2xl text-sm leading-relaxed text-foreground/60 md:text-base">
+              {description}
+            </p>
+          )}
+
+          {children && (
+            <div className="mt-4 flex flex-wrap items-center gap-3">
+              {children}
+            </div>
+          )}
         </div>
 
-        {description && (
-          <p className="max-w-2xl text-sm leading-relaxed text-foreground/60 md:text-base">
-            {description}
-          </p>
-        )}
-
-        {children && (
-          <div className="mt-4 flex flex-wrap items-center gap-3">
-            {children}
+        {rightContent && (
+          <div className="flex flex-col items-center gap-4">
+            {rightContent}
           </div>
         )}
       </div>

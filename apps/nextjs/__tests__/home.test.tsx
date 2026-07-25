@@ -119,6 +119,49 @@ describe("Home page", () => {
     expect(screen.getByText("John Doe")).toBeInTheDocument()
   })
 
+  it("renders hero section with min-h-screen", async () => {
+    const props = await getPageProps()
+    const { container } = renderWithTheme(<HomePage {...props} />)
+
+    const profileSection = container.querySelector("#profile")
+    expect(profileSection).toHaveClass("min-h-screen")
+  })
+
+  it("renders hero section with 2-column grid layout", async () => {
+    const props = await getPageProps()
+    const { container } = renderWithTheme(<HomePage {...props} />)
+
+    const hero = container.querySelector('[data-slot="tron-hero-section"]')
+    const grid = hero?.querySelector(".grid")
+    expect(grid).toBeInTheDocument()
+    expect(grid).toHaveClass("lg:grid-cols-2")
+  })
+
+  it("renders availability indicator in hero", async () => {
+    const props = await getPageProps()
+    const { container } = renderWithTheme(<HomePage {...props} />)
+
+    const indicator = screen.getByText("Ready to work")
+    expect(indicator).toBeInTheDocument()
+
+    const wrapper = container.querySelector('[data-slot="tron-availability-indicator"]')
+    expect(wrapper).toBeInTheDocument()
+  })
+
+  it("renders avatar in right column of hero", async () => {
+    const props = await getPageProps()
+    const { container } = renderWithTheme(<HomePage {...props} />)
+
+    const hero = container.querySelector('[data-slot="tron-hero-section"]')
+    const grid = hero?.querySelector(".grid")
+    const columns = grid?.children
+    expect(columns).toHaveLength(2)
+
+    const rightColumn = columns?.[1]
+    const avatar = rightColumn?.querySelector("img[alt='John Doe']")
+    expect(avatar).toBeInTheDocument()
+  })
+
   it("renders navigation bar with section links", async () => {
     const props = await getPageProps()
     renderWithTheme(<HomePage {...props} />)
