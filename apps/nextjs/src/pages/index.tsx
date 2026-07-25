@@ -126,7 +126,6 @@ export default function HomePage({ profile, skills, jobs, studies, certification
             title={profile.title}
             subtitle={profile.subtitle}
             description={bioText}
-            badge="PORTFOLIO"
             align="center"
             rightContent={
               <>
@@ -161,7 +160,7 @@ export default function HomePage({ profile, skills, jobs, studies, certification
                   <a
                     href={cvUrl}
                     download
-                    className="inline-flex items-center rounded border border-primary/30 bg-primary/10 px-5 py-2 font-mono text-xs uppercase tracking-widest text-primary transition-colors hover:bg-primary/20"
+                    className="inline-flex items-center rounded border border-primary/30 bg-primary/10 px-5 py-2 font-mono text-xs uppercase tracking-widest text-primary transition-colors hover:border-primary/60 hover:bg-primary/20 hover:shadow-[0_0_12px_rgba(var(--primary-rgb,0,180,255),0.15)]"
                   >
                     Download CV
                   </a>

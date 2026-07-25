@@ -115,7 +115,6 @@ describe("Home page", () => {
 
     const hero = container.querySelector('[data-slot="tron-hero-section"]')
     expect(hero).toBeInTheDocument()
-    expect(screen.getByText("PORTFOLIO")).toBeInTheDocument()
     expect(screen.getByText("John Doe")).toBeInTheDocument()
   })
 

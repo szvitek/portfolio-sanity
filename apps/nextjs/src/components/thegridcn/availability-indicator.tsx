@@ -46,7 +46,7 @@ export function AvailabilityIndicator({
         </span>
         <span className={cn("h-2 w-2 shrink-0 animate-pulse rounded-full", config.dot)} />
       </div>
-      <span className={cn("font-mono text-[10px] uppercase tracking-widest", config.text)}>
+      <span className={cn("font-mono text-[10px] font-bold uppercase tracking-widest", config.text)}>
         {config.label}
       </span>
     </div>
