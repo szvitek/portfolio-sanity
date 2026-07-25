@@ -146,6 +146,16 @@ describe("Home page", () => {
 
     const wrapper = container.querySelector('[data-slot="tron-availability-indicator"]')
     expect(wrapper).toBeInTheDocument()
+    expect(screen.getByText("Status:")).toBeInTheDocument()
+  })
+
+  it("renders hero inside mx-auto max-w-5xl container", async () => {
+    const props = await getPageProps()
+    const { container } = renderWithTheme(<HomePage {...props} />)
+
+    const profileSection = container.querySelector("#profile")
+    const container_ = profileSection?.querySelector(".mx-auto.max-w-5xl")
+    expect(container_).toBeInTheDocument()
   })
 
   it("renders avatar in right column of hero", async () => {

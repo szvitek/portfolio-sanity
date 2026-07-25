@@ -116,6 +116,7 @@ export default function HomePage({ profile, skills, jobs, studies, certification
 
       <main>
         <section id="profile" className="scroll-mt-16 flex min-h-screen items-center px-4">
+          <div className="mx-auto w-full max-w-5xl">
           {!hasProfile ? (
             <div className="flex min-h-[40vh] w-full items-center justify-center">
               <p className="text-sm text-foreground/50">No profile content found.</p>
@@ -126,14 +127,14 @@ export default function HomePage({ profile, skills, jobs, studies, certification
             subtitle={profile.subtitle}
             description={bioText}
             badge="PORTFOLIO"
-            align="left"
+            align="center"
             rightContent={
               <>
                 {avatarUrl && (
                   <img
                     src={avatarUrl}
                     alt={profile?.title ?? "Avatar"}
-                    className="h-32 w-32 rounded-full border-2 border-primary/30 object-cover ring-2 ring-primary/10 md:h-40 md:w-40"
+                    className="h-48 w-48 rounded-full border-2 border-primary/30 object-cover ring-2 ring-primary/10 md:h-56 md:w-56"
                   />
                 )}
                 {profile.availability && (
@@ -166,6 +167,7 @@ export default function HomePage({ profile, skills, jobs, studies, certification
             )}
           </HeroSection>
           )}
+          </div>
         </section>
 
         <section id="skills" className="scroll-mt-16 border-t border-border/30 px-4 py-16">
