@@ -65,7 +65,7 @@ export function ThemeControls() {
             INTENSITY_PRIMARY_STYLES[intensity],
             state.intensity === intensity
               ? "scale-125 ring-1 ring-foreground/50"
-              : "opacity-60 hover:scale-110 hover:opacity-100"
+              : "hover:scale-110 hover:opacity-100"
           )}
         />
       ))}
