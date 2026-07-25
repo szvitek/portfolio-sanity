@@ -40,7 +40,7 @@ export function AvailabilityIndicator({
       )}
       {...props}
     >
-      <div className="flex items-center gap-2">
+      <div className="flex items-center justify-center gap-2">
         <span className="font-mono text-[10px] uppercase tracking-widest text-foreground/60">
           Status:
         </span>
