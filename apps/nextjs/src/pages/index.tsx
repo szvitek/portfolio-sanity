@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import type { GetStaticProps, InferGetStaticPropsType } from "next"
 import type { PortableTextBlock } from "@portabletext/react"
 import { getHomePageData, urlFor, cvUrlFor } from "@/lib/sanity"
@@ -13,7 +13,7 @@ import { ProjectCard } from "@/components/ProjectCard"
 import { NavBar } from "@/components/NavBar"
 import { StatusBar } from "@/components/thegridcn/status-bar"
 import { SocialLinkIcon } from "@portfolio/ui"
-import { ThemeDots, IntensityDots } from "@/components/ThemeDots"
+import { ThemeControls } from "@/components/ThemeControls"
 import { cn } from "@/lib/utils"
 import { skillCategoryClasses } from "@/lib/skill-colors"
 import { MOCK_PROJECTS } from "@/lib/mock-data"
@@ -29,13 +29,20 @@ export const getStaticProps: GetStaticProps<{
   projects: ProjectData[]
 }> = async () => {
   const data = await getHomePageData()
+  const sortByDateDesc = <T extends { startDate?: string; date?: string }>(items: T[]): T[] =>
+    [...items].sort((a, b) => {
+      const dateA = a.startDate ?? a.date ?? ""
+      const dateB = b.startDate ?? b.date ?? ""
+      return dateB.localeCompare(dateA)
+    })
+
   return {
     props: {
       profile: data.profile,
       skills: data.skills ?? [],
-      jobs: data.jobs ?? [],
-      studies: data.studies ?? [],
-      certifications: data.certifications ?? [],
+      jobs: sortByDateDesc(data.jobs ?? []),
+      studies: sortByDateDesc(data.studies ?? []),
+      certifications: sortByDateDesc(data.certifications ?? []),
       projects: data.projects?.length ? data.projects : MOCK_PROJECTS,
     },
   }
@@ -77,6 +84,7 @@ function extractText(blocks: PortableTextBlock[] | undefined | null): string {
 
 export default function HomePage({ profile, skills, jobs, studies, certifications, projects }: Props) {
   const [activeCategory, setActiveCategory] = useState<string | null>(null)
+  const [showAllProjects, setShowAllProjects] = useState(false)
   const avatarUrl = profile?.avatar ? urlFor(profile.avatar).width(120).height(120).url() : undefined
   const cvUrl = profile?.cv ? cvUrlFor(profile.cv) : undefined
   const bioText = profile?.bio ? extractText(profile.bio) : ""
@@ -86,6 +94,25 @@ export default function HomePage({ profile, skills, jobs, studies, certification
   const filteredSkills = activeCategory
     ? skills.filter((s) => s.category === activeCategory)
     : skills
+
+  const featuredSkills = useMemo(
+    () =>
+      skills
+        .filter((s) => s.featured)
+        .sort((a, b) => a.name.localeCompare(b.name)),
+    [skills]
+  )
+
+  const featuredCategories = useMemo(() => {
+    const cats = [...new Set(featuredSkills.map((s) => s.category))]
+    return cats.sort()
+  }, [featuredSkills])
+
+  const filteredFeaturedSkills = activeCategory
+    ? featuredSkills.filter((s) => s.category === activeCategory)
+    : featuredSkills
+
+  const visibleProjects = showAllProjects ? projects : projects.filter((p) => p.featured)
 
   return (
     <>
@@ -98,14 +125,6 @@ export default function HomePage({ profile, skills, jobs, studies, certification
         }
         rightContent={
           <span className="flex items-center gap-4">
-            <span className="flex items-center gap-2">
-              <span className="text-[10px] text-foreground/50">Theme:</span>
-              <ThemeDots />
-            </span>
-            <span className="flex items-center gap-2">
-              <span className="text-[10px] text-foreground/50">Intensity:</span>
-              <IntensityDots />
-            </span>
             <span className="text-foreground/80">PORTFOLIO v1.0</span>
           </span>
         }
@@ -175,7 +194,7 @@ export default function HomePage({ profile, skills, jobs, studies, certification
         <section id="skills" className="scroll-mt-16 border-t border-border/30 px-4 py-16">
           <div className="mx-auto max-w-5xl">
             <h2 className="mb-8 font-mono text-xs uppercase tracking-widest text-foreground/50">Skills</h2>
-            {skills.length > 0 ? (
+            {featuredSkills.length > 0 ? (
               <>
                 <div className="mb-6 flex flex-wrap gap-2">
                   <button
@@ -189,7 +208,7 @@ export default function HomePage({ profile, skills, jobs, studies, certification
                   >
                     All
                   </button>
-                  {categories.map((cat) => {
+                  {featuredCategories.map((cat) => {
                     const btn = CATEGORY_BTN[cat]
                     return (
                       <button
@@ -209,7 +228,7 @@ export default function HomePage({ profile, skills, jobs, studies, certification
                 </div>
                 <LogoCloud
                   key={activeCategory ?? "all"}
-                  logos={filteredSkills.map((skill) => ({
+                  logos={filteredFeaturedSkills.map((skill) => ({
                     name: skill.name,
                     className: skillCategoryClasses(skill.category),
                     icon: skill.image
@@ -233,10 +252,20 @@ export default function HomePage({ profile, skills, jobs, studies, certification
 
         <section id="projects" className="scroll-mt-16 border-t border-border/30 px-4 py-16">
           <div className="mx-auto max-w-5xl">
-            <h2 className="mb-8 font-mono text-xs uppercase tracking-widest text-foreground/50">Projects</h2>
-            {projects.length > 0 ? (
-              <div className="grid gap-6 md:grid-cols-2">
-                {projects.map((project) => (
+            <div className="mb-8 flex items-center justify-between">
+              <h2 className="font-mono text-xs uppercase tracking-widest text-foreground/50">Projects</h2>
+              {projects.some((p) => !p.featured) && (
+                <button
+                  onClick={() => setShowAllProjects(!showAllProjects)}
+                  className="rounded border border-primary/30 bg-primary/10 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-primary transition-colors hover:border-primary/60 hover:bg-primary/20"
+                >
+                  {showAllProjects ? "Show Featured" : "Show All"}
+                </button>
+              )}
+            </div>
+            {visibleProjects.length > 0 ? (
+              <div className="grid gap-6 md:grid-cols-3">
+                {visibleProjects.map((project) => (
                   <ProjectCard
                     key={project._id}
                     title={project.title}
@@ -354,6 +383,8 @@ export default function HomePage({ profile, skills, jobs, studies, certification
         }
         data-testid="bottom-statusbar"
       />
+
+      <ThemeControls />
     </>
   )
 }

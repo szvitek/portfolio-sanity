@@ -35,10 +35,10 @@ export function CertificationCard({
             <img
               src={thumbnailUrl}
               alt={`${name} thumbnail`}
-              className="h-12 w-12 rounded border border-border/30 object-contain"
+              className="h-12 w-12 rounded border border-border/30 bg-background/80 object-contain"
             />
           ) : (
-            <div className="flex h-12 w-12 items-center justify-center rounded border border-border/30 bg-muted/50">
+            <div className="flex h-12 w-12 items-center justify-center rounded border border-border/30 bg-background/50">
               <svg
                 className="h-6 w-6 text-foreground/60"
                 fill="none"

@@ -246,16 +246,12 @@ describe("Home page", () => {
     const frontendButton = screen.getByText("Frontend")
     expect(frontendButton).toBeInTheDocument()
 
-    const backendButton = screen.getByText("Backend")
-    expect(backendButton).toBeInTheDocument()
-
     fireEvent.click(frontendButton)
 
     const frontendSkills = screen.getAllByText(/React|Next\.js/)
     expect(frontendSkills.length).toBeGreaterThan(0)
 
     const skillsSection = container.querySelector('#skills')
-    const nodeItems = skillsSection?.querySelectorAll("text") ?? []
     const nodeTexts = Array.from(skillsSection?.querySelectorAll("*") ?? []).filter(
       (el) => el.textContent === "Node.js" && el.children.length === 0
     )
@@ -497,7 +493,6 @@ describe("Home page", () => {
     const projectsSection = container.querySelector("#projects")
     expect(projectsSection).toBeInTheDocument()
     expect(screen.getByText("Portfolio Site")).toBeInTheDocument()
-    expect(screen.getByText("Task Manager API")).toBeInTheDocument()
     expect(screen.getByText("Cloud Deploy Tool")).toBeInTheDocument()
   })
 
@@ -514,7 +509,6 @@ describe("Home page", () => {
     renderWithTheme(<HomePage {...props} />)
 
     expect(screen.getByText(/personal portfolio built with Next\.js/)).toBeInTheDocument()
-    expect(screen.getByText(/RESTful API for task management/)).toBeInTheDocument()
     expect(screen.getByText(/CLI tool for automated deployments/)).toBeInTheDocument()
   })
 
@@ -553,7 +547,7 @@ describe("Home page", () => {
     renderWithTheme(<HomePage {...props} />)
 
     const githubLinks = screen.getAllByText("GitHub")
-    expect(githubLinks.length).toBe(3)
+    expect(githubLinks.length).toBe(2)
 
     expect(githubLinks[0]).toHaveAttribute("href", "https://github.com/johndoe/portfolio")
     expect(githubLinks[0]).toHaveAttribute("target", "_blank")
@@ -564,7 +558,7 @@ describe("Home page", () => {
     const { container } = renderWithTheme(<HomePage {...props} />)
 
     const projectCards = container.querySelectorAll('[data-slot="project-card"]')
-    expect(projectCards.length).toBe(3)
+    expect(projectCards.length).toBe(2)
   })
 
   it("renders projects section in correct position", async () => {
@@ -577,5 +571,99 @@ describe("Home page", () => {
     const projectsIndex = sectionIds.indexOf("projects")
     const skillsIndex = sectionIds.indexOf("skills")
     expect(projectsIndex).toBeGreaterThan(skillsIndex)
+  })
+
+  it("shows only featured projects by default", async () => {
+    const props = await getPageProps()
+    const { container } = renderWithTheme(<HomePage {...props} />)
+
+    const projectCards = container.querySelectorAll('[data-slot="project-card"]')
+    expect(projectCards.length).toBe(2)
+
+    expect(screen.getByText("Portfolio Site")).toBeInTheDocument()
+    expect(screen.getByText("Cloud Deploy Tool")).toBeInTheDocument()
+    expect(screen.queryByText("Task Manager API")).not.toBeInTheDocument()
+  })
+
+  it("shows all projects when Show All button is clicked", async () => {
+    const props = await getPageProps()
+    const { container } = renderWithTheme(<HomePage {...props} />)
+
+    const showAllButton = screen.getByText("Show All")
+    expect(showAllButton).toBeInTheDocument()
+
+    fireEvent.click(showAllButton)
+
+    const projectCards = container.querySelectorAll('[data-slot="project-card"]')
+    expect(projectCards.length).toBe(3)
+
+    expect(screen.getByText("Portfolio Site")).toBeInTheDocument()
+    expect(screen.getByText("Task Manager API")).toBeInTheDocument()
+    expect(screen.getByText("Cloud Deploy Tool")).toBeInTheDocument()
+
+    expect(screen.getByText("Show Featured")).toBeInTheDocument()
+  })
+
+  it("toggles back to featured only when Show Featured is clicked", async () => {
+    const props = await getPageProps()
+    const { container } = renderWithTheme(<HomePage {...props} />)
+
+    fireEvent.click(screen.getByText("Show All"))
+    fireEvent.click(screen.getByText("Show Featured"))
+
+    const projectCards = container.querySelectorAll('[data-slot="project-card"]')
+    expect(projectCards.length).toBe(2)
+    expect(screen.queryByText("Task Manager API")).not.toBeInTheDocument()
+  })
+
+  it("renders only featured skills in the carousel", async () => {
+    const props = await getPageProps()
+    const { container } = renderWithTheme(<HomePage {...props} />)
+
+    const allReact = screen.getAllByText("React")
+    expect(allReact.length).toBeGreaterThan(0)
+
+    const allNext = screen.getAllByText("Next.js")
+    expect(allNext.length).toBeGreaterThan(0)
+
+    const skillsSection = container.querySelector("#skills")
+    const nodeTexts = Array.from(skillsSection?.querySelectorAll("*") ?? []).filter(
+      (el) => el.textContent === "Node.js" && el.children.length === 0
+    )
+    expect(nodeTexts.length).toBe(0)
+
+    const pythonTexts = Array.from(skillsSection?.querySelectorAll("*") ?? []).filter(
+      (el) => el.textContent === "Python" && el.children.length === 0
+    )
+    expect(pythonTexts.length).toBe(0)
+  })
+
+  it("renders floating theme controls panel", async () => {
+    const props = await getPageProps()
+    renderWithTheme(<HomePage {...props} />)
+
+    const themeControls = screen.getByTestId("theme-controls")
+    expect(themeControls).toBeInTheDocument()
+    expect(themeControls).toHaveClass("fixed")
+    expect(themeControls).toHaveClass("right-4")
+  })
+
+  it("renders jobs sorted by startDate descending", async () => {
+    const props = await getPageProps()
+    renderWithTheme(<HomePage {...props} />)
+
+    const jobCards = screen.getAllByText(/Acme Corp|TechStart/)
+    const acmeIndex = jobCards.findIndex((el) => el.textContent?.includes("Acme Corp"))
+    const techStartIndex = jobCards.findIndex((el) => el.textContent?.includes("TechStart"))
+    expect(acmeIndex).toBeLessThan(techStartIndex)
+  })
+
+  it("renders 3-column project grid", async () => {
+    const props = await getPageProps()
+    const { container } = renderWithTheme(<HomePage {...props} />)
+
+    const projectsSection = container.querySelector("#projects")
+    const grid = projectsSection?.querySelector(".grid")
+    expect(grid).toHaveClass("md:grid-cols-3")
   })
 })

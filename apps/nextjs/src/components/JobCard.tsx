@@ -26,6 +26,21 @@ interface JobCardProps {
   highlights?: string[]
 }
 
+function groupSkillsByCategory(skills: SkillRef[]): { category: string; skills: SkillRef[] }[] {
+  const grouped = new Map<string, SkillRef[]>()
+  for (const skill of skills) {
+    const existing = grouped.get(skill.category) ?? []
+    existing.push(skill)
+    grouped.set(skill.category, existing)
+  }
+  return Array.from(grouped.entries())
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([category, items]) => ({
+      category,
+      skills: items.sort((a, b) => a.name.localeCompare(b.name)),
+    }))
+}
+
 export function JobCard({
   company,
   role,
@@ -56,10 +71,10 @@ export function JobCard({
             <img
               src={logoUrl}
               alt={`${company} logo`}
-              className="h-12 w-12 rounded border border-border/30 object-contain"
+              className="h-12 w-12 rounded border border-border/30 bg-background/80 object-contain"
             />
           ) : (
-            <div className="flex h-12 w-12 items-center justify-center rounded border border-border/30 bg-muted/50 font-mono text-sm font-bold uppercase text-foreground/60">
+            <div className="flex h-12 w-12 items-center justify-center rounded border border-border/30 bg-background/50 font-mono text-sm font-bold uppercase text-foreground/60">
               {company.charAt(0)}
             </div>
           )}
@@ -108,29 +123,33 @@ export function JobCard({
 
       {skills && skills.length > 0 && (
         <div className="mt-4 flex flex-wrap gap-1.5">
-          {skills.map((skill) => {
-            const colors = skillBadgeClasses(skill.category)
-            return (
-              <span
-                key={skill._id}
-                className={cn(
-                  "inline-flex items-center gap-1.5 rounded border px-2 py-0.5 font-mono text-[9px] uppercase tracking-widest",
-                  colors.border,
-                  colors.bg,
-                  colors.text
-                )}
-              >
-                {skill.image ? (
-                  <img
-                    src={urlFor(skill.image).width(16).height(16).url()}
-                    alt=""
-                    className="h-3 w-3 object-contain"
-                  />
-                ) : null}
-                {skill.name}
-              </span>
-            )
-          })}
+          {groupSkillsByCategory(skills).map((group) => (
+            <div key={group.category} className="flex flex-wrap gap-1.5">
+              {group.skills.map((skill) => {
+                const colors = skillBadgeClasses(skill.category)
+                return (
+                  <span
+                    key={skill._id}
+                    className={cn(
+                      "inline-flex items-center gap-1.5 rounded border px-2 py-0.5 font-mono text-[9px] uppercase tracking-widest",
+                      colors.border,
+                      colors.bg,
+                      colors.text
+                    )}
+                  >
+                    {skill.image ? (
+                      <img
+                        src={urlFor(skill.image).width(16).height(16).url()}
+                        alt=""
+                        className="h-3 w-3 object-contain"
+                      />
+                    ) : null}
+                    {skill.name}
+                  </span>
+                )
+              })}
+            </div>
+          ))}
         </div>
       )}
 
