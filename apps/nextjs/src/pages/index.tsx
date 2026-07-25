@@ -83,7 +83,7 @@ function extractText(blocks: PortableTextBlock[] | undefined | null): string {
 }
 
 export default function HomePage({ profile, skills, jobs, studies, certifications, projects }: Props) {
-  const [activeCategory, setActiveCategory] = useState<string | null>(null)
+  const [activeFilter, setActiveFilter] = useState<string>("featured")
   const [showAllProjects, setShowAllProjects] = useState(false)
   const avatarUrl = profile?.avatar ? urlFor(profile.avatar).width(120).height(120).url() : undefined
   const cvUrl = profile?.cv ? cvUrlFor(profile.cv) : undefined
@@ -91,9 +91,6 @@ export default function HomePage({ profile, skills, jobs, studies, certification
   const hasProfile = !!profile
 
   const categories = [...new Set(skills.map((s) => s.category))]
-  const filteredSkills = activeCategory
-    ? skills.filter((s) => s.category === activeCategory)
-    : skills
 
   const featuredSkills = useMemo(
     () =>
@@ -103,14 +100,25 @@ export default function HomePage({ profile, skills, jobs, studies, certification
     [skills]
   )
 
+  const allSkillsSorted = useMemo(
+    () => [...skills].sort((a, b) => a.name.localeCompare(b.name)),
+    [skills]
+  )
+
   const featuredCategories = useMemo(() => {
     const cats = [...new Set(featuredSkills.map((s) => s.category))]
     return cats.sort()
   }, [featuredSkills])
 
-  const filteredFeaturedSkills = activeCategory
-    ? featuredSkills.filter((s) => s.category === activeCategory)
-    : featuredSkills
+  const allCategories = useMemo(() => {
+    const cats = [...new Set(skills.map((s) => s.category))]
+    return cats.sort()
+  }, [skills])
+
+  const isFeaturedFilter = activeFilter === "featured" || activeFilter === "all"
+  const baseSkills = isFeaturedFilter
+    ? (activeFilter === "all" ? allSkillsSorted : featuredSkills)
+    : allSkillsSorted.filter((s) => s.category === activeFilter)
 
   const visibleProjects = showAllProjects ? projects : projects.filter((p) => p.featured)
 
@@ -194,29 +202,40 @@ export default function HomePage({ profile, skills, jobs, studies, certification
         <section id="skills" className="scroll-mt-16 border-t border-border/30 px-4 py-16">
           <div className="mx-auto max-w-5xl">
             <h2 className="mb-8 font-mono text-xs uppercase tracking-widest text-foreground/50">Skills</h2>
-            {featuredSkills.length > 0 ? (
+            {skills.length > 0 ? (
               <>
                 <div className="mb-6 flex flex-wrap gap-2">
                   <button
-                    onClick={() => setActiveCategory(null)}
+                    onClick={() => setActiveFilter("all")}
                     className={cn(
                       "rounded border px-3 py-1 font-mono text-[10px] uppercase tracking-widest transition-colors",
-                      activeCategory === null
+                      activeFilter === "all"
                         ? "border-primary/60 bg-primary/20 text-primary"
                         : "border-border/30 text-foreground/50 hover:border-foreground/30"
                     )}
                   >
                     All
                   </button>
-                  {featuredCategories.map((cat) => {
+                  <button
+                    onClick={() => setActiveFilter("featured")}
+                    className={cn(
+                      "rounded border px-3 py-1 font-mono text-[10px] uppercase tracking-widest transition-colors",
+                      activeFilter === "featured"
+                        ? "border-primary/60 bg-primary/20 text-primary"
+                        : "border-border/30 text-foreground/50 hover:border-foreground/30"
+                    )}
+                  >
+                    Featured
+                  </button>
+                  {allCategories.map((cat) => {
                     const btn = CATEGORY_BTN[cat]
                     return (
                       <button
                         key={cat}
-                        onClick={() => setActiveCategory(cat)}
+                        onClick={() => setActiveFilter(cat)}
                         className={cn(
                           "rounded border px-3 py-1 font-mono text-[10px] uppercase tracking-widest transition-colors",
-                          activeCategory === cat
+                          activeFilter === cat
                             ? btn?.active ?? "border-primary/60 bg-primary/20 text-primary"
                             : btn?.inactive ?? "border-border/30 text-foreground/50 hover:border-foreground/30"
                         )}
@@ -227,8 +246,8 @@ export default function HomePage({ profile, skills, jobs, studies, certification
                   })}
                 </div>
                 <LogoCloud
-                  key={activeCategory ?? "all"}
-                  logos={filteredFeaturedSkills.map((skill) => ({
+                  key={activeFilter}
+                  logos={baseSkills.map((skill) => ({
                     name: skill.name,
                     className: skillCategoryClasses(skill.category),
                     icon: skill.image

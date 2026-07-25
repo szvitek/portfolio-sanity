@@ -243,6 +243,9 @@ describe("Home page", () => {
     const allButton = screen.getByText("All")
     expect(allButton).toBeInTheDocument()
 
+    const featuredButtons = screen.getAllByText("Featured")
+    expect(featuredButtons.length).toBeGreaterThanOrEqual(1)
+
     const frontendButton = screen.getByText("Frontend")
     expect(frontendButton).toBeInTheDocument()
 
@@ -528,7 +531,7 @@ describe("Home page", () => {
     renderWithTheme(<HomePage {...props} />)
 
     const featuredBadges = screen.getAllByText("Featured")
-    expect(featuredBadges.length).toBe(2)
+    expect(featuredBadges.length).toBe(3)
   })
 
   it("renders project live demo links", async () => {
@@ -665,5 +668,29 @@ describe("Home page", () => {
     const projectsSection = container.querySelector("#projects")
     const grid = projectsSection?.querySelector(".grid")
     expect(grid).toHaveClass("md:grid-cols-3")
+  })
+
+  it("shows all skills when All filter is clicked", async () => {
+    const props = await getPageProps()
+    const { container } = renderWithTheme(<HomePage {...props} />)
+
+    fireEvent.click(screen.getByText("All"))
+
+    const skillsSection = container.querySelector("#skills")
+    const nodeTexts = Array.from(skillsSection?.querySelectorAll("*") ?? []).filter(
+      (el) => el.textContent === "Node.js" && el.children.length === 0
+    )
+    expect(nodeTexts.length).toBeGreaterThan(0)
+  })
+
+  it("shows only featured skills by default", async () => {
+    const props = await getPageProps()
+    const { container } = renderWithTheme(<HomePage {...props} />)
+
+    const skillsSection = container.querySelector("#skills")
+    const nodeTexts = Array.from(skillsSection?.querySelectorAll("*") ?? []).filter(
+      (el) => el.textContent === "Node.js" && el.children.length === 0
+    )
+    expect(nodeTexts.length).toBe(0)
   })
 })
