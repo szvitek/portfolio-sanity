@@ -77,9 +77,9 @@ describe("Home page", () => {
     const props = await getPageProps()
     renderWithTheme(<HomePage {...props} />)
 
-    const cvLink = screen.getByText("Download CV")
-    expect(cvLink).toBeInTheDocument()
-    expect(cvLink).toHaveAttribute("download")
+    const cvLinks = screen.getAllByText("Download CV")
+    expect(cvLinks.length).toBeGreaterThanOrEqual(1)
+    expect(cvLinks[0]).toHaveAttribute("download")
   })
 
   it("renders avatar image with correct alt text", async () => {

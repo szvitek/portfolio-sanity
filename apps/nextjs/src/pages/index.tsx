@@ -494,6 +494,14 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
             <Divider label="CONTACT" variant="circuit" className="mb-8" />
             <div className="grid gap-8 lg:grid-cols-[5fr_7fr]">
               <div className="flex flex-col items-center gap-6 lg:items-start">
+                <div className="flex flex-col gap-4">
+                  <h3 className="font-mono text-sm font-bold uppercase tracking-wider text-foreground/90">
+                    //GET IN TOUCH
+                  </h3>
+                  <p className="font-mono text-[10px] uppercase tracking-widest text-foreground/40">
+                    Have a project, question, or just want to say hi? Drop a message.
+                  </p>
+                </div>
                 <Radar
                   size={180}
                   sweepSpeed={4}
@@ -503,15 +511,9 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
                     { x: 25, y: 70, label: "Projects" },
                   ]}
                 />
-                <div className="flex flex-col gap-4">
-                  <h3 className="font-mono text-sm font-bold uppercase tracking-wider text-foreground/90">
-                    //GET IN TOUCH
-                  </h3>
-                  <p className="font-mono text-[10px] uppercase tracking-widest text-foreground/40">
-                    Have a project, question, or just want to say hi? Drop a message.
-                  </p>
+                <div className="flex flex-wrap items-center gap-3">
                   {profile?.socialLinks && profile.socialLinks.length > 0 && (
-                    <div className="mt-2 flex flex-wrap gap-3">
+                    <div className="flex flex-wrap gap-3">
                       {profile.socialLinks.map((link) => (
                         <SocialLinkIcon
                           key={link.platform}
@@ -529,6 +531,15 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
                     >
                       <span className="h-1.5 w-1.5 rounded-full bg-primary/60" />
                       {profile.email}
+                    </a>
+                  )}
+                  {cvUrl && (
+                    <a
+                      href={cvUrl}
+                      download
+                      className="inline-flex items-center rounded border border-primary/30 bg-primary/10 px-4 py-2 font-mono text-[10px] uppercase tracking-widest text-primary transition-all hover:border-primary hover:bg-primary hover:text-background hover:shadow-[0_0_16px_rgba(var(--primary-rgb,0,180,255),0.3)]"
+                    >
+                      Download CV
                     </a>
                   )}
                 </div>
