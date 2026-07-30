@@ -493,7 +493,7 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
           <div className="mx-auto max-w-5xl">
             <Divider label="CONTACT" variant="circuit" className="mb-8" />
             <div className="grid gap-8 lg:grid-cols-[5fr_7fr]">
-              <div className="flex flex-col items-center gap-6 lg:items-start">
+              <div className="flex h-full flex-col items-center justify-between lg:items-start">
                 <div className="flex flex-col gap-4">
                   <h3 className="font-mono text-sm font-bold uppercase tracking-wider text-foreground/90">
                     //GET IN TOUCH
