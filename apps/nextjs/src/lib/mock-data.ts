@@ -88,4 +88,89 @@ export const MOCK_PROJECTS: ProjectData[] = [
     order: 3,
     publishedAt: "2024-01-10T00:00:00Z",
   },
+  {
+    _id: "project-4",
+    title: "Realtime Chat App",
+    description: [
+      {
+        _type: "block",
+        _key: "proj4-desc",
+        style: "normal",
+        children: [
+          {
+            _type: "span",
+            _key: "proj4-span",
+            text: "WebSocket-based chat application with rooms, typing indicators, and message history.",
+            marks: [],
+          },
+        ],
+      },
+    ],
+    skills: [
+      { _id: "skill-react", name: "React", category: "Frontend" },
+      { _id: "skill-node", name: "Node.js", category: "Backend" },
+    ],
+    githubUrl: "https://github.com/johndoe/realtime-chat",
+    featured: false,
+    order: 4,
+    publishedAt: "2023-11-20T00:00:00Z",
+  },
+  {
+    _id: "project-5",
+    title: "DevOps Dashboard",
+    description: [
+      {
+        _type: "block",
+        _key: "proj5-desc",
+        style: "normal",
+        children: [
+          {
+            _type: "span",
+            _key: "proj5-span",
+            text: "Monitoring dashboard for CI/CD pipelines with real-time status and deployment logs.",
+            marks: [],
+          },
+        ],
+      },
+    ],
+    thumbnail: {
+      _type: "image",
+      asset: { _ref: "image-devops-600x340-png" },
+    },
+    skills: [
+      { _id: "skill-nextjs", name: "Next.js", category: "Frontend" },
+      { _id: "skill-python", name: "Python", category: "Languages" },
+    ],
+    liveUrl: "https://devops-dash.example.com",
+    githubUrl: "https://github.com/johndoe/devops-dashboard",
+    featured: true,
+    order: 5,
+    publishedAt: "2023-09-05T00:00:00Z",
+  },
+  {
+    _id: "project-6",
+    title: "Markdown CMS",
+    description: [
+      {
+        _type: "block",
+        _key: "proj6-desc",
+        style: "normal",
+        children: [
+          {
+            _type: "span",
+            _key: "proj6-span",
+            text: "Lightweight headless CMS for Markdown files with version control and collaborative editing.",
+            marks: [],
+          },
+        ],
+      },
+    ],
+    skills: [
+      { _id: "skill-node", name: "Node.js", category: "Backend" },
+    ],
+    githubUrl: "https://github.com/johndoe/markdown-cms",
+    featured: false,
+    order: 6,
+    publishedAt: "2023-07-12T00:00:00Z",
+  },
 ]

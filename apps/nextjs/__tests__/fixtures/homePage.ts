@@ -108,8 +108,16 @@ export const mockHomePageData: HomePageData = {
         { _id: "skill-node", name: "Node.js", category: "Backend" },
       ],
       highlights: [
-        "Reduced API latency by 40%",
-        "Mentored team of 5 developers",
+        {
+          title: "Reduced API latency by 40%",
+          description: "Optimized database queries and implemented caching layer",
+          category: "PERF",
+        },
+        {
+          title: "Mentored team of 5 developers",
+          description: "Led weekly code reviews and pairing sessions",
+          category: "LEAD",
+        },
       ],
       order: 1,
       publishedAt: "2024-01-01T00:00:00Z",

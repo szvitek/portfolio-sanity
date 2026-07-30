@@ -2,10 +2,13 @@ import type { PortableTextBlock } from "@portabletext/react"
 import { PortableText } from "@portabletext/react"
 import type { SanityImageSource } from "@sanity/image-url/lib/types/types"
 import { urlFor } from "@/lib/sanity"
+import type { HighlightItem } from "@/lib/sanity"
 import { cn } from "@/lib/utils"
 import { skillBadgeClasses } from "@/lib/skill-colors"
 import { dateRange } from "@/lib/date-utils"
 import { groupSkillsByCategory } from "@/lib/skill-groups"
+import { Changelog } from "@/components/thegridcn/changelog"
+import { CircuitBackground } from "@/components/thegridcn/circuit-background"
 
 interface SkillRef {
   _id: string
@@ -24,7 +27,7 @@ interface JobCardProps {
   location?: string
   website?: string
   skills?: SkillRef[]
-  highlights?: string[]
+  highlights?: HighlightItem[]
 }
 
 export function JobCard({
@@ -42,9 +45,11 @@ export function JobCard({
   const logoUrl = image ? urlFor(image).width(96).height(96).url() : undefined
 
   return (
-    <div
+    <CircuitBackground
       data-slot="job-card"
-      className="relative overflow-hidden rounded border border-border/30 bg-card/50 p-6"
+      animated={true}
+      opacity={0.06}
+      className="relative rounded border border-border/30 bg-card/50 p-6"
     >
       <div className="pointer-events-none absolute left-0 top-0 h-4 w-4 border-l-2 border-t-2 border-primary/50" />
       <div className="pointer-events-none absolute right-0 top-0 h-4 w-4 border-r-2 border-t-2 border-primary/50" />
@@ -109,51 +114,47 @@ export function JobCard({
 
       {skills && skills.length > 0 && (
         <div className="mt-4 flex flex-wrap gap-1.5">
-          {groupSkillsByCategory(skills).map((group) => (
-            <div key={group.category} className="flex flex-wrap gap-1.5">
-              {group.skills.map((skill) => {
-                const colors = skillBadgeClasses(skill.category)
-                return (
-                  <span
-                    key={skill._id}
+          {groupSkillsByCategory(skills).map((group, groupIndex) =>
+            group.skills.map((skill, skillIndex) => {
+              const colors = skillBadgeClasses(skill.category)
+              return (
+                <span
+                  key={skill._id}
                     className={cn(
                       "inline-flex items-center gap-1.5 rounded border px-2 py-0.5 font-mono text-[9px] uppercase tracking-widest",
+                      groupIndex > 0 && skillIndex === 0 ? "ml-3" : "",
                       colors.border,
                       colors.bg,
                       colors.text
                     )}
-                  >
-                    {skill.image ? (
-                      <img
-                        src={urlFor(skill.image).width(16).height(16).url()}
-                        alt=""
-                        className="h-3 w-3 object-contain"
-                      />
-                    ) : null}
-                    {skill.name}
-                  </span>
-                )
-              })}
-            </div>
-          ))}
+                >
+                  {skill.image ? (
+                    <img
+                      src={urlFor(skill.image).width(16).height(16).url()}
+                      alt=""
+                      className="h-3 w-3 object-contain"
+                    />
+                  ) : null}
+                  {skill.name}
+                </span>
+              )
+            })
+          )}
         </div>
       )}
 
       {highlights && highlights.length > 0 && (
         <div className="mt-4 border-t border-border/30 pt-3">
-          <p className="mb-2 font-mono text-[10px] uppercase tracking-widest text-foreground/50">
-            Highlights
-          </p>
-          <ul className="space-y-1">
-            {highlights.map((highlight, i) => (
-              <li key={i} className="flex items-start gap-2 font-mono text-xs text-foreground/70">
-                <span className="mt-1 h-1 w-1 shrink-0 rounded-full bg-primary/60" />
-                {highlight}
-              </li>
-            ))}
-          </ul>
+          <Changelog
+            label="SYSTEM_HIGHLIGHTS"
+            items={highlights.map((h) => ({
+              title: h.title,
+              description: h.description,
+              category: h.category,
+            }))}
+          />
         </div>
       )}
-    </div>
+    </CircuitBackground>
   )
 }

@@ -33,7 +33,7 @@ export function HeroSection({
     <div
       data-slot="tron-hero-section"
       className={cn(
-        "group relative overflow-hidden rounded border border-primary/20 bg-card/80 px-6 py-16 backdrop-blur-sm md:px-12 md:py-24 lg:py-32",
+        "group relative overflow-hidden rounded bg-card/80 px-6 py-16 backdrop-blur-sm md:px-12 md:py-24 lg:py-32",
         className
       )}
       {...props}
@@ -44,37 +44,15 @@ export function HeroSection({
 
       <div className="pointer-events-none absolute -top-1/4 left-1/2 h-[600px] w-[800px] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(var(--primary-rgb,0,180,255),0.06),transparent_70%)]" />
 
+      {/* Horizontal scan line */}
       <div
-        className="pointer-events-none absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent"
-        style={{ animation: "heroScan 6s ease-in-out infinite" }}
+        className="pointer-events-none absolute left-0 top-0 h-px w-full"
+        style={{
+          background: "linear-gradient(90deg, transparent 0%, transparent 8%, var(--primary) 50%, transparent 92%, transparent 100%)",
+          opacity: 0.6,
+          animation: "hero-scan 7s ease-in-out infinite",
+        }}
       />
-
-      <div className="pointer-events-none absolute left-0 right-0 top-0 h-px">
-        <div
-          className="h-full w-1/4 bg-gradient-to-r from-transparent via-primary/60 to-transparent"
-          style={{ animation: "heroSweep 5s ease-in-out infinite" }}
-        />
-      </div>
-
-      <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-px">
-        <div
-          className="h-full w-1/4 bg-gradient-to-r from-transparent via-primary/60 to-transparent"
-          style={{ animation: "heroSweep 5s ease-in-out infinite reverse" }}
-        />
-      </div>
-
-      <style>{`
-        @keyframes heroScan {
-          0%, 100% { top: 20%; opacity: 0; }
-          10% { opacity: 1; }
-          90% { opacity: 1; }
-          50% { top: 80%; }
-        }
-        @keyframes heroSweep {
-          0%, 100% { margin-left: -10%; }
-          50% { margin-left: 86%; }
-        }
-      `}</style>
 
       <div
         className={cn(
@@ -142,16 +120,11 @@ export function HeroSection({
         )}
       </div>
 
-      <div className="pointer-events-none absolute bottom-8 left-0 top-8 flex flex-col justify-between">
-        <div className="h-16 w-px bg-gradient-to-b from-primary/40 to-transparent" />
-        <div className="h-16 w-px bg-gradient-to-t from-primary/40 to-transparent" />
-      </div>
+      {/* Left side border */}
+      <div className="pointer-events-none absolute left-0 top-0 z-20 h-full w-[2px] hero-side-border" />
 
-      <div className="pointer-events-none absolute bottom-8 right-0 top-8 flex flex-col justify-between">
-        <div className="h-16 w-px bg-gradient-to-b from-primary/40 to-transparent" />
-        <div className="h-16 w-px bg-gradient-to-t from-primary/40 to-transparent" />
-      </div>
-
+      {/* Right side border */}
+      <div className="pointer-events-none absolute right-0 top-0 z-20 h-full w-[2px] hero-side-border" />
       <div className="pointer-events-none absolute left-0 top-0 h-6 w-6 border-l-2 border-t-2 border-primary/40" />
       <div className="pointer-events-none absolute right-0 top-0 h-6 w-6 border-r-2 border-t-2 border-primary/40" />
       <div className="pointer-events-none absolute bottom-0 left-0 h-6 w-6 border-b-2 border-l-2 border-primary/40" />

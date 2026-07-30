@@ -54,16 +54,16 @@ export function Divider({
       {/* Left line */}
       <div className={cn(
         "flex-1",
-        variant === "default" && "h-px bg-primary/20",
-        variant === "glow" && "h-px bg-primary/30 shadow-[0_0_4px_var(--primary)]",
-        variant === "dashed" && "border-t border-dashed border-primary/30",
-        variant === "circuit" && "h-px bg-primary/20",
+        variant === "default" && "h-px bg-primary-200",
+        variant === "glow" && "h-px bg-primary-300 shadow-[0_0_4px_var(--primary)]",
+        variant === "dashed" && "border-t border-dashed border-primary-300",
+        variant === "circuit" && "h-px bg-primary-200",
       )}>
         {variant === "circuit" && (
           <>
-            <div className="absolute left-0 top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-primary/40" />
+            <div className="absolute left-0 top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-primary-400" />
             <div
-              className="absolute top-1/2 h-1 w-1 -translate-y-1/2 rounded-full bg-primary/80"
+              className="absolute top-1/2 h-1 w-1 -translate-y-1/2 rounded-full bg-primary-700"
               style={{ animation: "dividerDot 3s ease-in-out infinite" }}
             />
           </>
@@ -80,13 +80,13 @@ export function Divider({
       {/* Right line */}
       <div className={cn(
         "flex-1",
-        variant === "default" && "h-px bg-primary/20",
-        variant === "glow" && "h-px bg-primary/30 shadow-[0_0_4px_var(--primary)]",
-        variant === "dashed" && "border-t border-dashed border-primary/30",
-        variant === "circuit" && "h-px bg-primary/20",
+        variant === "default" && "h-px bg-primary-200",
+        variant === "glow" && "h-px bg-primary-300 shadow-[0_0_4px_var(--primary)]",
+        variant === "dashed" && "border-t border-dashed border-primary-300",
+        variant === "circuit" && "h-px bg-primary-200",
       )}>
         {variant === "circuit" && (
-          <div className="absolute right-0 top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-primary/40" />
+          <div className="absolute right-0 top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-primary-400" />
         )}
       </div>
 

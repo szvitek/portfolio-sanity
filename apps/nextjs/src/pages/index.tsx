@@ -5,18 +5,54 @@ import { getHomePageData, urlFor, cvUrlFor } from "@/lib/sanity"
 import type { ProfileData, SkillData, JobData, StudyData, CertificationData, ProjectData } from "@/lib/sanity"
 import { HeroSection } from "@/components/thegridcn/hero-section"
 import { AvailabilityIndicator } from "@/components/thegridcn/availability-indicator"
+import { AgentAvatar } from "@/components/thegridcn/agent-avatar"
+import { AnomalyBanner } from "@/components/thegridcn/anomaly-banner"
 import { LogoCloud } from "@/components/thegridcn/logo-cloud"
+import { BentoGrid } from "@/components/thegridcn/bento-grid"
+import { Divider } from "@/components/thegridcn/divider"
 import { JobCard } from "@/components/JobCard"
-import { StudyCard } from "@/components/StudyCard"
 import { CertificationCard } from "@/components/CertificationCard"
 import { ProjectCard } from "@/components/ProjectCard"
 import { NavBar } from "@/components/NavBar"
 import { StatusBar } from "@/components/thegridcn/status-bar"
 import { SocialLinkIcon } from "@portfolio/ui"
 import { ThemeControls } from "@/components/ThemeControls"
+import { GridBackground } from "@/components/GridBackground"
+import { TronFooter } from "@/components/thegridcn/tron-footer"
+import { NewsletterForm } from "@/components/thegridcn/newsletter-form"
+import { Timeline } from "@/components/thegridcn/timeline"
+import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
 import { skillCategoryClasses } from "@/lib/skill-colors"
+import { dateRange, formatYear } from "@/lib/date-utils"
 import { MOCK_PROJECTS } from "@/lib/mock-data"
+
+type GroupedStudy = {
+  institution: string
+  studies: StudyData[]
+  latestStart: string
+  earliestEnd?: string
+}
+
+function groupStudiesByInstitution(studies: StudyData[]): GroupedStudy[] {
+  const map = new Map<string, StudyData[]>()
+  for (const study of studies) {
+    const existing = map.get(study.institution) ?? []
+    existing.push(study)
+    map.set(study.institution, existing)
+  }
+  const groups: GroupedStudy[] = []
+  for (const [institution, items] of map) {
+    const sorted = [...items].sort((a, b) => (b.startDate ?? "").localeCompare(a.startDate ?? ""))
+    groups.push({
+      institution,
+      studies: sorted,
+      latestStart: sorted[0]?.startDate ?? "",
+      earliestEnd: sorted[sorted.length - 1]?.endDate,
+    })
+  }
+  return groups.sort((a, b) => b.latestStart.localeCompare(a.latestStart))
+}
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -25,6 +61,7 @@ export const getStaticProps: GetStaticProps<{
   skills: SkillData[]
   jobs: JobData[]
   studies: StudyData[]
+  groupedStudies: GroupedStudy[]
   certifications: CertificationData[]
   projects: ProjectData[]
 }> = async () => {
@@ -36,12 +73,15 @@ export const getStaticProps: GetStaticProps<{
       return dateB.localeCompare(dateA)
     })
 
+  const allStudies = sortByDateDesc(data.studies ?? [])
+
   return {
     props: {
       profile: data.profile,
       skills: data.skills ?? [],
       jobs: sortByDateDesc(data.jobs ?? []),
-      studies: sortByDateDesc(data.studies ?? []),
+      studies: allStudies,
+      groupedStudies: groupStudiesByInstitution(allStudies),
       certifications: sortByDateDesc(data.certifications ?? []),
       projects: data.projects?.length ? data.projects : MOCK_PROJECTS,
     },
@@ -82,7 +122,7 @@ function extractText(blocks: PortableTextBlock[] | undefined | null): string {
   return firstBlock.children.map((c) => ("text" in c ? c.text ?? "" : "")).join(" ")
 }
 
-export default function HomePage({ profile, skills, jobs, studies, certifications, projects }: Props) {
+export default function HomePage({ profile, skills, jobs, studies, groupedStudies, certifications, projects }: Props) {
   const [activeFilter, setActiveFilter] = useState<string>("featured")
   const [showAllProjects, setShowAllProjects] = useState(false)
   const avatarUrl = profile?.avatar ? urlFor(profile.avatar).width(120).height(120).url() : undefined
@@ -124,6 +164,8 @@ export default function HomePage({ profile, skills, jobs, studies, certification
 
   return (
     <>
+      <GridBackground />
+
       <StatusBar
         leftContent={
           <span className="flex items-center gap-2">
@@ -150,58 +192,78 @@ export default function HomePage({ profile, skills, jobs, studies, certification
             </div>
           ) : (
           <HeroSection
-            title={profile.title}
-            subtitle={profile.subtitle}
-            description={bioText}
+            title=""
+            subtitle=""
             align="center"
             rightContent={
-              <>
-                {avatarUrl && (
+            <>
+              {avatarUrl && (
+                <div className="relative h-48 w-48 md:h-56 md:w-56">
+                  <AgentAvatar
+                    seed={profile.title}
+                    size={240}
+                    ring={false}
+                    animated
+                    className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 opacity-40 mix-blend-screen"
+                  />
                   <img
                     src={avatarUrl}
                     alt={profile?.title ?? "Avatar"}
-                    className="h-48 w-48 rounded-full border-2 border-primary/30 object-cover ring-2 ring-primary/10 md:h-56 md:w-56"
+                    className="relative h-full w-full rounded-full border-2 border-primary/30 object-cover ring-2 ring-primary/10"
                   />
-                )}
-                {profile.availability && (
-                  <AvailabilityIndicator
-                    availability={profile.availability}
-                    className="w-48 md:w-56"
-                  />
-                )}
-              </>
-            }
+                </div>
+              )}
+              {profile.availability && (
+                <AvailabilityIndicator
+                  availability={profile.availability}
+                  className="w-48 md:w-56"
+                />
+              )}
+            </>
+          }
           >
-            {profile?.socialLinks && profile.socialLinks.length > 0 && (
-              <div className="flex w-full items-center gap-4">
-                {profile.socialLinks.map((link) => (
-                  <SocialLinkIcon
-                    key={link.platform}
-                    platform={link.platform}
-                    url={link.url}
-                    className="text-foreground/60 transition-colors hover:text-primary"
-                  />
-                ))}
+            <div className="flex w-full flex-col items-center gap-4">
+              <AnomalyBanner
+                title={profile.title}
+                subtitle={profile.subtitle}
+                animated={false}
+              />
+              {bioText && (
+                <p className="max-w-2xl text-center text-sm leading-relaxed text-foreground/60 md:text-base">
+                  {bioText}
+                </p>
+              )}
+              {profile?.socialLinks && profile.socialLinks.length > 0 && (
+                <div className="flex items-center gap-4">
+                  {profile.socialLinks.map((link) => (
+                    <SocialLinkIcon
+                      key={link.platform}
+                      platform={link.platform}
+                      url={link.url}
+                      className="text-foreground/60 transition-colors hover:text-primary"
+                    />
+                  ))}
 
-                {cvUrl && (
-                  <a
-                    href={cvUrl}
-                    download
-                    className="inline-flex items-center rounded border border-primary/30 bg-primary/10 px-5 py-2 font-mono text-xs uppercase tracking-widest text-primary transition-all hover:border-primary hover:bg-primary hover:text-background hover:shadow-[0_0_16px_rgba(var(--primary-rgb,0,180,255),0.3)]"
-                  >
-                    Download CV
-                  </a>
-                )}
-              </div>
-            )}
+                  {cvUrl && (
+                    <a
+                      href={cvUrl}
+                      download
+                      className="inline-flex items-center rounded border border-primary/30 bg-primary/10 px-5 py-2 font-mono text-xs uppercase tracking-widest text-primary transition-all hover:border-primary hover:bg-primary hover:text-background hover:shadow-[0_0_16px_rgba(var(--primary-rgb,0,180,255),0.3)]"
+                    >
+                      Download CV
+                    </a>
+                  )}
+                </div>
+              )}
+            </div>
           </HeroSection>
           )}
           </div>
         </section>
 
-        <section id="skills" className="scroll-mt-16 border-t border-border/30 px-4 py-16">
+        <section id="skills" className="scroll-mt-16 px-4 py-16">
           <div className="mx-auto max-w-5xl">
-            <h2 className="mb-8 font-mono text-xs uppercase tracking-widest text-foreground/50">Skills</h2>
+            <Divider label="SKILLS" variant="circuit" className="mb-8" />
             {skills.length > 0 ? (
               <>
                 <div className="mb-6 flex flex-wrap gap-2">
@@ -269,33 +331,65 @@ export default function HomePage({ profile, skills, jobs, studies, certification
           </div>
         </section>
 
-        <section id="projects" className="scroll-mt-16 border-t border-border/30 px-4 py-16">
+        <section id="projects" className="scroll-mt-16 px-4 py-16">
           <div className="mx-auto max-w-5xl">
             <div className="mb-8 flex items-center justify-between">
-              <h2 className="font-mono text-xs uppercase tracking-widest text-foreground/50">Projects</h2>
+              <Divider label="PROJECTS" variant="circuit" className="flex-1" />
               {projects.some((p) => !p.featured) && (
                 <button
                   onClick={() => setShowAllProjects(!showAllProjects)}
-                  className="rounded border border-primary/30 bg-primary/10 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-primary transition-colors hover:border-primary/60 hover:bg-primary/20"
+                  className="ml-4 shrink-0 rounded border border-primary/30 bg-primary/10 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-primary transition-colors hover:border-primary/60 hover:bg-primary/20"
                 >
                   {showAllProjects ? "Show Featured" : "Show All"}
                 </button>
               )}
             </div>
             {visibleProjects.length > 0 ? (
-              <div className="grid gap-6 md:grid-cols-3">
-                {visibleProjects.map((project) => (
-                  <ProjectCard
-                    key={project._id}
-                    title={project.title}
-                    description={project.description}
-                    thumbnail={project.thumbnail}
-                    skills={project.skills}
-                    liveUrl={project.liveUrl}
-                    githubUrl={project.githubUrl}
-                    featured={project.featured}
-                  />
-                ))}
+              <div>
+                <div className="grid gap-6 md:grid-cols-3">
+                  {projects
+                    .filter((p) => p.featured)
+                    .map((project) => (
+                      <ProjectCard
+                        key={project._id}
+                        title={project.title}
+                        description={project.description}
+                        thumbnail={project.thumbnail}
+                        skills={project.skills}
+                        liveUrl={project.liveUrl}
+                        githubUrl={project.githubUrl}
+                        featured={project.featured}
+                      />
+                    ))}
+                </div>
+                <div
+                  className="grid transition-[grid-template-rows,opacity] duration-700 ease-out"
+                  style={{
+                    gridTemplateRows: showAllProjects ? "1fr" : "0fr",
+                    opacity: showAllProjects ? 1 : 0,
+                  }}
+                >
+                  <div className="overflow-hidden">
+                    <div className="grid gap-6 pt-6 md:grid-cols-3">
+                      {projects
+                        .filter((p) => !p.featured)
+                        .map((project, index) => (
+                          <ProjectCard
+                            key={project._id}
+                            title={project.title}
+                            description={project.description}
+                            thumbnail={project.thumbnail}
+                            skills={project.skills}
+                            liveUrl={project.liveUrl}
+                            githubUrl={project.githubUrl}
+                            featured={project.featured}
+                            className="project-card-animate-in"
+                            style={{ animationDelay: `${index * 60}ms` }}
+                          />
+                        ))}
+                    </div>
+                  </div>
+                </div>
               </div>
             ) : (
               <p className="text-sm text-foreground/40">Projects content coming soon.</p>
@@ -303,9 +397,9 @@ export default function HomePage({ profile, skills, jobs, studies, certification
           </div>
         </section>
 
-        <section id="jobs" className="scroll-mt-16 border-t border-border/30 px-4 py-16">
+        <section id="jobs" className="scroll-mt-16 px-4 py-16">
           <div className="mx-auto max-w-5xl">
-            <h2 className="mb-8 font-mono text-xs uppercase tracking-widest text-foreground/50">Experience</h2>
+            <Divider label="EXPERIENCE" variant="circuit" className="mb-8" />
             {jobs.length > 0 ? (
               <div className="space-y-6">
                 {jobs.map((job) => (
@@ -330,77 +424,94 @@ export default function HomePage({ profile, skills, jobs, studies, certification
           </div>
         </section>
 
-        <section id="studies" className="scroll-mt-16 border-t border-border/30 px-4 py-16">
+        <section id="studies" className="scroll-mt-16 px-4 py-16">
           <div className="mx-auto max-w-5xl">
-            <h2 className="mb-8 font-mono text-xs uppercase tracking-widest text-foreground/50">Education</h2>
-            {studies.length > 0 ? (
-              <div className="space-y-6">
-                {studies.map((study) => (
-                  <StudyCard
-                    key={study._id}
-                    institution={study.institution}
-                    field={study.field}
-                    startDate={study.startDate}
-                    endDate={study.endDate}
-                    description={study.description}
-                  />
-                ))}
-              </div>
+            <Divider label="EDUCATION" variant="circuit" className="mb-8" />
+            {groupedStudies.length > 0 ? (
+              <Timeline
+                label="ACADEMIC RECORD"
+                items={groupedStudies.map((group) => ({
+                  title: group.institution,
+                  description: (
+                    <div className="mt-1 space-y-1.5">
+                      {group.studies.map((study) => (
+                        <div key={study._id} className="flex items-center gap-2">
+                          <Badge variant="outline" className="shrink-0 font-mono text-[9px] leading-none uppercase tracking-wider">
+                            {study.field}
+                          </Badge>
+                          {study.description && (
+                            <span className="text-xs text-foreground/50">— {study.description}</span>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  ),
+                  date: group.studies.length === 1
+                    ? dateRange(group.studies[0].startDate, group.studies[0].endDate)
+                    : dateRange(group.latestStart, group.earliestEnd),
+                  status: group.earliestEnd ? "completed" as const : "active" as const,
+                }))}
+              />
             ) : (
               <p className="text-sm text-foreground/40">Education content coming soon.</p>
             )}
           </div>
         </section>
 
-        <section id="certifications" className="scroll-mt-16 border-t border-border/30 px-4 py-16">
+        <section id="certifications" className="scroll-mt-16 px-4 py-16">
           <div className="mx-auto max-w-5xl">
-            <h2 className="mb-8 font-mono text-xs uppercase tracking-widest text-foreground/50">Certifications</h2>
+            <Divider label="CERTIFICATIONS" variant="circuit" className="mb-8" />
             {certifications.length > 0 ? (
-              <div className="grid gap-6 md:grid-cols-3">
-                {certifications.map((cert) => (
-                  <CertificationCard
-                    key={cert._id}
-                    name={cert.name}
-                    date={cert.date}
-                    url={cert.url}
-                    thumbnail={cert.thumbnail}
-                  />
-                ))}
-              </div>
+              <BentoGrid
+                columns={3}
+                items={certifications.map((cert) => ({
+                  title: cert.name,
+                  description: formatYear(cert.date),
+                  variant: "highlight" as const,
+                  url: cert.url,
+                  icon: cert.thumbnail ? (
+                    <img
+                      src={urlFor(cert.thumbnail).width(48).height(48).url()}
+                      alt=""
+                      className="h-full w-full object-contain"
+                    />
+                  ) : (
+                    <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
+                    </svg>
+                  ),
+                }))}
+              />
             ) : (
               <p className="text-sm text-foreground/40">Certifications content coming soon.</p>
             )}
           </div>
         </section>
 
-        <section id="contact" className="scroll-mt-16 border-t border-border/30 px-4 py-16">
-          <div className="mx-auto max-w-5xl text-center">
-            <h2 className="mb-4 font-mono text-xs uppercase tracking-widest text-foreground/50">Contact</h2>
-            {profile?.email ? (
-              <a
-                href={`mailto:${profile.email}`}
-                className="inline-flex items-center rounded border border-primary/30 bg-primary/10 px-6 py-3 font-mono text-sm uppercase tracking-widest text-primary transition-colors hover:bg-primary/20"
-              >
-                Send Message
-              </a>
-            ) : (
-              <p className="text-sm text-foreground/40">Contact content coming soon.</p>
-            )}
+        <section id="contact" className="scroll-mt-16 px-4 py-16">
+          <div className="mx-auto max-w-5xl">
+            <Divider label="CONTACT" variant="circuit" className="mb-8" />
+            <NewsletterForm
+              title="Stay Connected"
+              description="Subscribe to receive updates on new projects and opportunities."
+              submitLabel="Subscribe"
+              onSubmit={(email) => {
+                console.log("Newsletter signup:", email)
+              }}
+            />
           </div>
         </section>
+
       </main>
 
-      <StatusBar
-        leftContent={
-          <span className="flex items-center gap-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
-            CONNECTION ESTABLISHED
-          </span>
-        }
-        rightContent={
-          <span>END OF TRANSMISSION</span>
-        }
-        data-testid="bottom-statusbar"
+      <TronFooter
+        brand="PORTFOLIO"
+        tagline="END OF LINE"
+        links={[
+          { label: "GitHub", href: "https://github.com/johndoe" },
+          { label: "LinkedIn", href: "https://linkedin.com/in/johndoe" },
+          { label: "Email", href: `mailto:${profile?.email || ""}` },
+        ]}
       />
 
       <ThemeControls />

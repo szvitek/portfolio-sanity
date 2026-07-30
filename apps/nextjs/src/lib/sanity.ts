@@ -39,6 +39,12 @@ export interface SkillRef {
   category: string
 }
 
+export interface HighlightItem {
+  title: string
+  description?: string
+  category: string
+}
+
 export interface JobData {
   _id: string
   company: string
@@ -50,7 +56,7 @@ export interface JobData {
   location?: string
   website?: string
   skills?: SkillRef[]
-  highlights?: string[]
+  highlights?: HighlightItem[]
   order: number
   publishedAt: string
 }

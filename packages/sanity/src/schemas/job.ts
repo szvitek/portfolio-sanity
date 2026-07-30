@@ -59,8 +59,47 @@ export const job = defineType({
       name: "highlights",
       title: "Highlights",
       type: "array",
-      of: [{ type: "string" }],
-      options: { layout: "tags" },
+      of: [
+        {
+          type: "object",
+          fields: [
+            defineField({
+              name: "title",
+              title: "Title",
+              type: "string",
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: "description",
+              title: "Description",
+              type: "text",
+            }),
+            defineField({
+              name: "category",
+              title: "Category",
+              type: "string",
+              options: {
+                list: [
+                  { title: "Architecture", value: "ARCH" },
+                  { title: "Feature", value: "FEAT" },
+                  { title: "Leadership", value: "LEAD" },
+                  { title: "Performance", value: "PERF" },
+                  { title: "DevOps", value: "DEVOPS" },
+                  { title: "Finance", value: "FIN" },
+                ],
+                layout: "dropdown",
+              },
+              validation: (rule) => rule.required(),
+            }),
+          ],
+          preview: {
+            select: {
+              title: "title",
+              subtitle: "category",
+            },
+          },
+        },
+      ],
     }),
     defineField({
       name: "order",

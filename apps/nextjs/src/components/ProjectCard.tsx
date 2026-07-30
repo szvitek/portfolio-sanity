@@ -21,6 +21,8 @@ interface ProjectCardProps {
   liveUrl?: string
   githubUrl?: string
   featured?: boolean
+  className?: string
+  style?: React.CSSProperties
 }
 
 export function ProjectCard({
@@ -31,6 +33,8 @@ export function ProjectCard({
   liveUrl,
   githubUrl,
   featured,
+  className,
+  style,
 }: ProjectCardProps) {
   const thumbnailUrl = thumbnail
     ? urlFor(thumbnail).width(600).height(340).url()
@@ -39,7 +43,11 @@ export function ProjectCard({
   return (
     <div
       data-slot="project-card"
-      className="relative overflow-hidden rounded border border-border/30 bg-card/50 p-6"
+      className={cn(
+        "relative overflow-hidden rounded border border-border/30 bg-card/50 p-6",
+        className
+      )}
+      style={style}
     >
       <div className="pointer-events-none absolute left-0 top-0 h-4 w-4 border-l-2 border-t-2 border-primary/50" />
       <div className="pointer-events-none absolute right-0 top-0 h-4 w-4 border-r-2 border-t-2 border-primary/50" />
@@ -90,33 +98,32 @@ export function ProjectCard({
 
       {skills && skills.length > 0 && (
         <div className="mt-4 flex flex-wrap gap-1.5">
-          {groupSkillsByCategory(skills).map((group) => (
-            <div key={group.category} className="flex flex-wrap gap-1.5">
-              {group.skills.map((skill) => {
-                const colors = skillBadgeClasses(skill.category)
-                return (
-                  <span
-                    key={skill._id}
+          {groupSkillsByCategory(skills).map((group, groupIndex) =>
+            group.skills.map((skill, skillIndex) => {
+              const colors = skillBadgeClasses(skill.category)
+              return (
+                <span
+                  key={skill._id}
                     className={cn(
                       "inline-flex items-center gap-1.5 rounded border px-2 py-0.5 font-mono text-[9px] uppercase tracking-widest",
+                      groupIndex > 0 && skillIndex === 0 ? "ml-3" : "",
                       colors.border,
                       colors.bg,
                       colors.text
                     )}
-                  >
-                    {skill.image ? (
-                      <img
-                        src={urlFor(skill.image).width(16).height(16).url()}
-                        alt=""
-                        className="h-3 w-3 object-contain"
-                      />
-                    ) : null}
-                    {skill.name}
-                  </span>
-                )
-              })}
-            </div>
-          ))}
+                >
+                  {skill.image ? (
+                    <img
+                      src={urlFor(skill.image).width(16).height(16).url()}
+                      alt=""
+                      className="h-3 w-3 object-contain"
+                    />
+                  ) : null}
+                  {skill.name}
+                </span>
+              )
+            })
+          )}
         </div>
       )}
 

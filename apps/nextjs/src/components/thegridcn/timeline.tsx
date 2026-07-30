@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils"
 
 interface TimelineItem {
   title: string
-  description?: string
+  description?: React.ReactNode
   date?: string
   status?: "completed" | "active" | "upcoming"
   icon?: React.ReactNode
@@ -81,7 +81,7 @@ export function Timeline({
               )}
             >
               {/* Timeline line + dot */}
-              <div className="relative flex flex-col items-center">
+              <div className="relative flex flex-col items-center pt-0.5">
                 <div
                   className={cn(
                     "relative z-10 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2",
@@ -93,8 +93,9 @@ export function Timeline({
                   {item.icon ? (
                     <span className="text-[10px]">{item.icon}</span>
                   ) : status === "completed" ? (
-                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                      <path d="M2 5l2.5 2.5L8 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-primary-foreground" />
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary-foreground">
+                      <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                      <path d="M6 12v5c3 3 6 3 6 3s3 0 6-3v-5" />
                     </svg>
                   ) : null}
                 </div>
@@ -104,13 +105,13 @@ export function Timeline({
               </div>
 
               {/* Content */}
-              <div className="-mt-0.5 flex-1">
-                <div className="flex flex-wrap items-center gap-2">
+              <div className="flex-1">
+                <div className="flex flex-wrap items-center justify-between gap-2">
                   <h4 className="font-mono text-sm font-medium text-foreground/90">
                     {item.title}
                   </h4>
                   {item.date && (
-                    <span className="font-mono text-[9px] text-foreground/30">
+                    <span className="shrink-0 rounded bg-primary/10 px-1.5 py-0.5 font-mono text-[9px] tracking-wider text-primary/70">
                       {item.date}
                     </span>
                   )}
@@ -121,9 +122,9 @@ export function Timeline({
                   )}
                 </div>
                 {item.description && (
-                  <p className="mt-1 text-xs leading-relaxed text-foreground/50">
+                  <div className="mt-1 text-xs leading-relaxed text-foreground/50">
                     {item.description}
-                  </p>
+                  </div>
                 )}
               </div>
             </div>
