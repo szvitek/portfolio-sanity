@@ -20,6 +20,7 @@ import { ThemeControls } from "@/components/ThemeControls"
 import { GridBackground } from "@/components/GridBackground"
 import { TronFooter } from "@/components/thegridcn/tron-footer"
 import { ContactForm } from "@/components/ContactForm"
+import { Radar } from "@/components/thegridcn/radar"
 import { Timeline } from "@/components/thegridcn/timeline"
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
@@ -492,34 +493,45 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
           <div className="mx-auto max-w-5xl">
             <Divider label="CONTACT" variant="circuit" className="mb-8" />
             <div className="grid gap-8 lg:grid-cols-[5fr_7fr]">
-              <div className="flex flex-col justify-center gap-4">
-                <h3 className="font-mono text-sm font-bold uppercase tracking-wider text-foreground/90">
-                  //GET IN TOUCH
-                </h3>
-                <p className="font-mono text-[10px] uppercase tracking-widest text-foreground/40">
-                  Have a project, question, or just want to say hi? Drop a message.
-                </p>
-                {profile?.socialLinks && profile.socialLinks.length > 0 && (
-                  <div className="mt-2 flex flex-wrap gap-3">
-                    {profile.socialLinks.map((link) => (
-                      <SocialLinkIcon
-                        key={link.platform}
-                        platform={link.platform}
-                        url={link.url}
-                        className="text-foreground/60 transition-colors hover:text-primary"
-                      />
-                    ))}
-                  </div>
-                )}
-                {profile?.email && (
-                  <a
-                    href={`mailto:${profile.email}`}
-                    className="inline-flex items-center gap-2 font-mono text-xs text-foreground/60 transition-colors hover:text-primary"
-                  >
-                    <span className="h-1.5 w-1.5 rounded-full bg-primary/60" />
-                    {profile.email}
-                  </a>
-                )}
+              <div className="flex flex-col items-center gap-6 lg:items-start">
+                <Radar
+                  size={180}
+                  sweepSpeed={4}
+                  targets={[
+                    { x: 35, y: 30, label: "Email" },
+                    { x: 65, y: 60, label: "Social" },
+                    { x: 25, y: 70, label: "Projects" },
+                  ]}
+                />
+                <div className="flex flex-col gap-4">
+                  <h3 className="font-mono text-sm font-bold uppercase tracking-wider text-foreground/90">
+                    //GET IN TOUCH
+                  </h3>
+                  <p className="font-mono text-[10px] uppercase tracking-widest text-foreground/40">
+                    Have a project, question, or just want to say hi? Drop a message.
+                  </p>
+                  {profile?.socialLinks && profile.socialLinks.length > 0 && (
+                    <div className="mt-2 flex flex-wrap gap-3">
+                      {profile.socialLinks.map((link) => (
+                        <SocialLinkIcon
+                          key={link.platform}
+                          platform={link.platform}
+                          url={link.url}
+                          className="text-foreground/60 transition-colors hover:text-primary"
+                        />
+                      ))}
+                    </div>
+                  )}
+                  {profile?.email && (
+                    <a
+                      href={`mailto:${profile.email}`}
+                      className="inline-flex items-center gap-2 font-mono text-xs text-foreground/60 transition-colors hover:text-primary"
+                    >
+                      <span className="h-1.5 w-1.5 rounded-full bg-primary/60" />
+                      {profile.email}
+                    </a>
+                  )}
+                </div>
               </div>
               <ContactForm />
             </div>
