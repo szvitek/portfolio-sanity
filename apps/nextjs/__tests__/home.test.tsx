@@ -4,6 +4,7 @@ import type { GetStaticPropsResult } from "next"
 import HomePage, { getStaticProps } from "@/pages/index"
 import { mockHomePageData } from "./fixtures/homePage"
 import type { ProfileData, SkillData, JobData, StudyData, CertificationData, ProjectData } from "@/lib/sanity"
+import type { GroupedStudy } from "@/pages/index"
 import { ThemeProvider } from "@portfolio/ui"
 
 function renderWithTheme(ui: React.ReactElement) {
@@ -15,6 +16,7 @@ type PageProps = {
   skills: SkillData[]
   jobs: JobData[]
   studies: StudyData[]
+  groupedStudies: GroupedStudy[]
   certifications: CertificationData[]
   projects: ProjectData[]
 }
@@ -24,7 +26,7 @@ async function getPageProps(): Promise<PageProps> {
   if ("props" in result) {
     return result.props as PageProps
   }
-  return { profile: null, skills: [], jobs: [], studies: [], certifications: [], projects: [] }
+  return { profile: null, skills: [], jobs: [], studies: [], groupedStudies: [], certifications: [], projects: [] }
 }
 
 const mockFetch = vi.hoisted(() => vi.fn())
@@ -62,11 +64,13 @@ describe("Home page", () => {
     const props = await getPageProps()
     renderWithTheme(<HomePage {...props} />)
 
-    const githubLink = screen.getByLabelText("github")
-    expect(githubLink).toHaveAttribute("href", "https://github.com/johndoe")
+    const githubLinks = screen.getAllByLabelText("github")
+    expect(githubLinks.length).toBeGreaterThanOrEqual(1)
+    expect(githubLinks[0]).toHaveAttribute("href", "https://github.com/johndoe")
 
-    const linkedinLink = screen.getByLabelText("linkedin")
-    expect(linkedinLink).toHaveAttribute("href", "https://linkedin.com/in/johndoe")
+    const linkedinLinks = screen.getAllByLabelText("linkedin")
+    expect(linkedinLinks.length).toBeGreaterThanOrEqual(1)
+    expect(linkedinLinks[0]).toHaveAttribute("href", "https://linkedin.com/in/johndoe")
   })
 
   it("renders CV download button", async () => {

@@ -3,12 +3,13 @@
 import * as React from "react"
 import { cn } from "@/lib/utils"
 
-interface NewsletterFormProps extends React.HTMLAttributes<HTMLFormElement> {
+interface NewsletterFormProps {
   title?: string
   description?: string
   placeholder?: string
   submitLabel?: string
   onSubmit?: (email: string) => void
+  className?: string
 }
 
 export function NewsletterForm({
@@ -44,7 +45,6 @@ export function NewsletterForm({
         "group relative overflow-hidden rounded border border-primary/20 bg-card/80 p-6 backdrop-blur-sm",
         className
       )}
-      {...props}
     >
       {/* Scanline overlay */}
       <div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.03)_2px,rgba(0,0,0,0.03)_4px)]" />

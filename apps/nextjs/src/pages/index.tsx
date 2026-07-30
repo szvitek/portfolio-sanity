@@ -19,7 +19,7 @@ import { SocialLinkIcon } from "@portfolio/ui"
 import { ThemeControls } from "@/components/ThemeControls"
 import { GridBackground } from "@/components/GridBackground"
 import { TronFooter } from "@/components/thegridcn/tron-footer"
-import { NewsletterForm } from "@/components/thegridcn/newsletter-form"
+import { ContactForm } from "@/components/ContactForm"
 import { Timeline } from "@/components/thegridcn/timeline"
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
@@ -27,7 +27,7 @@ import { skillCategoryClasses } from "@/lib/skill-colors"
 import { dateRange, formatYear } from "@/lib/date-utils"
 import { MOCK_PROJECTS } from "@/lib/mock-data"
 
-type GroupedStudy = {
+export type GroupedStudy = {
   institution: string
   studies: StudyData[]
   latestStart: string
@@ -491,14 +491,38 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
         <section id="contact" className="scroll-mt-16 px-4 py-16">
           <div className="mx-auto max-w-5xl">
             <Divider label="CONTACT" variant="circuit" className="mb-8" />
-            <NewsletterForm
-              title="Stay Connected"
-              description="Subscribe to receive updates on new projects and opportunities."
-              submitLabel="Subscribe"
-              onSubmit={(email) => {
-                console.log("Newsletter signup:", email)
-              }}
-            />
+            <div className="grid gap-8 lg:grid-cols-[5fr_7fr]">
+              <div className="flex flex-col justify-center gap-4">
+                <h3 className="font-mono text-sm font-bold uppercase tracking-wider text-foreground/90">
+                  //GET IN TOUCH
+                </h3>
+                <p className="font-mono text-[10px] uppercase tracking-widest text-foreground/40">
+                  Have a project, question, or just want to say hi? Drop a message.
+                </p>
+                {profile?.socialLinks && profile.socialLinks.length > 0 && (
+                  <div className="mt-2 flex flex-wrap gap-3">
+                    {profile.socialLinks.map((link) => (
+                      <SocialLinkIcon
+                        key={link.platform}
+                        platform={link.platform}
+                        url={link.url}
+                        className="text-foreground/60 transition-colors hover:text-primary"
+                      />
+                    ))}
+                  </div>
+                )}
+                {profile?.email && (
+                  <a
+                    href={`mailto:${profile.email}`}
+                    className="inline-flex items-center gap-2 font-mono text-xs text-foreground/60 transition-colors hover:text-primary"
+                  >
+                    <span className="h-1.5 w-1.5 rounded-full bg-primary/60" />
+                    {profile.email}
+                  </a>
+                )}
+              </div>
+              <ContactForm />
+            </div>
           </div>
         </section>
 
