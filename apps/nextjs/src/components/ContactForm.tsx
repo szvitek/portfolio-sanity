@@ -97,7 +97,7 @@ export function ContactForm() {
               placeholder="Your Name"
               required
               className={cn(
-                "w-full rounded border bg-background/50 px-3 py-2 font-mono text-xs text-foreground placeholder:text-foreground/30 focus:outline-none focus:ring-1",
+                "w-full rounded border bg-background/50 px-3 py-2 font-mono text-xs text-black placeholder:text-black/30 focus:outline-none focus:ring-1",
                 getError("name")
                   ? "border-red-500/50 focus:border-red-500 focus:ring-red-500/30"
                   : "border-primary/30 focus:border-primary focus:ring-primary/30"
@@ -120,7 +120,7 @@ export function ContactForm() {
               placeholder="your@email.com"
               required
               className={cn(
-                "w-full rounded border bg-background/50 px-3 py-2 font-mono text-xs text-foreground placeholder:text-foreground/30 focus:outline-none focus:ring-1",
+                "w-full rounded border bg-background/50 px-3 py-2 font-mono text-xs text-black placeholder:text-black/30 focus:outline-none focus:ring-1",
                 getError("email")
                   ? "border-red-500/50 focus:border-red-500 focus:ring-red-500/30"
                   : "border-primary/30 focus:border-primary focus:ring-primary/30"
@@ -143,7 +143,7 @@ export function ContactForm() {
               placeholder="Subject"
               required
               className={cn(
-                "w-full rounded border bg-background/50 px-3 py-2 font-mono text-xs text-foreground placeholder:text-foreground/30 focus:outline-none focus:ring-1",
+                "w-full rounded border bg-background/50 px-3 py-2 font-mono text-xs text-black placeholder:text-black/30 focus:outline-none focus:ring-1",
                 getError("subject")
                   ? "border-red-500/50 focus:border-red-500 focus:ring-red-500/30"
                   : "border-primary/30 focus:border-primary focus:ring-primary/30"
@@ -166,7 +166,7 @@ export function ContactForm() {
               required
               rows={4}
               className={cn(
-                "w-full resize-none rounded border bg-background/50 px-3 py-2 font-mono text-xs text-foreground placeholder:text-foreground/30 focus:outline-none focus:ring-1",
+                "w-full resize-none rounded border bg-background/50 px-3 py-2 font-mono text-xs text-black placeholder:text-black/30 focus:outline-none focus:ring-1",
                 getError("message")
                   ? "border-red-500/50 focus:border-red-500 focus:ring-red-500/30"
                   : "border-primary/30 focus:border-primary focus:ring-primary/30"

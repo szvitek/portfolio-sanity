@@ -505,10 +505,11 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
                 <Radar
                   size={180}
                   sweepSpeed={4}
+                  className="self-center"
                   targets={[
-                    { x: 35, y: 30, label: "Email" },
-                    { x: 65, y: 60, label: "Social" },
-                    { x: 25, y: 70, label: "Projects" },
+                    { x: 25, y: 70, label: "Socials" },
+                    { x: 50, y: 25, label: "Projects" },
+                    { x: 75, y: 50, label: "Email" },
                   ]}
                 />
                 <div className="flex flex-wrap items-center gap-3">
