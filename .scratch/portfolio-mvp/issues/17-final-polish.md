@@ -19,7 +19,7 @@
 
 ## Comments
 
-Implemented via commit(s) TBD.
+Implemented via commit `1c37ee0`.
 
 - Favicon: `swytech-dev-logo.png` moved to `apps/nextjs/public/` and linked via `<link rel="icon">` in `_document.tsx`.
 - Logo placed in the footer brand column (next to `//swytech.dev`) via a new optional `logo` prop on `TronFooter`.
