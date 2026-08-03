@@ -10,6 +10,7 @@
 - [x] Set the `swytech-dev-logo` icon (added to the root of `apps/nextjs`) as the site favicon
 - [x] Place the logo somewhere on the page — contact form and/or footer
 - [x] Change the `[ alert ]` badge text in the hero to `[ SWYTECH.DEV ]`
+- [x] Add the logo + `swytech.dev` to the header (NavBar), pushing the menu items to the right
 
 **Borders:**
 - [x] Fix border imbalance — hero has a thin border while other sections have heavy glowing borders
@@ -27,3 +28,4 @@ Implemented via commit `1c37ee0`.
 - Footer header: `TronFooter brand="PORTFOLIO"` → `brand="swytech.dev"` on the home page.
 - Border balance: added `[data-slot="tron-hero-section"]` to the `--tron-border-glow` list in `globals.css` so the hero matches the other sections' heavy glowing borders.
 - Tests: footer shows `//swytech.dev` + logo image, and hero shows `[ SWYTECH.DEV ]` (TDD at the two agreed seams).
+- Header: `NavBar` now renders the logo + `swytech.dev` brand linking to `#profile` on the left, and the section menu is pushed to the right (`justify-between`).

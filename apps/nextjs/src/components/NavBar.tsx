@@ -48,21 +48,33 @@ export function NavBar() {
       data-testid="navbar"
       className="sticky top-0 z-40 border-b border-border/50 bg-background/80 backdrop-blur-md"
     >
-      <div className="mx-auto flex max-w-5xl items-center justify-center gap-1 px-4 py-2">
-        {SECTIONS.map(({ id, label }) => (
-          <a
-            key={id}
-            href={`#${id}`}
-            className={cn(
-              "rounded px-3 py-1.5 font-mono text-[11px] uppercase tracking-widest transition-colors",
-              activeSection === id
-                ? "text-primary"
-                : "text-foreground/50 hover:text-foreground/80"
-            )}
-          >
-            {label}
-          </a>
-        ))}
+      <div className="mx-auto flex max-w-5xl items-center justify-between gap-1 px-4 py-2">
+        <a href="#profile" className="flex shrink-0 items-center gap-2">
+          <img
+            src="/swytech-dev-logo.png"
+            alt="swytech.dev logo"
+            className="h-6 w-6 object-contain"
+          />
+          <span className="font-mono text-xs font-bold uppercase tracking-[0.3em] text-primary">
+            swytech.dev
+          </span>
+        </a>
+        <div className="flex items-center justify-end gap-1">
+          {SECTIONS.map(({ id, label }) => (
+            <a
+              key={id}
+              href={`#${id}`}
+              className={cn(
+                "rounded px-3 py-1.5 font-mono text-[11px] uppercase tracking-widest transition-colors",
+                activeSection === id
+                  ? "text-primary"
+                  : "text-foreground/50 hover:text-foreground/80"
+              )}
+            >
+              {label}
+            </a>
+          ))}
+        </div>
       </div>
     </nav>
   )

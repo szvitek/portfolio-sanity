@@ -185,8 +185,30 @@ describe("Home page", () => {
     const navLinks = nav.querySelectorAll("a")
     const linkTexts = Array.from(navLinks).map((link) => link.textContent)
     expect(linkTexts).toEqual([
-      "Profile", "Skills", "Projects", "Jobs", "Studies", "Certifications", "Contact",
+      "swytech.dev", "Profile", "Skills", "Projects", "Jobs", "Studies", "Certifications", "Contact",
     ])
+  })
+
+  it("renders the swytech.dev brand linking to the top of the page", async () => {
+    const props = await getPageProps()
+    renderWithTheme(<HomePage {...props} />)
+
+    const nav = screen.getByTestId("navbar")
+    const brandLink = nav.querySelector('a[href="#profile"]')
+    expect(brandLink).toBeInTheDocument()
+
+    const logo = brandLink?.querySelector('img[alt="swytech.dev logo"]')
+    expect(logo).toBeInTheDocument()
+    expect(logo).toHaveAttribute("src", "/swytech-dev-logo.png")
+    expect(brandLink).toHaveTextContent("swytech.dev")
+  })
+
+  it("pushes the menu items to the right of the header brand", async () => {
+    const props = await getPageProps()
+    renderWithTheme(<HomePage {...props} />)
+
+    const nav = screen.getByTestId("navbar")
+    expect(nav.firstElementChild).toHaveClass("justify-between")
   })
 
   it("renders top status bar", async () => {
