@@ -28,4 +28,4 @@ Implemented via commit `1c37ee0`.
 - Footer header: `TronFooter brand="PORTFOLIO"` → `brand="swytech.dev"` on the home page.
 - Border balance: added `[data-slot="tron-hero-section"]` to the `--tron-border-glow` list in `globals.css` so the hero matches the other sections' heavy glowing borders.
 - Tests: footer shows `//swytech.dev` + logo image, and hero shows `[ SWYTECH.DEV ]` (TDD at the two agreed seams).
-- Header: `NavBar` now renders the logo + `swytech.dev` brand linking to `#profile` on the left, and the section menu is pushed to the right (`justify-between`).
+- Header: `NavBar` now renders the logo + `swytech.dev` brand linking to `#profile` on the left, and the section menu is pushed to the right (`justify-between`) — commit `d60e7a7`.
