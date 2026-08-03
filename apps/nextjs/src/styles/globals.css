@@ -419,6 +419,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* GridCN component glows */
 [data-tron-intensity] [data-slot="tron-status-bar"],
+[data-tron-intensity] [data-slot="tron-hero-section"],
 [data-tron-intensity] [data-slot="tron-data-card"],
 [data-tron-intensity] [data-slot="tron-cta-banner"],
 [data-tron-intensity] [data-slot="tron-timeline"],

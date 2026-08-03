@@ -4,12 +4,14 @@ import { cn } from "@/lib/utils"
 export interface AnomalyBannerProps extends React.HTMLAttributes<HTMLDivElement> {
   title?: string
   subtitle?: string
+  label?: string
   animated?: boolean
 }
 
 export function AnomalyBanner({
   title = "ANOMALY FOUND",
   subtitle,
+  label = "[ ALERT ]",
   animated = true,
   className,
   ...props
@@ -20,7 +22,7 @@ export function AnomalyBanner({
       <div className="flex items-center">
         <div className="h-px flex-1 bg-gradient-to-r from-transparent to-amber-500/50" />
         <span className="px-4 font-mono text-[10px] tracking-[0.5em] text-amber-500/70">
-          [ ALERT ]
+          {label}
         </span>
         <div className="h-px flex-1 bg-gradient-to-l from-transparent to-amber-500/50" />
       </div>

@@ -4,6 +4,7 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
+        <link rel="icon" type="image/png" href="/swytech-dev-logo.png" />
         <script
           dangerouslySetInnerHTML={{
             __html: `

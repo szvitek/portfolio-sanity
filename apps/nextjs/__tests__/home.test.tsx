@@ -201,8 +201,24 @@ describe("Home page", () => {
     const props = await getPageProps()
     renderWithTheme(<HomePage {...props} />)
 
-    expect(screen.getByText("//PORTFOLIO")).toBeInTheDocument()
+    expect(screen.getByText("//swytech.dev")).toBeInTheDocument()
     expect(screen.getByText("END OF LINE")).toBeInTheDocument()
+  })
+
+  it("renders the swytech.dev logo in the footer", async () => {
+    const props = await getPageProps()
+    const { container } = renderWithTheme(<HomePage {...props} />)
+
+    const logo = container.querySelector('[data-slot="tron-footer"] img[alt="swytech.dev logo"]')
+    expect(logo).toBeInTheDocument()
+    expect(logo).toHaveAttribute("src", "/swytech-dev-logo.png")
+  })
+
+  it("renders the SWYTECH.DEV badge in the hero", async () => {
+    const props = await getPageProps()
+    renderWithTheme(<HomePage {...props} />)
+
+    expect(screen.getByText("[ SWYTECH.DEV ]")).toBeInTheDocument()
   })
 
   it("renders section IDs for navigation anchor targets", async () => {

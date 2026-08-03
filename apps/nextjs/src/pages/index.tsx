@@ -227,6 +227,7 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
               <AnomalyBanner
                 title={profile.title}
                 subtitle={profile.subtitle}
+                label="[ SWYTECH.DEV ]"
                 animated={false}
               />
               {bioText && (
@@ -553,8 +554,9 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
       </main>
 
       <TronFooter
-        brand="PORTFOLIO"
+        brand="swytech.dev"
         tagline="END OF LINE"
+        logo="/swytech-dev-logo.png"
         links={[
           { label: "GitHub", href: "https://github.com/johndoe" },
           { label: "LinkedIn", href: "https://linkedin.com/in/johndoe" },

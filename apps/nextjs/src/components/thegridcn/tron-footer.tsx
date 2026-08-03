@@ -12,6 +12,7 @@ interface TronFooterProps extends React.HTMLAttributes<HTMLElement> {
   brand?: string
   tagline?: string
   links?: FooterLink[]
+  logo?: string
   copyright?: string
 }
 
@@ -19,6 +20,7 @@ export function TronFooter({
   brand = "PORTFOLIO",
   tagline = "END OF LINE",
   links = [],
+  logo,
   copyright,
   className,
   ...props
@@ -40,8 +42,17 @@ export function TronFooter({
         <div className="grid gap-8 md:grid-cols-3">
           {/* Brand */}
           <div>
-            <div className="mb-3 font-mono text-xs font-bold uppercase tracking-[0.3em] text-primary">
-              //{brand}
+            <div className="mb-3 flex items-center gap-2">
+              {logo && (
+                <img
+                  src={logo}
+                  alt="swytech.dev logo"
+                  className="h-6 w-6 object-contain"
+                />
+              )}
+              <span className="font-mono text-xs font-bold uppercase tracking-[0.3em] text-primary">
+                //{brand}
+              </span>
             </div>
             <p className="font-mono text-[10px] uppercase tracking-widest text-foreground/40">
               {tagline}
