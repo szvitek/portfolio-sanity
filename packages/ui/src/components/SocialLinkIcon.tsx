@@ -23,8 +23,18 @@ const icons: Record<SocialLinkIconProps["platform"], (props: { className?: strin
   ),
 }
 
-export function SocialLinkIcon({ platform, url, className }: SocialLinkIconProps) {
+export function SocialIcon({
+  platform,
+  className,
+}: {
+  platform: SocialLinkIconProps["platform"]
+  className?: string
+}) {
   const Icon = icons[platform]
+  return <Icon className={className} />
+}
+
+export function SocialLinkIcon({ platform, url, className }: SocialLinkIconProps) {
   return (
     <a
       href={url}
@@ -33,7 +43,7 @@ export function SocialLinkIcon({ platform, url, className }: SocialLinkIconProps
       className={className}
       aria-label={platform}
     >
-      <Icon className="h-5 w-5" />
+      <SocialIcon platform={platform} className="h-5 w-5" />
     </a>
   )
 }

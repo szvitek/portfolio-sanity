@@ -15,7 +15,7 @@ import { CertificationCard } from "@/components/CertificationCard"
 import { ProjectCard } from "@/components/ProjectCard"
 import { NavBar } from "@/components/NavBar"
 import { StatusBar } from "@/components/thegridcn/status-bar"
-import { SocialLinkIcon } from "@portfolio/ui"
+import { SocialIcon, SocialLinkIcon } from "@portfolio/ui"
 import { ThemeControls } from "@/components/ThemeControls"
 import { GridBackground } from "@/components/GridBackground"
 import { TronFooter } from "@/components/thegridcn/tron-footer"
@@ -28,6 +28,11 @@ import { cn } from "@/lib/utils"
 import { skillCategoryClasses } from "@/lib/skill-colors"
 import { dateRange, formatYear } from "@/lib/date-utils"
 import { MOCK_PROJECTS } from "@/lib/mock-data"
+
+const SOCIAL_LABELS: Record<"github" | "linkedin", string> = {
+  github: "GitHub",
+  linkedin: "LinkedIn",
+}
 
 export type GroupedStudy = {
   institution: string
@@ -243,16 +248,35 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
                   {bioText}
                 </p>
               )}
-              {profile?.socialLinks && profile.socialLinks.length > 0 && (
-                <div className="flex items-center gap-4">
-                  {profile.socialLinks.map((link) => (
-                    <SocialLinkIcon
-                      key={link.platform}
-                      platform={link.platform}
-                      url={link.url}
-                      className="text-foreground/60 transition-colors hover:text-primary"
-                    />
-                  ))}
+                  {profile?.socialLinks && profile.socialLinks.length > 0 && (
+                    <div className="flex flex-wrap items-center justify-center gap-4">
+                      {profile.socialLinks.map((link) =>
+                        link.platform === "github" || link.platform === "linkedin" ? (
+                          <Button
+                            key={link.platform}
+                            asChild
+                            variant="outline"
+                            className="px-4 py-2 text-xs"
+                          >
+                            <a
+                              href={link.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              aria-label={link.platform}
+                            >
+                              <SocialIcon platform={link.platform} className="h-4 w-4" />
+                              <span>{SOCIAL_LABELS[link.platform]}</span>
+                            </a>
+                          </Button>
+                        ) : (
+                          <SocialLinkIcon
+                            key={link.platform}
+                            platform={link.platform}
+                            url={link.url}
+                            className="text-foreground/60 transition-colors hover:text-primary"
+                          />
+                        )
+                      )}
 
                   {cvUrl && (
                     <Button
@@ -331,7 +355,7 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
                         <img
                           src={urlFor(skill.image).width(32).height(32).url()}
                           alt=""
-                          className="h-8 w-8 rounded bg-background/80 object-contain p-0.5"
+                          className="h-8 w-8 rounded object-contain p-0.5"
                         />
                       )
                       : undefined,
@@ -535,18 +559,37 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
                     ]}
                   />
                   <div className="flex flex-wrap items-center gap-3">
-                    {profile?.socialLinks && profile.socialLinks.length > 0 && (
-                      <div className="flex flex-wrap gap-3">
-                        {profile.socialLinks.map((link) => (
-                          <SocialLinkIcon
-                            key={link.platform}
-                            platform={link.platform}
-                            url={link.url}
-                            className="text-foreground/60 transition-colors hover:text-primary"
-                          />
-                        ))}
-                      </div>
-                    )}
+                        {profile?.socialLinks && profile.socialLinks.length > 0 && (
+                          <div className="flex flex-wrap gap-3">
+                            {profile.socialLinks.map((link) =>
+                              link.platform === "github" || link.platform === "linkedin" ? (
+                                <Button
+                                  key={link.platform}
+                                  asChild
+                                  variant="outline"
+                                  className="px-4 py-2 text-[10px]"
+                                >
+                                    <a
+                                      href={link.url}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      aria-label={link.platform}
+                                    >
+                                      <SocialIcon platform={link.platform} className="h-4 w-4" />
+                                      <span>{SOCIAL_LABELS[link.platform]}</span>
+                                    </a>
+                                  </Button>
+                              ) : (
+                                <SocialLinkIcon
+                                  key={link.platform}
+                                  platform={link.platform}
+                                  url={link.url}
+                                  className="text-foreground/60 transition-colors hover:text-primary"
+                                />
+                              )
+                            )}
+                          </div>
+                        )}
                     {profile?.email && (
                       <a
                         href={`mailto:${profile.email}`}

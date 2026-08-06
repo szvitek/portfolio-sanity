@@ -73,6 +73,27 @@ describe("Home page", () => {
     expect(linkedinLinks[0]).toHaveAttribute("href", "https://linkedin.com/in/johndoe")
   })
 
+  it("renders hero and contact social links as outline buttons", async () => {
+    const props = await getPageProps()
+    renderWithTheme(<HomePage {...props} />)
+
+    const githubButtons = screen
+      .getAllByText("GitHub")
+      .map((el) => el.closest('a[data-slot="button"]'))
+      .filter((el): el is HTMLAnchorElement => el !== null)
+      .filter((el) => el.getAttribute("href") === "https://github.com/johndoe")
+    expect(githubButtons.length).toBeGreaterThanOrEqual(2)
+    githubButtons.forEach((btn) => expect(btn).toHaveAttribute("data-variant", "outline"))
+
+    const linkedinButtons = screen
+      .getAllByText("LinkedIn")
+      .map((el) => el.closest('a[data-slot="button"]'))
+      .filter((el): el is HTMLAnchorElement => el !== null)
+      .filter((el) => el.getAttribute("href") === "https://linkedin.com/in/johndoe")
+    expect(linkedinButtons.length).toBeGreaterThanOrEqual(2)
+    linkedinButtons.forEach((btn) => expect(btn).toHaveAttribute("data-variant", "outline"))
+  })
+
   it("renders CV download button", async () => {
     const props = await getPageProps()
     renderWithTheme(<HomePage {...props} />)
@@ -282,6 +303,20 @@ describe("Home page", () => {
 
     const allPython = screen.getAllByText("Python")
     expect(allPython.length).toBeGreaterThan(0)
+  })
+
+  it("renders skill icons without their own background so the carousel item tint shows through", async () => {
+    const props = await getPageProps()
+    const { container } = renderWithTheme(<HomePage {...props} />)
+
+    const logoCloud = container.querySelector('[data-slot="tron-logo-cloud"]')
+    const iconImgs = Array.from(logoCloud?.querySelectorAll("img") ?? [])
+    expect(iconImgs.length).toBeGreaterThan(0)
+
+    for (const img of iconImgs) {
+      const bgClasses = Array.from(img.classList).filter((c) => c.startsWith("bg-"))
+      expect(bgClasses).toEqual([])
+    }
   })
 
   it("renders category filter buttons and filters skills on click", async () => {
@@ -608,7 +643,11 @@ describe("Home page", () => {
     const props = await getPageProps()
     renderWithTheme(<HomePage {...props} />)
 
-    const githubLinks = screen.getAllByText("GitHub")
+    const githubLinks = screen
+      .getAllByText("GitHub")
+      .map((el) => el.closest("a"))
+      .filter((el): el is HTMLAnchorElement => el !== null)
+      .filter((el) => el.getAttribute("href")?.includes("github.com/johndoe/"))
     expect(githubLinks.length).toBeGreaterThanOrEqual(3)
 
     expect(githubLinks[0]).toHaveAttribute("href", "https://github.com/johndoe/portfolio")
@@ -624,7 +663,10 @@ describe("Home page", () => {
     expect(liveDemo).toHaveAttribute("data-variant", "default")
 
     const githubLinks = screen.getAllByText("GitHub")
-    const githubButton = githubLinks.find((el) => el.hasAttribute("data-slot"))
+    const githubButton = githubLinks
+      .map((el) => el.closest("a"))
+      .find((el) => el !== null && el.getAttribute("href")?.includes("johndoe/portfolio"))
+    expect(githubButton).toHaveAttribute("data-slot", "button")
     expect(githubButton).toHaveAttribute("data-variant", "default")
   })
 

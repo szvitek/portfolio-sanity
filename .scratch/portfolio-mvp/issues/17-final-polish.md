@@ -20,6 +20,9 @@
 
 **New scope:**
 - [x] Revisit button components — should we use the original GridCN buttons?
+- [x] Skill icons render transparent so each carousel item's category tint shows through
+- [x] Hero + contact GitHub/LinkedIn links as outline buttons
+- [x] Outline buttons glow only on hover (plain border at rest)
 - [ ] Finalise the footer
 - [ ] Background music feature — store 1+ audio files in Sanity, add the GridCN waveform component
 
@@ -30,6 +33,12 @@
 **Button variants (regression fix):** The skills category buttons and the projects toggle were `variant="outline"`, which meant the tron rules in `globals.css` (`[data-tron-intensity] [data-slot="button"][data-variant="outline"]`, 0-3-0 specificity) overrode the per-category Tailwind color classes (`border-sky-500/30`, `text-sky-500/60`, …) whenever glow was on. Switched those buttons to `variant="ghost"` — the tron rules only restyle `default` and `outline`, so the category colors now show through with glow on, and visuals are identical with glow off. The `FILTER_*`/`CATEGORY_BTN` hover overrides were kept because ghost still carries `hover:bg-muted hover:text-primary`. Tests updated to assert `data-variant="ghost"` on the skills "All" button and the projects toggle.
 
 **Semantic color opacity bug (root-cause fix):** The "All"/"Featured" filter buttons had no active background because `bg-primary/20` (and `border-primary/60`) compiled to *nothing*: the `@portfolio/tailwind-config` preset mapped semantic colors (`primary`, `foreground`, `background`, `card`, `border`, `muted`, …) to a raw CSS variable string (`var(--primary)`), and Tailwind 3.4 silently drops the `/XX` opacity variant for those. The same bug silently affected dozens of utilities across the app (`text-foreground/50`, `bg-card/80`, `border-border/30`, the theme-switch intensity dots' `bg-primary/40`/`bg-primary/70`, the default button's `hover:bg-primary/80`, …). Category buttons worked only because `sky/emerald/…` are built-in palette colors. Fixed in the preset by wrapping every semantic color as `oklch(from var(--x) l c h / <alpha-value>)` — the same pattern already used for the numbered `primary-50..700` scale, so no CSS variable or component change was needed. Verified: Tailwind CLI probe + clean `next build` now emit `.bg-primary\/20`, `.border-primary\/60`, etc. (was previously absent from the production CSS). Note: this also restores the *intended* partial-opacity look for anything using semantic-color opacity utilities (they previously fell back to full opacity/transparent).
+
+**Skill icon background (visual fix):** The skill logos in the carousel originally had a hardcoded `bg-background/80` backdrop (added because some logos are too dark), then briefly the category tint (`skillBadgeClasses(category).bg`, e.g. `bg-sky-500/20`). Layering that 20% icon background on top of the carousel item's own 20% tint composites to ~36% — visually indistinguishable from the item's 40% border color. Removed the icon's own background entirely so the item's single tint is all that shows behind the logo; test re-scoped to assert skill icons carry no `bg-*` class.
+
+**Social links as outline buttons:** GitHub and LinkedIn links in the hero and contact sections now render as GridCN `Button asChild variant="outline"` (icon + "GitHub"/"LinkedIn" label) instead of bare icon anchors. Extracted a bare `SocialIcon` (svg-only, no anchor) from `SocialLinkIcon` so it can live inside the button's anchor without nesting `<a>` elements; non-github/linkedin platforms keep the plain `SocialLinkIcon`. Tests: new "renders hero and contact social links as outline buttons" (TDD at the button seam); two project-GitHub tests hardened to match by href instead of bare text since the hero now also shows the word "GitHub".
+
+**Outline button glow (hover-only):** The generic "Button glow" rule in `globals.css` gives *every* `[data-slot="button"]` `box-shadow: var(--tron-border-glow)` at rest. Outline buttons therefore glowed constantly despite the outline rule defining only their border. Added `box-shadow: none` to `[data-variant="outline"]`'s default state so outline buttons keep their border but glow only on hover (the outline `:hover` rule already had its own glow). Confirmed in the compiled production CSS.
 
 
 Implemented via commit `f4a0ea0`.
