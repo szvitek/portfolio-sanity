@@ -4,21 +4,21 @@ const gridcnPreset: Partial<Config> = {
   theme: {
     extend: {
       colors: {
-        border: "var(--border)",
-        input: "var(--input)",
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        border: "oklch(from var(--border) l c h / <alpha-value>)",
+        input: "oklch(from var(--input) l c h / <alpha-value>)",
+        background: "oklch(from var(--background) l c h / <alpha-value>)",
+        foreground: "oklch(from var(--foreground) l c h / <alpha-value>)",
         card: {
-          DEFAULT: "var(--card)",
-          foreground: "var(--card-foreground)",
+          DEFAULT: "oklch(from var(--card) l c h / <alpha-value>)",
+          foreground: "oklch(from var(--card-foreground) l c h / <alpha-value>)",
         },
         muted: {
-          DEFAULT: "var(--muted)",
-          foreground: "var(--muted-foreground)",
+          DEFAULT: "oklch(from var(--muted) l c h / <alpha-value>)",
+          foreground: "oklch(from var(--muted-foreground) l c h / <alpha-value>)",
         },
         primary: {
-          DEFAULT: "var(--primary)",
-          foreground: "var(--primary-foreground)",
+          DEFAULT: "oklch(from var(--primary) l c h / <alpha-value>)",
+          foreground: "oklch(from var(--primary-foreground) l c h / <alpha-value>)",
           rgb: "var(--primary-rgb)",
           50: "oklch(from var(--primary) l c h / 0.05)",
           100: "oklch(from var(--primary) l c h / 0.1)",
@@ -30,18 +30,18 @@ const gridcnPreset: Partial<Config> = {
           700: "oklch(from var(--primary) l c h / 1)",
         },
         accent: {
-          DEFAULT: "var(--accent)",
-          foreground: "var(--accent-foreground)",
+          DEFAULT: "oklch(from var(--accent) l c h / <alpha-value>)",
+          foreground: "oklch(from var(--accent-foreground) l c h / <alpha-value>)",
         },
         destructive: {
-          DEFAULT: "oklch(0.6 0.2 30)",
+          DEFAULT: "oklch(0.6 0.2 30 / <alpha-value>)",
           foreground: "white",
         },
         secondary: {
-          DEFAULT: "var(--secondary)",
-          foreground: "var(--secondary-foreground)",
+          DEFAULT: "oklch(from var(--secondary) l c h / <alpha-value>)",
+          foreground: "oklch(from var(--secondary-foreground) l c h / <alpha-value>)",
         },
-        ring: "var(--ring)",
+        ring: "oklch(from var(--ring) l c h / <alpha-value>)",
       },
       spacing: {
         "0": "0px",
