@@ -77,7 +77,7 @@ export function SignalIndicator({
 
       {/* Label */}
       {label && (
-        <span className="text-[10px] uppercase tracking-widest text-foreground/90">
+        <span className="text-[10px] uppercase tracking-widest text-foreground/80">
           {label}
         </span>
       )}

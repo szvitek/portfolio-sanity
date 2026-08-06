@@ -38,7 +38,7 @@ export function Footer({ email }: FooterProps) {
           </span>
         }
         rightContent={
-          <span className="text-foreground/70">
+          <span className="text-foreground/50">
             &copy; {new Date().getFullYear()} PORTFOLIO v1.0
           </span>
         }

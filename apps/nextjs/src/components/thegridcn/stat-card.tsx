@@ -15,7 +15,7 @@ interface StatCardProps extends React.HTMLAttributes<HTMLDivElement> {
 const trendColor: Record<string, string> = {
   up: "text-green-500",
   down: "text-red-500",
-  neutral: "text-foreground/70",
+  neutral: "text-foreground/50",
 }
 
 const trendIcon: Record<string, string> = {
@@ -89,7 +89,7 @@ export function StatCard({
 
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0 flex-1">
-          <div className="text-[10px] uppercase tracking-widest text-foreground/80">
+          <div className="text-[10px] uppercase tracking-widest text-foreground/60">
             {title}
           </div>
           <div className="mt-1 flex items-baseline gap-1.5">
@@ -97,7 +97,7 @@ export function StatCard({
               {displayValue !== null ? displayValue : value}
             </span>
             {unit && (
-              <span className="font-mono text-sm text-foreground/70">{unit}</span>
+              <span className="font-mono text-sm text-foreground/50">{unit}</span>
             )}
           </div>
           {trend && (

@@ -40,7 +40,7 @@ export function ArrivalPanel({
 
       <div className="px-12 py-4 text-center">
         {subtitle && (
-          <div className="mb-1 font-mono text-[9px] tracking-widest text-foreground/90">
+          <div className="mb-1 font-mono text-[9px] tracking-widest text-foreground/80">
             {subtitle}
           </div>
         )}

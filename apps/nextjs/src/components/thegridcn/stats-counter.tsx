@@ -79,7 +79,7 @@ export function StatsCounter({
         {items.map((item, i) => (
           <div key={i} className="flex flex-col items-center gap-1 px-4 py-6 text-center">
             <AnimatedNumber value={item.value} prefix={item.prefix} suffix={item.suffix} />
-            <span className="text-[10px] uppercase tracking-widest text-foreground/70">
+            <span className="text-[10px] uppercase tracking-widest text-foreground/50">
               {item.label}
             </span>
           </div>

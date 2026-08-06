@@ -53,7 +53,7 @@ export function NewsletterForm({
         <h3 className="mb-2 font-mono text-sm font-bold uppercase tracking-wider text-foreground/90">
           //{title}
         </h3>
-        <p className="mb-4 font-mono text-[10px] uppercase tracking-widest text-foreground/60">
+        <p className="mb-4 font-mono text-[10px] uppercase tracking-widest text-foreground/40">
           {description}
         </p>
 
@@ -64,7 +64,7 @@ export function NewsletterForm({
             onChange={(e) => setEmail(e.target.value)}
             placeholder={placeholder}
             required
-            className="flex-1 rounded border border-primary/30 bg-background/50 px-3 py-2 font-mono text-xs text-foreground placeholder:text-foreground/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30"
+            className="flex-1 rounded border border-primary/30 bg-background/50 px-3 py-2 font-mono text-xs text-foreground placeholder:text-foreground/30 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30"
           />
           <button
             type="submit"

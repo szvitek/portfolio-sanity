@@ -68,7 +68,7 @@ export function NavBar() {
                 "group relative px-3 py-1.5 font-mono text-[11px] uppercase tracking-widest transition-colors",
                 activeSection === id
                   ? "text-primary"
-                  : "text-foreground/70 hover:text-foreground/90"
+                  : "text-foreground/50 hover:text-foreground/80"
               )}
             >
               {label}

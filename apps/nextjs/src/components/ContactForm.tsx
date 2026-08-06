@@ -66,7 +66,7 @@ export function ContactForm() {
         <h3 className="mb-2 font-mono text-sm font-bold uppercase tracking-wider text-foreground/90">
           //SEND TRANSMISSION
         </h3>
-        <p className="mb-4 font-mono text-[10px] uppercase tracking-widest text-foreground/60">
+        <p className="mb-4 font-mono text-[10px] uppercase tracking-widest text-foreground/40">
           Fill out the form below to get in touch.
         </p>
 

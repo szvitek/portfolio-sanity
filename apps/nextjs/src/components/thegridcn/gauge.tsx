@@ -144,7 +144,7 @@ export function Gauge({
           strokeWidth={config.stroke}
           strokeLinecap="round"
           strokeDasharray={`${arcLength} ${gapLength}`}
-          className="text-foreground/20"
+          className="text-foreground/10"
           transform={`rotate(${startAngleDeg} ${center} ${center})`}
         />
 
@@ -226,7 +226,7 @@ export function Gauge({
       </svg>
 
       {label && (
-        <span className={cn("uppercase tracking-widest text-foreground/90", config.labelSize)}>
+        <span className={cn("uppercase tracking-widest text-foreground/80", config.labelSize)}>
           {label}
         </span>
       )}

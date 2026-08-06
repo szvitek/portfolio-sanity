@@ -83,7 +83,7 @@ export function HeroSection({
           </h1>
 
           {subtitle && (
-            <div className="font-mono text-[10px] uppercase tracking-widest text-foreground/70">
+            <div className="font-mono text-[10px] uppercase tracking-widest text-foreground/50">
               {subtitle}
             </div>
           )}
@@ -101,7 +101,7 @@ export function HeroSection({
           </div>
 
           {description && (
-            <p className="max-w-2xl text-sm leading-relaxed text-foreground/80 md:text-base">
+            <p className="max-w-2xl text-sm leading-relaxed text-foreground/60 md:text-base">
               {description}
             </p>
           )}

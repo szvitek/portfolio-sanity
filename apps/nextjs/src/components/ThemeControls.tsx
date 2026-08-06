@@ -33,7 +33,7 @@ export function ThemeControls() {
       data-testid="theme-controls"
       className="fixed right-4 top-1/2 z-50 flex -translate-y-1/2 flex-col items-center gap-3 rounded border border-border/30 bg-background/80 p-2 backdrop-blur-md"
     >
-      <span className="font-mono text-[8px] uppercase tracking-widest text-foreground/60 [writing-mode:vertical-lr]">
+      <span className="font-mono text-[8px] uppercase tracking-widest text-foreground/40 [writing-mode:vertical-lr]">
         Theme
       </span>
       {THEME_NAMES.map((theme) => (
@@ -56,7 +56,7 @@ export function ThemeControls() {
 
       <div className="my-1 h-px w-4 bg-border/30" />
 
-      <span className="font-mono text-[8px] uppercase tracking-widest text-foreground/60 [writing-mode:vertical-lr]">
+      <span className="font-mono text-[8px] uppercase tracking-widest text-foreground/40 [writing-mode:vertical-lr]">
         Glow
       </span>
       {INTENSITY_VALUES.map((intensity) => (

@@ -63,7 +63,7 @@ export function Timeline({
       <div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.03)_2px,rgba(0,0,0,0.03)_4px)]" />
 
       {label && (
-        <div className="mb-4 text-[10px] uppercase tracking-widest text-foreground/70">
+        <div className="mb-4 text-[10px] uppercase tracking-widest text-foreground/50">
           {label}
         </div>
       )}
@@ -122,7 +122,7 @@ export function Timeline({
                   )}
                 </div>
                 {item.description && (
-                  <div className="mt-1 text-xs leading-relaxed text-foreground/70">
+                  <div className="mt-1 text-xs leading-relaxed text-foreground/50">
                     {item.description}
                   </div>
                 )}

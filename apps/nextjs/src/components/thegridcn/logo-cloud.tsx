@@ -38,7 +38,7 @@ export function LogoCloud({
       <div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.03)_2px,rgba(0,0,0,0.03)_4px)]" />
 
       {label && (
-        <div className="relative mb-4 text-center text-[10px] uppercase tracking-widest text-foreground/60">
+        <div className="relative mb-4 text-center text-[10px] uppercase tracking-widest text-foreground/40">
           {label}
         </div>
       )}
@@ -54,7 +54,7 @@ export function LogoCloud({
           <div
             key={i}
             className={cn(
-              "flex shrink-0 items-center gap-2 rounded border px-4 py-2 font-mono text-xs uppercase tracking-widest text-foreground/70 transition-colors hover:text-foreground/90",
+              "flex shrink-0 items-center gap-2 rounded border px-4 py-2 font-mono text-xs uppercase tracking-widest text-foreground/50 transition-colors hover:text-foreground/70",
               logo.className
             )}
           >

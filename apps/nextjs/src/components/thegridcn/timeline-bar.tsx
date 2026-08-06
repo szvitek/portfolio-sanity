@@ -46,7 +46,7 @@ export function TimelineBar({
                 marker.active ? "bg-primary" : "bg-foreground/50"
               )}
             />
-            <span className="absolute -bottom-4 text-[8px] text-foreground/90">
+            <span className="absolute -bottom-4 text-[8px] text-foreground/80">
               {marker.id}
             </span>
           </div>
@@ -54,7 +54,7 @@ export function TimelineBar({
       </div>
 
       {/* Labels */}
-      <div className="mt-1 flex items-center justify-between text-[9px] text-foreground/90">
+      <div className="mt-1 flex items-center justify-between text-[9px] text-foreground/80">
         <span>{leftLabel}</span>
         <span>{rightLabel}</span>
       </div>
