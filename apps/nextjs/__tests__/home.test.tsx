@@ -210,6 +210,34 @@ describe("Home page", () => {
     ])
   })
 
+  it("renders nav items with an animated bottom border — active kept, hover animates in", async () => {
+    const props = await getPageProps()
+    renderWithTheme(<HomePage {...props} />)
+
+    const nav = screen.getByTestId("navbar")
+    const sectionLinks = Array.from(nav.querySelectorAll<HTMLAnchorElement>('a[href^="#"]')).filter(
+      (link) => link.querySelector("span") && !link.querySelector("img")
+    )
+    expect(sectionLinks.length).toBeGreaterThanOrEqual(7)
+
+    for (const link of sectionLinks) {
+      expect(link).toHaveClass("group", "relative")
+      expect(link.querySelector("span")).toHaveClass(
+        "absolute", "inset-x-2", "bottom-0", "h-px", "bg-primary", "transition-transform"
+      )
+    }
+
+    const activeLink = sectionLinks.find((link) => link.href.endsWith("#profile"))
+    expect(activeLink).toBeDefined()
+    expect(activeLink?.querySelector("span")).toHaveClass("scale-x-100")
+
+    const inactiveLinks = sectionLinks.filter((link) => link !== activeLink)
+    expect(inactiveLinks.length).toBeGreaterThan(0)
+    for (const link of inactiveLinks) {
+      expect(link.querySelector("span")).toHaveClass("scale-x-0", "group-hover:scale-x-100")
+    }
+  })
+
   it("renders the swytech.dev brand linking to the top of the page", async () => {
     const props = await getPageProps()
     renderWithTheme(<HomePage {...props} />)

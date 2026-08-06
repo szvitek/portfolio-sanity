@@ -23,6 +23,7 @@
 - [x] Skill icons render transparent so each carousel item's category tint shows through
 - [x] Hero + contact GitHub/LinkedIn links as outline buttons
 - [x] Outline buttons glow only on hover (plain border at rest)
+- [x] Navbar: active item keeps a bottom border, other items animate one in on hover
 - [ ] Finalise the footer
 - [ ] Background music feature — store 1+ audio files in Sanity, add the GridCN waveform component
 
@@ -39,6 +40,8 @@
 **Social links as outline buttons:** GitHub and LinkedIn links in the hero and contact sections now render as GridCN `Button asChild variant="outline"` (icon + "GitHub"/"LinkedIn" label) instead of bare icon anchors. Extracted a bare `SocialIcon` (svg-only, no anchor) from `SocialLinkIcon` so it can live inside the button's anchor without nesting `<a>` elements; non-github/linkedin platforms keep the plain `SocialLinkIcon`. Tests: new "renders hero and contact social links as outline buttons" (TDD at the button seam); two project-GitHub tests hardened to match by href instead of bare text since the hero now also shows the word "GitHub".
 
 **Outline button glow (hover-only):** The generic "Button glow" rule in `globals.css` gives *every* `[data-slot="button"]` `box-shadow: var(--tron-border-glow)` at rest. Outline buttons therefore glowed constantly despite the outline rule defining only their border. Added `box-shadow: none` to `[data-variant="outline"]`'s default state so outline buttons keep their border but glow only on hover (the outline `:hover` rule already had its own glow). Confirmed in the compiled production CSS.
+
+**Navbar active/hover underline (gridcn pattern):** The nav section items now follow the gridcn navbar behaviour — each link is `group relative` with an absolutely-positioned `h-px bg-primary` underline span (`absolute inset-x-2 bottom-0 transition-transform`). The active section keeps it visible (`scale-x-100`); the others hide it (`scale-x-0`) and animate it in on hover (`group-hover:scale-x-100`, 150ms transform transition). Pure Tailwind scaleX animation, no custom keyframes — matches the gridcn site exactly (confirmed by inspecting the gridcn homepage markup). TDD: new test asserts every section link carries the underline span, the active (profile) link is `scale-x-100`, and the rest are `scale-x-0 group-hover:scale-x-100`.
 
 
 Implemented via commit `f4a0ea0`.

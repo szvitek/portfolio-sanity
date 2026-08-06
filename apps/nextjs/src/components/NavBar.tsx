@@ -65,13 +65,20 @@ export function NavBar() {
               key={id}
               href={`#${id}`}
               className={cn(
-                "rounded px-3 py-1.5 font-mono text-[11px] uppercase tracking-widest transition-colors",
+                "group relative px-3 py-1.5 font-mono text-[11px] uppercase tracking-widest transition-colors",
                 activeSection === id
                   ? "text-primary"
                   : "text-foreground/50 hover:text-foreground/80"
               )}
             >
               {label}
+              <span
+                aria-hidden
+                className={cn(
+                  "absolute inset-x-2 bottom-0 h-px bg-primary transition-transform",
+                  activeSection === id ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+                )}
+              />
             </a>
           ))}
         </div>
