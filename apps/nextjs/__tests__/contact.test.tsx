@@ -143,6 +143,15 @@ describe("ContactForm component", () => {
     expect(screen.getByText("//SEND TRANSMISSION")).toBeInTheDocument()
   })
 
+  it("renders the submit button using the GridCN button component", () => {
+    render(<ContactForm />)
+
+    const submit = screen.getByText("// SEND MESSAGE")
+    expect(submit).toHaveAttribute("data-slot", "button")
+    expect(submit).toHaveAttribute("data-variant", "outline")
+    expect(submit).toHaveAttribute("type", "submit")
+  })
+
   it("shows success message on successful submission", async () => {
     const mockFetch = vi.mocked(globalThis.fetch)
     mockFetch.mockImplementationOnce(

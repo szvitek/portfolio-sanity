@@ -19,13 +19,15 @@
 - [x] Rename footer header to `swytech.dev` — the logo would fit here
 
 **New scope:**
-- [ ] Revisit button components — should we use the original GridCN buttons?
+- [x] Revisit button components — should we use the original GridCN buttons?
 - [ ] Finalise the footer
 - [ ] Background music feature — store 1+ audio files in Sanity, add the GridCN waveform component
 
 ## Comments
 
-Implemented via commit `1c37ee0`.
+**Button components (implemented):** Yes — adopt the GridCN button. `pnpm dlx shadcn@latest add @thegridcn/button` resolved to the existing `src/components/ui/button.tsx` (byte-identical, so the CLI skipped writing it). Every `<button>` rendered on the page now uses that `Button` component: the skills filter buttons and projects "Show All/Show Featured" toggle in `pages/index.tsx` (via `variant="outline"`), the ContactForm submit button, and the 10 theme/glow swatches in `ThemeControls.tsx` (via `variant="ghost"`, kept as small round dots). The two "Download CV" anchors are now `<Button asChild><a>` so they inherit the button's styling and focus/disabled behaviour. Existing button visuals were preserved through className overrides (`FILTER_BTN`/`FILTER_ACTIVE`/`FILTER_INACTIVE`/`CATEGORY_BTN`/`CV_BTN` constants). GridCN library components that aren't rendered on the page (cta-banner, tag, chip, newsletter-form, tabs, ThemeDots) still use their own internal buttons. Tests assert `data-slot="button"` on each converted control (TDD at the button seam).
+
+Implemented via commit `f4a0ea0`.
 
 - Favicon: `swytech-dev-logo.png` moved to `apps/nextjs/public/` and linked via `<link rel="icon">` in `_document.tsx`.
 - Logo placed in the footer brand column (next to `//swytech.dev`) via a new optional `logo` prop on `TronFooter`.

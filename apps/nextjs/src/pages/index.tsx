@@ -23,6 +23,7 @@ import { ContactForm } from "@/components/ContactForm"
 import { Radar } from "@/components/thegridcn/radar"
 import { Timeline } from "@/components/thegridcn/timeline"
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { skillCategoryClasses } from "@/lib/skill-colors"
 import { dateRange, formatYear } from "@/lib/date-utils"
@@ -91,30 +92,37 @@ export const getStaticProps: GetStaticProps<{
 
 const CATEGORY_BTN: Record<string, { active: string; inactive: string }> = {
   Frontend: {
-    active: "border-sky-500 bg-sky-500/20 text-sky-400",
-    inactive: "border-sky-500/30 text-sky-500/60 hover:bg-sky-500/10 hover:border-sky-500/50",
+    active: "border-sky-500 bg-sky-500/20 text-sky-400 hover:border-sky-500 hover:bg-sky-500/20 hover:text-sky-400",
+    inactive: "border-sky-500/30 bg-transparent text-sky-500/60 hover:border-sky-500/50 hover:bg-sky-500/10 hover:text-sky-500/60",
   },
   Backend: {
-    active: "border-emerald-500 bg-emerald-500/20 text-emerald-400",
-    inactive: "border-emerald-500/30 text-emerald-500/60 hover:bg-emerald-500/10 hover:border-emerald-500/50",
+    active: "border-emerald-500 bg-emerald-500/20 text-emerald-400 hover:border-emerald-500 hover:bg-emerald-500/20 hover:text-emerald-400",
+    inactive: "border-emerald-500/30 bg-transparent text-emerald-500/60 hover:border-emerald-500/50 hover:bg-emerald-500/10 hover:text-emerald-500/60",
   },
   DevOps: {
-    active: "border-purple-500 bg-purple-500/20 text-purple-400",
-    inactive: "border-purple-500/30 text-purple-500/60 hover:bg-purple-500/10 hover:border-purple-500/50",
+    active: "border-purple-500 bg-purple-500/20 text-purple-400 hover:border-purple-500 hover:bg-purple-500/20 hover:text-purple-400",
+    inactive: "border-purple-500/30 bg-transparent text-purple-500/60 hover:border-purple-500/50 hover:bg-purple-500/10 hover:text-purple-500/60",
   },
   Languages: {
-    active: "border-amber-500 bg-amber-500/20 text-amber-400",
-    inactive: "border-amber-500/30 text-amber-500/60 hover:bg-amber-500/10 hover:border-amber-500/50",
+    active: "border-amber-500 bg-amber-500/20 text-amber-400 hover:border-amber-500 hover:bg-amber-500/20 hover:text-amber-400",
+    inactive: "border-amber-500/30 bg-transparent text-amber-500/60 hover:border-amber-500/50 hover:bg-amber-500/10 hover:text-amber-500/60",
   },
   Tools: {
-    active: "border-rose-500 bg-rose-500/20 text-rose-400",
-    inactive: "border-rose-500/30 text-rose-500/60 hover:bg-rose-500/10 hover:border-rose-500/50",
+    active: "border-rose-500 bg-rose-500/20 text-rose-400 hover:border-rose-500 hover:bg-rose-500/20 hover:text-rose-400",
+    inactive: "border-rose-500/30 bg-transparent text-rose-500/60 hover:border-rose-500/50 hover:bg-rose-500/10 hover:text-rose-500/60",
   },
   Databases: {
-    active: "border-cyan-500 bg-cyan-500/20 text-cyan-400",
-    inactive: "border-cyan-500/30 text-cyan-500/60 hover:bg-cyan-500/10 hover:border-cyan-500/50",
+    active: "border-cyan-500 bg-cyan-500/20 text-cyan-400 hover:border-cyan-500 hover:bg-cyan-500/20 hover:text-cyan-400",
+    inactive: "border-cyan-500/30 bg-transparent text-cyan-500/60 hover:border-cyan-500/50 hover:bg-cyan-500/10 hover:text-cyan-500/60",
   },
 }
+
+const FILTER_BTN = "h-auto rounded border px-3 py-1 font-mono text-[10px] uppercase tracking-widest shadow-none"
+const FILTER_ACTIVE = "border-primary/60 bg-primary/20 text-primary hover:border-primary/60 hover:bg-primary/20 hover:text-primary"
+const FILTER_INACTIVE =
+  "border-border/30 bg-transparent text-foreground/50 hover:border-foreground/30 hover:bg-transparent hover:text-foreground/50"
+const CV_BTN =
+  "h-auto rounded border border-primary/30 bg-primary/10 font-mono uppercase tracking-widest text-primary shadow-none transition-all hover:border-primary hover:bg-primary hover:text-background hover:shadow-[0_0_16px_rgba(var(--primary-rgb,0,180,255),0.3)]"
 
 function extractText(blocks: PortableTextBlock[] | undefined | null): string {
   if (!blocks) return ""
@@ -247,13 +255,15 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
                   ))}
 
                   {cvUrl && (
-                    <a
-                      href={cvUrl}
-                      download
-                      className="inline-flex items-center rounded border border-primary/30 bg-primary/10 px-5 py-2 font-mono text-xs uppercase tracking-widest text-primary transition-all hover:border-primary hover:bg-primary hover:text-background hover:shadow-[0_0_16px_rgba(var(--primary-rgb,0,180,255),0.3)]"
+                    <Button
+                      asChild
+                      variant="outline"
+                      className={cn(CV_BTN, "px-5 py-2 text-xs")}
                     >
-                      Download CV
-                    </a>
+                      <a href={cvUrl} download>
+                        Download CV
+                      </a>
+                    </Button>
                   )}
                 </div>
               )}
@@ -269,43 +279,45 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
             {skills.length > 0 ? (
               <>
                 <div className="mb-6 flex flex-wrap gap-2">
-                  <button
+                  <Button
+                    type="button"
+                    variant="outline"
                     onClick={() => setActiveFilter("all")}
                     className={cn(
-                      "rounded border px-3 py-1 font-mono text-[10px] uppercase tracking-widest transition-colors",
-                      activeFilter === "all"
-                        ? "border-primary/60 bg-primary/20 text-primary"
-                        : "border-border/30 text-foreground/50 hover:border-foreground/30"
+                      FILTER_BTN,
+                      activeFilter === "all" ? FILTER_ACTIVE : FILTER_INACTIVE
                     )}
                   >
                     All
-                  </button>
-                  <button
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
                     onClick={() => setActiveFilter("featured")}
                     className={cn(
-                      "rounded border px-3 py-1 font-mono text-[10px] uppercase tracking-widest transition-colors",
-                      activeFilter === "featured"
-                        ? "border-primary/60 bg-primary/20 text-primary"
-                        : "border-border/30 text-foreground/50 hover:border-foreground/30"
+                      FILTER_BTN,
+                      activeFilter === "featured" ? FILTER_ACTIVE : FILTER_INACTIVE
                     )}
                   >
                     Featured
-                  </button>
+                  </Button>
                   {allCategories.map((cat) => {
                     const btn = CATEGORY_BTN[cat]
                     return (
-                      <button
+                      <Button
                         key={cat}
+                        type="button"
+                        variant="outline"
                         onClick={() => setActiveFilter(cat)}
                         className={cn(
-                          "rounded border px-3 py-1 font-mono text-[10px] uppercase tracking-widest transition-colors",
+                          FILTER_BTN,
                           activeFilter === cat
-                            ? btn?.active ?? "border-primary/60 bg-primary/20 text-primary"
-                            : btn?.inactive ?? "border-border/30 text-foreground/50 hover:border-foreground/30"
+                            ? btn?.active ?? FILTER_ACTIVE
+                            : btn?.inactive ?? FILTER_INACTIVE
                         )}
                       >
                         {cat}
-                      </button>
+                      </Button>
                     )
                   })}
                 </div>
@@ -338,12 +350,14 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
             <div className="mb-8 flex items-center justify-between">
               <Divider label="PROJECTS" variant="circuit" className="flex-1" />
               {projects.some((p) => !p.featured) && (
-                <button
+                <Button
+                  type="button"
+                  variant="outline"
                   onClick={() => setShowAllProjects(!showAllProjects)}
-                  className="ml-4 shrink-0 rounded border border-primary/30 bg-primary/10 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-primary transition-colors hover:border-primary/60 hover:bg-primary/20"
+                  className="ml-4 h-auto shrink-0 rounded border border-primary/30 bg-primary/10 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-primary shadow-none transition-colors hover:border-primary/60 hover:bg-primary/20 hover:text-primary"
                 >
                   {showAllProjects ? "Show Featured" : "Show All"}
-                </button>
+                </Button>
               )}
             </div>
             {visibleProjects.length > 0 ? (
@@ -543,13 +557,15 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
                       </a>
                     )}
                     {cvUrl && (
-                      <a
-                        href={cvUrl}
-                        download
-                        className="inline-flex items-center rounded border border-primary/30 bg-primary/10 px-4 py-2 font-mono text-[10px] uppercase tracking-widest text-primary transition-all hover:border-primary hover:bg-primary hover:text-background hover:shadow-[0_0_16px_rgba(var(--primary-rgb,0,180,255),0.3)]"
+                      <Button
+                        asChild
+                        variant="outline"
+                        className={cn(CV_BTN, "px-4 py-2 text-[10px]")}
                       >
-                        Download CV
-                      </a>
+                        <a href={cvUrl} download>
+                          Download CV
+                        </a>
+                      </Button>
                     )}
                   </div>
                 </div>

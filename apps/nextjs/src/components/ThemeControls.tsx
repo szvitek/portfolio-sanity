@@ -3,6 +3,7 @@
 import { useTheme } from "@portfolio/ui"
 import type { ThemeName, Intensity } from "@portfolio/ui"
 import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
 
 const THEME_DOT_COLORS: Record<ThemeName, string> = {
   tron: "bg-cyan-400",
@@ -36,12 +37,15 @@ export function ThemeControls() {
         Theme
       </span>
       {THEME_NAMES.map((theme) => (
-        <button
+        <Button
           key={theme}
+          type="button"
+          variant="ghost"
           onClick={() => setTheme(theme)}
           title={theme}
+          aria-label={theme}
           className={cn(
-            "h-3 w-3 rounded-full border transition-all",
+            "h-3 w-3 rounded-full border p-0 hover:bg-transparent",
             THEME_DOT_COLORS[theme],
             state.theme === theme
               ? "scale-125 border-foreground ring-1 ring-foreground/50"
@@ -56,12 +60,15 @@ export function ThemeControls() {
         Glow
       </span>
       {INTENSITY_VALUES.map((intensity) => (
-        <button
+        <Button
           key={intensity}
+          type="button"
+          variant="ghost"
           onClick={() => setIntensity(intensity)}
           title={intensity}
+          aria-label={intensity}
           className={cn(
-            "h-3 w-3 rounded-full transition-all",
+            "h-3 w-3 rounded-full border p-0 hover:bg-transparent",
             INTENSITY_PRIMARY_STYLES[intensity],
             state.intensity === intensity
               ? "scale-125 ring-1 ring-foreground/50"

@@ -309,6 +309,17 @@ describe("Home page", () => {
     expect(nodeTexts.length).toBe(0)
   })
 
+  it("renders skill filter buttons using the GridCN button component", async () => {
+    const props = await getPageProps()
+    const { container } = renderWithTheme(<HomePage {...props} />)
+
+    const skillsSection = container.querySelector("#skills")
+    const allButton = skillsSection?.querySelector('[data-slot="button"]')
+    expect(allButton).toBeInTheDocument()
+    expect(allButton).toHaveTextContent("All")
+    expect(allButton).toHaveAttribute("data-variant", "outline")
+  })
+
   it("renders no placeholder text when all sections have data", async () => {
     const props = await getPageProps()
     renderWithTheme(<HomePage {...props} />)
@@ -650,6 +661,35 @@ describe("Home page", () => {
     expect(screen.getByText("Cloud Deploy Tool")).toBeInTheDocument()
 
     expect(screen.getByText("Show Featured")).toBeInTheDocument()
+  })
+
+  it("renders the projects toggle using the GridCN button component", async () => {
+    const props = await getPageProps()
+    renderWithTheme(<HomePage {...props} />)
+
+    const showAllButton = screen.getByText("Show All")
+    expect(showAllButton).toHaveAttribute("data-slot", "button")
+    expect(showAllButton).toHaveAttribute("data-variant", "outline")
+  })
+
+  it("renders CV download links using the GridCN button component", async () => {
+    const props = await getPageProps()
+    renderWithTheme(<HomePage {...props} />)
+
+    const cvLinks = screen.getAllByText("Download CV")
+    expect(cvLinks.length).toBeGreaterThanOrEqual(1)
+    for (const link of cvLinks) {
+      expect(link).toHaveAttribute("data-slot", "button")
+    }
+  })
+
+  it("renders theme control swatches as GridCN button components", async () => {
+    const props = await getPageProps()
+    renderWithTheme(<HomePage {...props} />)
+
+    const themeControls = screen.getByTestId("theme-controls")
+    const swatches = themeControls.querySelectorAll('[data-slot="button"]')
+    expect(swatches.length).toBe(10)
   })
 
   it("toggles back to featured only when Show Featured is clicked", async () => {

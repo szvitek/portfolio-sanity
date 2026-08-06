@@ -4,6 +4,7 @@ import { useState, type FormEvent } from "react"
 import { cn } from "@/lib/utils"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import { Button } from "@/components/ui/button"
 
 type FieldError = {
   field: string
@@ -172,17 +173,18 @@ export function ContactForm() {
             )}
           </div>
 
-          <button
+          <Button
             type="submit"
+            variant="outline"
             disabled={status === "loading"}
-            className="w-full rounded border border-primary/50 bg-primary/20 px-4 py-2 font-mono text-[10px] uppercase tracking-widest text-primary transition-all hover:bg-primary/30 disabled:opacity-50"
+            className="h-auto w-full rounded border border-primary/50 bg-primary/20 px-4 py-2 font-mono text-[10px] uppercase tracking-widest text-primary shadow-none transition-all hover:bg-primary/30 hover:text-primary"
           >
             {status === "loading"
               ? "// TRANSMITTING..."
               : status === "success"
                 ? "✓ MESSAGE SENT"
                 : "// SEND MESSAGE"}
-          </button>
+          </Button>
         </form>
 
         {status === "success" && (
