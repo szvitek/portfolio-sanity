@@ -317,7 +317,7 @@ describe("Home page", () => {
     const allButton = skillsSection?.querySelector('[data-slot="button"]')
     expect(allButton).toBeInTheDocument()
     expect(allButton).toHaveTextContent("All")
-    expect(allButton).toHaveAttribute("data-variant", "outline")
+    expect(allButton).toHaveAttribute("data-variant", "ghost")
   })
 
   it("renders no placeholder text when all sections have data", async () => {
@@ -682,7 +682,7 @@ describe("Home page", () => {
 
     const showAllButton = screen.getByText("Show All")
     expect(showAllButton).toHaveAttribute("data-slot", "button")
-    expect(showAllButton).toHaveAttribute("data-variant", "outline")
+    expect(showAllButton).toHaveAttribute("data-variant", "ghost")
   })
 
   it("renders CV download links using the GridCN button component", async () => {

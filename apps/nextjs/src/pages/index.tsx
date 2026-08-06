@@ -281,7 +281,7 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
                 <div className="mb-6 flex flex-wrap gap-2">
                   <Button
                     type="button"
-                    variant="outline"
+                    variant="ghost"
                     onClick={() => setActiveFilter("all")}
                     className={cn(
                       FILTER_BTN,
@@ -292,7 +292,7 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
                   </Button>
                   <Button
                     type="button"
-                    variant="outline"
+                    variant="ghost"
                     onClick={() => setActiveFilter("featured")}
                     className={cn(
                       FILTER_BTN,
@@ -307,7 +307,7 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
                       <Button
                         key={cat}
                         type="button"
-                        variant="outline"
+                        variant="ghost"
                         onClick={() => setActiveFilter(cat)}
                         className={cn(
                           FILTER_BTN,
@@ -352,7 +352,7 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
               {projects.some((p) => !p.featured) && (
                 <Button
                   type="button"
-                  variant="outline"
+                  variant="ghost"
                   onClick={() => setShowAllProjects(!showAllProjects)}
                   className="ml-4 h-auto shrink-0 rounded border border-primary/30 bg-primary/10 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-primary shadow-none transition-colors hover:border-primary/60 hover:bg-primary/20 hover:text-primary"
                 >
