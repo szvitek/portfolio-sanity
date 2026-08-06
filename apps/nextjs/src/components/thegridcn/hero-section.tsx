@@ -33,7 +33,7 @@ export function HeroSection({
     <div
       data-slot="tron-hero-section"
       className={cn(
-        "group relative overflow-hidden rounded bg-card/80 px-6 py-16 backdrop-blur-sm md:px-12 md:py-24 lg:py-32",
+        "group relative overflow-hidden rounded border border-primary/20 bg-card/80 px-6 py-16 backdrop-blur-sm md:px-12 md:py-24 lg:py-32",
         className
       )}
       {...props}
@@ -120,11 +120,6 @@ export function HeroSection({
         )}
       </div>
 
-      {/* Left side border */}
-      <div className="pointer-events-none absolute left-0 top-0 z-20 h-full w-[2px] hero-side-border" />
-
-      {/* Right side border */}
-      <div className="pointer-events-none absolute right-0 top-0 z-20 h-full w-[2px] hero-side-border" />
       <div className="pointer-events-none absolute left-0 top-0 h-6 w-6 border-l-2 border-t-2 border-primary/40" />
       <div className="pointer-events-none absolute right-0 top-0 h-6 w-6 border-r-2 border-t-2 border-primary/40" />
       <div className="pointer-events-none absolute bottom-0 left-0 h-6 w-6 border-b-2 border-l-2 border-primary/40" />

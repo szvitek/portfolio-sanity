@@ -2,6 +2,8 @@
 
 import { useState, type FormEvent } from "react"
 import { cn } from "@/lib/utils"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
 
 type FieldError = {
   field: string
@@ -57,13 +59,8 @@ export function ContactForm() {
   return (
     <div
       data-slot="tron-contact-form"
-      className={cn(
-        "group relative overflow-hidden rounded border border-primary/20 bg-card/80 p-6 backdrop-blur-sm"
-      )}
+      className="relative rounded border border-primary/20 p-6"
     >
-      {/* Scanline overlay */}
-      <div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.03)_2px,rgba(0,0,0,0.03)_4px)]" />
-
       <div className="relative">
         <h3 className="mb-2 font-mono text-sm font-bold uppercase tracking-wider text-foreground/90">
           //SEND TRANSMISSION
@@ -88,7 +85,7 @@ export function ContactForm() {
           </div>
 
           <div>
-            <input
+            <Input
               type="text"
               name="name"
               id="contact-name"
@@ -97,10 +94,9 @@ export function ContactForm() {
               placeholder="Your Name"
               required
               className={cn(
-                "w-full rounded border bg-background/50 px-3 py-2 font-mono text-xs text-black placeholder:text-black/30 focus:outline-none focus:ring-1",
-                getError("name")
-                  ? "border-red-500/50 focus:border-red-500 focus:ring-red-500/30"
-                  : "border-primary/30 focus:border-primary focus:ring-primary/30"
+                "font-mono text-xs",
+                getError("name") &&
+                  "border-red-500/50 focus-visible:border-red-500 focus-visible:ring-red-500/30"
               )}
             />
             {getError("name") && (
@@ -111,7 +107,7 @@ export function ContactForm() {
           </div>
 
           <div>
-            <input
+            <Input
               type="email"
               name="email"
               id="contact-email"
@@ -120,10 +116,9 @@ export function ContactForm() {
               placeholder="your@email.com"
               required
               className={cn(
-                "w-full rounded border bg-background/50 px-3 py-2 font-mono text-xs text-black placeholder:text-black/30 focus:outline-none focus:ring-1",
-                getError("email")
-                  ? "border-red-500/50 focus:border-red-500 focus:ring-red-500/30"
-                  : "border-primary/30 focus:border-primary focus:ring-primary/30"
+                "font-mono text-xs",
+                getError("email") &&
+                  "border-red-500/50 focus-visible:border-red-500 focus-visible:ring-red-500/30"
               )}
             />
             {getError("email") && (
@@ -134,7 +129,7 @@ export function ContactForm() {
           </div>
 
           <div>
-            <input
+            <Input
               type="text"
               name="subject"
               id="contact-subject"
@@ -143,10 +138,9 @@ export function ContactForm() {
               placeholder="Subject"
               required
               className={cn(
-                "w-full rounded border bg-background/50 px-3 py-2 font-mono text-xs text-black placeholder:text-black/30 focus:outline-none focus:ring-1",
-                getError("subject")
-                  ? "border-red-500/50 focus:border-red-500 focus:ring-red-500/30"
-                  : "border-primary/30 focus:border-primary focus:ring-primary/30"
+                "font-mono text-xs",
+                getError("subject") &&
+                  "border-red-500/50 focus-visible:border-red-500 focus-visible:ring-red-500/30"
               )}
             />
             {getError("subject") && (
@@ -157,7 +151,7 @@ export function ContactForm() {
           </div>
 
           <div>
-            <textarea
+            <Textarea
               name="message"
               id="contact-message"
               value={message}
@@ -166,10 +160,9 @@ export function ContactForm() {
               required
               rows={4}
               className={cn(
-                "w-full resize-none rounded border bg-background/50 px-3 py-2 font-mono text-xs text-black placeholder:text-black/30 focus:outline-none focus:ring-1",
-                getError("message")
-                  ? "border-red-500/50 focus:border-red-500 focus:ring-red-500/30"
-                  : "border-primary/30 focus:border-primary focus:ring-primary/30"
+                "resize-none font-mono text-xs",
+                getError("message") &&
+                  "border-red-500/50 focus-visible:border-red-500 focus-visible:ring-red-500/30"
               )}
             />
             {getError("message") && (
@@ -203,12 +196,6 @@ export function ContactForm() {
           </p>
         )}
       </div>
-
-      {/* Corner decorations */}
-      <div className="pointer-events-none absolute left-0 top-0 h-3 w-3 border-l border-t border-primary/30" />
-      <div className="pointer-events-none absolute right-0 top-0 h-3 w-3 border-r border-t border-primary/30" />
-      <div className="pointer-events-none absolute bottom-0 left-0 h-3 w-3 border-b border-l border-primary/30" />
-      <div className="pointer-events-none absolute bottom-0 right-0 h-3 w-3 border-b border-r border-primary/30" />
     </div>
   )
 }

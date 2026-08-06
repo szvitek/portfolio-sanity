@@ -4,7 +4,7 @@
 
 **Blocked by:** 13 — Schema additions, 14 — Hero section upgrade, 15 — Sections polish, 16 — Contact form with Resend
 
-**Status:** completed
+**Status:** in progress
 
 **Branding (swytech.dev):**
 - [x] Set the `swytech-dev-logo` icon (added to the root of `apps/nextjs`) as the site favicon
@@ -17,6 +17,11 @@
 
 **Footer:**
 - [x] Rename footer header to `swytech.dev` — the logo would fit here
+
+**New scope:**
+- [ ] Revisit button components — should we use the original GridCN buttons?
+- [ ] Finalise the footer
+- [ ] Background music feature — store 1+ audio files in Sanity, add the GridCN waveform component
 
 ## Comments
 

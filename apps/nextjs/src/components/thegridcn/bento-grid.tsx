@@ -94,6 +94,7 @@ export function BentoGrid({
         return (
           <div
             key={i}
+            data-slot="tron-bento-card"
             className={cn(
               "group relative overflow-hidden rounded border bg-card/80 p-5 backdrop-blur-sm transition-all duration-400",
               item.url && "cursor-pointer",

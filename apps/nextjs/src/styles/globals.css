@@ -33,6 +33,25 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Autofill: keep fields dark instead of the browser's white/yellow fill */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--foreground);
+  caret-color: var(--foreground);
+  -webkit-box-shadow: 0 0 0 1000px transparent inset;
+  box-shadow: 0 0 0 1000px transparent inset;
+  transition: background-color 9999s ease-out;
+}
+
+input:-webkit-autofill::placeholder,
+textarea:-webkit-autofill::placeholder {
+  -webkit-text-fill-color: var(--muted-foreground);
+}
+
 h1, h2, h3, h4, h5, h6 {
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -244,25 +263,11 @@ h1, h2, h3, h4, h5, h6 {
   100% { transform: translateX(320%); }
 }
 
-.hero-side-border {
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    transparent 6%,
-    rgba(var(--primary-rgb, 0, 180, 255), 0.6) 10%,
-    transparent 18%,
-    transparent 82%,
-    rgba(var(--primary-rgb, 0, 180, 255), 0.6) 90%,
-    transparent 94%,
-    transparent 100%
-  );
-}
-
 /* Hero border sweeps */
 [data-slot="tron-hero-section"]::before {
   content: '';
   position: absolute;
-  top: 0;
+  top: 8px;
   left: 0;
   right: 0;
   height: 1px;
@@ -275,7 +280,7 @@ h1, h2, h3, h4, h5, h6 {
 [data-slot="tron-hero-section"]::after {
   content: '';
   position: absolute;
-  bottom: 0;
+  bottom: 8px;
   left: 0;
   right: 0;
   height: 1px;
@@ -429,7 +434,9 @@ h1, h2, h3, h4, h5, h6 {
 [data-tron-intensity] [data-slot="project-card"],
 [data-tron-intensity] [data-slot="job-card"],
 [data-tron-intensity] [data-slot="study-card"],
-[data-tron-intensity] [data-slot="certification-card"] {
+[data-tron-intensity] [data-slot="certification-card"],
+[data-tron-intensity] [data-slot="tron-bento-card"],
+[data-tron-intensity] [data-slot="tron-contact"] {
   box-shadow: var(--tron-border-glow);
   transition: box-shadow var(--tron-transition);
 }
@@ -439,7 +446,9 @@ h1, h2, h3, h4, h5, h6 {
 [data-tron-intensity] [data-slot="project-card"]:hover,
 [data-tron-intensity] [data-slot="job-card"]:hover,
 [data-tron-intensity] [data-slot="study-card"]:hover,
-[data-tron-intensity] [data-slot="certification-card"]:hover {
+[data-tron-intensity] [data-slot="certification-card"]:hover,
+[data-tron-intensity] [data-slot="tron-bento-card"]:hover,
+[data-tron-intensity] [data-slot="tron-contact"]:hover {
   box-shadow: var(--tron-hover-glow);
 }
 

@@ -221,7 +221,7 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
                 />
               )}
             </>
-          }
+            }
           >
             <div className="flex w-full flex-col items-center gap-4">
               <AnomalyBanner
@@ -493,60 +493,74 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
         <section id="contact" className="scroll-mt-16 px-4 py-16">
           <div className="mx-auto max-w-5xl">
             <Divider label="CONTACT" variant="circuit" className="mb-8" />
-            <div className="grid gap-8 lg:grid-cols-[5fr_7fr]">
-              <div className="flex h-full flex-col items-center justify-between lg:items-start">
-                <div className="flex flex-col gap-4">
-                  <h3 className="font-mono text-sm font-bold uppercase tracking-wider text-foreground/90">
-                    //GET IN TOUCH
-                  </h3>
-                  <p className="font-mono text-[10px] uppercase tracking-widest text-foreground/40">
-                    Have a project, question, or just want to say hi? Drop a message.
-                  </p>
+            <div
+              data-slot="tron-contact"
+              className="relative overflow-hidden rounded border border-primary/20 bg-card/80 p-6 backdrop-blur-sm md:p-8"
+            >
+              {/* Scanline overlay */}
+              <div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.03)_2px,rgba(0,0,0,0.03)_4px)]" />
+
+              <div className="relative grid gap-8 lg:grid-cols-[5fr_7fr]">
+                <div className="flex h-full flex-col items-center justify-between lg:items-start">
+                  <div className="flex flex-col gap-4">
+                    <h3 className="font-mono text-sm font-bold uppercase tracking-wider text-foreground/90">
+                      //GET IN TOUCH
+                    </h3>
+                    <p className="font-mono text-[10px] uppercase tracking-widest text-foreground/40">
+                      Have a project, question, or just want to say hi? Drop a message.
+                    </p>
+                  </div>
+                  <Radar
+                    size={180}
+                    sweepSpeed={4}
+                    className="self-center"
+                    targets={[
+                      { x: 25, y: 70, label: "Socials" },
+                      { x: 50, y: 25, label: "Projects" },
+                      { x: 75, y: 50, label: "Email" },
+                    ]}
+                  />
+                  <div className="flex flex-wrap items-center gap-3">
+                    {profile?.socialLinks && profile.socialLinks.length > 0 && (
+                      <div className="flex flex-wrap gap-3">
+                        {profile.socialLinks.map((link) => (
+                          <SocialLinkIcon
+                            key={link.platform}
+                            platform={link.platform}
+                            url={link.url}
+                            className="text-foreground/60 transition-colors hover:text-primary"
+                          />
+                        ))}
+                      </div>
+                    )}
+                    {profile?.email && (
+                      <a
+                        href={`mailto:${profile.email}`}
+                        className="inline-flex items-center gap-2 font-mono text-xs text-foreground/60 transition-colors hover:text-primary"
+                      >
+                        <span className="h-1.5 w-1.5 rounded-full bg-primary/60" />
+                        {profile.email}
+                      </a>
+                    )}
+                    {cvUrl && (
+                      <a
+                        href={cvUrl}
+                        download
+                        className="inline-flex items-center rounded border border-primary/30 bg-primary/10 px-4 py-2 font-mono text-[10px] uppercase tracking-widest text-primary transition-all hover:border-primary hover:bg-primary hover:text-background hover:shadow-[0_0_16px_rgba(var(--primary-rgb,0,180,255),0.3)]"
+                      >
+                        Download CV
+                      </a>
+                    )}
+                  </div>
                 </div>
-                <Radar
-                  size={180}
-                  sweepSpeed={4}
-                  className="self-center"
-                  targets={[
-                    { x: 25, y: 70, label: "Socials" },
-                    { x: 50, y: 25, label: "Projects" },
-                    { x: 75, y: 50, label: "Email" },
-                  ]}
-                />
-                <div className="flex flex-wrap items-center gap-3">
-                  {profile?.socialLinks && profile.socialLinks.length > 0 && (
-                    <div className="flex flex-wrap gap-3">
-                      {profile.socialLinks.map((link) => (
-                        <SocialLinkIcon
-                          key={link.platform}
-                          platform={link.platform}
-                          url={link.url}
-                          className="text-foreground/60 transition-colors hover:text-primary"
-                        />
-                      ))}
-                    </div>
-                  )}
-                  {profile?.email && (
-                    <a
-                      href={`mailto:${profile.email}`}
-                      className="inline-flex items-center gap-2 font-mono text-xs text-foreground/60 transition-colors hover:text-primary"
-                    >
-                      <span className="h-1.5 w-1.5 rounded-full bg-primary/60" />
-                      {profile.email}
-                    </a>
-                  )}
-                  {cvUrl && (
-                    <a
-                      href={cvUrl}
-                      download
-                      className="inline-flex items-center rounded border border-primary/30 bg-primary/10 px-4 py-2 font-mono text-[10px] uppercase tracking-widest text-primary transition-all hover:border-primary hover:bg-primary hover:text-background hover:shadow-[0_0_16px_rgba(var(--primary-rgb,0,180,255),0.3)]"
-                    >
-                      Download CV
-                    </a>
-                  )}
-                </div>
+                <ContactForm />
               </div>
-              <ContactForm />
+
+              {/* Corner decorations */}
+              <div className="pointer-events-none absolute left-0 top-0 h-3 w-3 border-l border-t border-primary/30" />
+              <div className="pointer-events-none absolute right-0 top-0 h-3 w-3 border-r border-t border-primary/30" />
+              <div className="pointer-events-none absolute bottom-0 left-0 h-3 w-3 border-b border-l border-primary/30" />
+              <div className="pointer-events-none absolute bottom-0 right-0 h-3 w-3 border-b border-r border-primary/30" />
             </div>
           </div>
         </section>

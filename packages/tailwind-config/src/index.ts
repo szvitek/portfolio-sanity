@@ -5,6 +5,7 @@ const gridcnPreset: Partial<Config> = {
     extend: {
       colors: {
         border: "var(--border)",
+        input: "var(--input)",
         background: "var(--background)",
         foreground: "var(--foreground)",
         card: {
