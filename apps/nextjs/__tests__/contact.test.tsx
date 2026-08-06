@@ -148,7 +148,7 @@ describe("ContactForm component", () => {
 
     const submit = screen.getByText("// SEND MESSAGE")
     expect(submit).toHaveAttribute("data-slot", "button")
-    expect(submit).toHaveAttribute("data-variant", "outline")
+    expect(submit).toHaveAttribute("data-variant", "default")
     expect(submit).toHaveAttribute("type", "submit")
   })
 

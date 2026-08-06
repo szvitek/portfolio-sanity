@@ -615,6 +615,19 @@ describe("Home page", () => {
     expect(githubLinks[0]).toHaveAttribute("target", "_blank")
   })
 
+  it("renders project action links as GridCN default buttons", async () => {
+    const props = await getPageProps()
+    renderWithTheme(<HomePage {...props} />)
+
+    const liveDemo = screen.getAllByText("Live Demo")[0]
+    expect(liveDemo).toHaveAttribute("data-slot", "button")
+    expect(liveDemo).toHaveAttribute("data-variant", "default")
+
+    const githubLinks = screen.getAllByText("GitHub")
+    const githubButton = githubLinks.find((el) => el.hasAttribute("data-slot"))
+    expect(githubButton).toHaveAttribute("data-variant", "default")
+  })
+
   it("renders project cards with correct data-slot", async () => {
     const props = await getPageProps()
     const { container } = renderWithTheme(<HomePage {...props} />)

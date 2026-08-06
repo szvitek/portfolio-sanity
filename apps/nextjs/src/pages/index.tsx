@@ -122,7 +122,7 @@ const FILTER_ACTIVE = "border-primary/60 bg-primary/20 text-primary hover:border
 const FILTER_INACTIVE =
   "border-border/30 bg-transparent text-foreground/50 hover:border-foreground/30 hover:bg-transparent hover:text-foreground/50"
 const CV_BTN =
-  "h-auto rounded border border-primary/30 bg-primary/10 font-mono uppercase tracking-widest text-primary shadow-none transition-all hover:border-primary hover:bg-primary hover:text-background hover:shadow-[0_0_16px_rgba(var(--primary-rgb,0,180,255),0.3)]"
+  "h-auto font-mono uppercase tracking-widest hover:shadow-[0_0_16px_rgba(var(--primary-rgb,0,180,255),0.3)]"
 
 function extractText(blocks: PortableTextBlock[] | undefined | null): string {
   if (!blocks) return ""
@@ -257,7 +257,7 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
                   {cvUrl && (
                     <Button
                       asChild
-                      variant="outline"
+                      variant="default"
                       className={cn(CV_BTN, "px-5 py-2 text-xs")}
                     >
                       <a href={cvUrl} download>
@@ -559,7 +559,7 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
                     {cvUrl && (
                       <Button
                         asChild
-                        variant="outline"
+                        variant="default"
                         className={cn(CV_BTN, "px-4 py-2 text-[10px]")}
                       >
                         <a href={cvUrl} download>

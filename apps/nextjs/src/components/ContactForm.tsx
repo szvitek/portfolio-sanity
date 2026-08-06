@@ -175,9 +175,9 @@ export function ContactForm() {
 
           <Button
             type="submit"
-            variant="outline"
+            variant="default"
             disabled={status === "loading"}
-            className="h-auto w-full rounded border border-primary/50 bg-primary/20 px-4 py-2 font-mono text-[10px] uppercase tracking-widest text-primary shadow-none transition-all hover:bg-primary/30 hover:text-primary"
+            className="h-auto w-full px-4 py-2 font-mono text-[10px] uppercase tracking-widest"
           >
             {status === "loading"
               ? "// TRANSMITTING..."
