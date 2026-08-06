@@ -16,7 +16,7 @@ const variantStyles: Record<string, string> = {
   success: "border-green-500/50 bg-green-500/15 text-green-500",
   warning: "border-amber-500/50 bg-amber-500/15 text-amber-500",
   danger: "border-red-500/50 bg-red-500/15 text-red-500",
-  outline: "border-foreground/30 bg-transparent text-foreground/80",
+  outline: "border-foreground/30 bg-transparent text-foreground/90",
 }
 
 const variantGlow: Record<string, string> = {

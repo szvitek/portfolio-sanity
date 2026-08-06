@@ -79,10 +79,10 @@ export function DataStream({
         {streaming && (
           <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-green-500 shadow-[0_0_4px_rgba(34,197,94,0.6)]" />
         )}
-        <span className="text-[10px] uppercase tracking-widest text-foreground/80">
+        <span className="text-[10px] uppercase tracking-widest text-foreground/90">
           {title}
         </span>
-        <span className="ml-auto font-mono text-[10px] text-foreground/40">
+        <span className="ml-auto font-mono text-[10px] text-foreground/60">
           {visibleCount}/{entries.length}
         </span>
       </div>
@@ -103,7 +103,7 @@ export function DataStream({
             >
               <div className={cn("mt-1.5 h-1 w-1 shrink-0 rounded-full", typeDot[type])} />
               {entry.timestamp && (
-                <span className="shrink-0 text-foreground/40">{entry.timestamp}</span>
+                <span className="shrink-0 text-foreground/60">{entry.timestamp}</span>
               )}
               <span className={cn("leading-relaxed", typeColor[type])}>{entry.text}</span>
             </div>

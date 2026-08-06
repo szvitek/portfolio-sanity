@@ -10,7 +10,7 @@ interface DataFieldProps {
 function DataField({ label, value, highlight = false }: DataFieldProps) {
   return (
     <div className="space-y-1">
-      <div className="text-[10px] uppercase tracking-widest text-foreground/80">
+      <div className="text-[10px] uppercase tracking-widest text-foreground/90">
         {label}
       </div>
       <div className="flex items-center gap-2">
@@ -67,7 +67,7 @@ export function DataCard({
       {(title || subtitle) && (
         <div className="border-b border-border/50 px-4 py-2">
           {subtitle && (
-            <div className="text-[10px] uppercase tracking-widest text-foreground/80">
+            <div className="text-[10px] uppercase tracking-widest text-foreground/90">
               {subtitle}
             </div>
           )}

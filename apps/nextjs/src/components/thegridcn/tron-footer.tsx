@@ -54,7 +54,7 @@ export function TronFooter({
                 //{brand}
               </span>
             </div>
-            <p className="font-mono text-[10px] uppercase tracking-widest text-foreground/40">
+            <p className="font-mono text-[10px] uppercase tracking-widest text-foreground/60">
               {tagline}
             </p>
           </div>
@@ -68,7 +68,7 @@ export function TronFooter({
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-mono text-[10px] uppercase tracking-widest text-foreground/50 transition-colors hover:text-primary"
+                  className="font-mono text-[10px] uppercase tracking-widest text-foreground/70 transition-colors hover:text-primary"
                 >
                   {link.label}
                 </a>
@@ -80,11 +80,11 @@ export function TronFooter({
           <div className="flex flex-col items-start gap-2 md:items-end">
             <div className="flex items-center gap-2">
               <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
-              <span className="font-mono text-[10px] uppercase tracking-widest text-foreground/50">
+              <span className="font-mono text-[10px] uppercase tracking-widest text-foreground/70">
                 SYSTEM OPERATIONAL
               </span>
             </div>
-            <span className="font-mono text-[10px] text-foreground/30">
+            <span className="font-mono text-[10px] text-foreground/50">
               {copyright || `© ${new Date().getFullYear()} ${brand}`}
             </span>
           </div>
@@ -92,7 +92,7 @@ export function TronFooter({
 
         {/* Bottom bar */}
         <div className="mt-8 border-t border-border/30 pt-4">
-          <div className="flex items-center justify-between font-mono text-[9px] uppercase tracking-widest text-foreground/30">
+          <div className="flex items-center justify-between font-mono text-[9px] uppercase tracking-widest text-foreground/50">
             <span>BUILD: {process.env.NEXT_PUBLIC_BUILD_ID || "DEV"}</span>
             <span>NODE: REACT</span>
             <span>STATUS: ONLINE</span>

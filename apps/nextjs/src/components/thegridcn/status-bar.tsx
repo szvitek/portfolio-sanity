@@ -31,10 +31,10 @@ export function StatusBar({
       )}
       {...props}
     >
-      <div className="flex items-center gap-4 text-foreground/80">
+      <div className="flex items-center gap-4 text-foreground/90">
         {leftContent}
       </div>
-      <div className="flex items-center gap-4 text-foreground/80">
+      <div className="flex items-center gap-4 text-foreground/90">
         {rightContent}
       </div>
     </div>
@@ -76,12 +76,12 @@ export function InfoPanel({
       <div className="flex items-center justify-between border-b border-border/50 bg-muted/30 px-4 py-2">
         <div className="flex items-center gap-3">
           <div className={cn("h-2 w-2 rounded-full", statusIndicator[status])} />
-          <span className="font-mono text-[10px] uppercase tracking-widest text-foreground/80">
+          <span className="font-mono text-[10px] uppercase tracking-widest text-foreground/90">
             {subtitle}
           </span>
         </div>
         {timestamp && (
-          <span className="font-mono text-[10px] text-foreground/80">
+          <span className="font-mono text-[10px] text-foreground/90">
             {timestamp}
           </span>
         )}
@@ -144,7 +144,7 @@ export function UplinkBar({
 
       <div className="flex items-center gap-4">
         {status && (
-          <span className="uppercase tracking-widest text-foreground/80">
+          <span className="uppercase tracking-widest text-foreground/90">
             {status}
           </span>
         )}
@@ -211,7 +211,7 @@ export function ProgressTimeline({
       </div>
 
       {/* Labels */}
-      <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-widest text-foreground/80">
+      <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-widest text-foreground/90">
         <span>00:00</span>
         {currentLabel && <span className="text-primary">{currentLabel}</span>}
         <span>END</span>

@@ -87,7 +87,7 @@ export function BootSequence({
 
       {/* Header */}
       <div className="flex items-center gap-2 border-b border-border/50 px-4 py-2">
-        <span className="text-[10px] uppercase tracking-widest text-foreground/80">
+        <span className="text-[10px] uppercase tracking-widest text-foreground/90">
           {title}
         </span>
         <span className="ml-auto font-mono text-[10px] text-primary tabular-nums">
@@ -113,14 +113,14 @@ export function BootSequence({
               <span className="w-4 shrink-0 text-center">
                 {state === "done" && <span className="text-green-500">&#10003;</span>}
                 {state === "loading" && <span className="animate-pulse text-primary">&#9679;</span>}
-                {state === "pending" && <span className="text-foreground/20">&#9675;</span>}
+                {state === "pending" && <span className="text-foreground/30">&#9675;</span>}
               </span>
 
               <span className={cn(
                 "uppercase tracking-wider",
                 state === "loading" && "text-primary",
-                state === "done" && "text-foreground/70",
-                state === "pending" && "text-foreground/30"
+                state === "done" && "text-foreground/90",
+                state === "pending" && "text-foreground/50"
               )}>
                 {step.label}
               </span>

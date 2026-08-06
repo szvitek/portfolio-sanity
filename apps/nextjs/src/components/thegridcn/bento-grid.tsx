@@ -68,7 +68,7 @@ export function BentoGrid({
                 {item.title}
               </h3>
               {item.description && (
-                <p className="mt-1.5 text-xs leading-relaxed text-foreground/50">
+                <p className="mt-1.5 text-xs leading-relaxed text-foreground/70">
                   {item.description}
                 </p>
               )}

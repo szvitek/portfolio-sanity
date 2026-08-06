@@ -54,7 +54,7 @@ export function Changelog({
       <div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.03)_2px,rgba(0,0,0,0.03)_4px)]" />
 
       {label && (
-        <div className="mb-4 font-mono text-[10px] uppercase tracking-widest text-foreground/50">
+        <div className="mb-4 font-mono text-[10px] uppercase tracking-widest text-foreground/70">
           // {label}
         </div>
       )}
@@ -100,7 +100,7 @@ export function Changelog({
                   </h4>
                 </div>
                 {item.description && (
-                  <p className="mt-1 text-xs leading-relaxed text-foreground/50">
+                  <p className="mt-1 text-xs leading-relaxed text-foreground/70">
                     {item.description}
                   </p>
                 )}

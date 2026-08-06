@@ -125,7 +125,7 @@ const CATEGORY_BTN: Record<string, { active: string; inactive: string }> = {
 const FILTER_BTN = "h-auto rounded border px-3 py-1 font-mono text-[10px] uppercase tracking-widest shadow-none"
 const FILTER_ACTIVE = "border-primary/60 bg-primary/20 text-primary hover:border-primary/60 hover:bg-primary/20 hover:text-primary"
 const FILTER_INACTIVE =
-  "border-border/30 bg-transparent text-foreground/50 hover:border-foreground/30 hover:bg-transparent hover:text-foreground/50"
+  "border-border/30 bg-transparent text-foreground/70 hover:border-foreground/30 hover:bg-transparent hover:text-foreground/70"
 const CV_BTN =
   "h-auto font-mono uppercase tracking-widest hover:shadow-[0_0_16px_rgba(var(--primary-rgb,0,180,255),0.3)]"
 
@@ -189,7 +189,7 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
         }
         rightContent={
           <span className="flex items-center gap-4">
-            <span className="text-foreground/80">PORTFOLIO v1.0</span>
+            <span className="text-foreground/90">PORTFOLIO v1.0</span>
           </span>
         }
         data-testid="top-statusbar"
@@ -202,7 +202,7 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
           <div className="mx-auto w-full max-w-5xl">
           {!hasProfile ? (
             <div className="flex min-h-[40vh] w-full items-center justify-center">
-              <p className="text-sm text-foreground/50">No profile content found.</p>
+              <p className="text-sm text-foreground/70">No profile content found.</p>
             </div>
           ) : (
           <HeroSection
@@ -244,7 +244,7 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
                 animated={false}
               />
               {bioText && (
-                <p className="max-w-2xl text-center text-sm leading-relaxed text-foreground/60 md:text-base">
+                <p className="max-w-2xl text-center text-sm leading-relaxed text-foreground/80 md:text-base">
                   {bioText}
                 </p>
               )}
@@ -273,7 +273,7 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
                             key={link.platform}
                             platform={link.platform}
                             url={link.url}
-                            className="text-foreground/60 transition-colors hover:text-primary"
+                            className="text-foreground/80 transition-colors hover:text-primary"
                           />
                         )
                       )}
@@ -364,7 +364,7 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
                 />
               </>
             ) : (
-              <p className="text-sm text-foreground/40">Skills content coming soon.</p>
+              <p className="text-sm text-foreground/60">Skills content coming soon.</p>
             )}
           </div>
         </section>
@@ -432,7 +432,7 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
                 </div>
               </div>
             ) : (
-              <p className="text-sm text-foreground/40">Projects content coming soon.</p>
+              <p className="text-sm text-foreground/60">Projects content coming soon.</p>
             )}
           </div>
         </section>
@@ -459,7 +459,7 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
                 ))}
               </div>
             ) : (
-              <p className="text-sm text-foreground/40">Experience content coming soon.</p>
+              <p className="text-sm text-foreground/60">Experience content coming soon.</p>
             )}
           </div>
         </section>
@@ -480,7 +480,7 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
                             {study.field}
                           </Badge>
                           {study.description && (
-                            <span className="text-xs text-foreground/50">— {study.description}</span>
+                            <span className="text-xs text-foreground/70">— {study.description}</span>
                           )}
                         </div>
                       ))}
@@ -493,7 +493,7 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
                 }))}
               />
             ) : (
-              <p className="text-sm text-foreground/40">Education content coming soon.</p>
+              <p className="text-sm text-foreground/60">Education content coming soon.</p>
             )}
           </div>
         </section>
@@ -523,7 +523,7 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
                 }))}
               />
             ) : (
-              <p className="text-sm text-foreground/40">Certifications content coming soon.</p>
+              <p className="text-sm text-foreground/60">Certifications content coming soon.</p>
             )}
           </div>
         </section>
@@ -544,7 +544,7 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
                     <h3 className="font-mono text-sm font-bold uppercase tracking-wider text-foreground/90">
                       //GET IN TOUCH
                     </h3>
-                    <p className="font-mono text-[10px] uppercase tracking-widest text-foreground/40">
+                    <p className="font-mono text-[10px] uppercase tracking-widest text-foreground/60">
                       Have a project, question, or just want to say hi? Drop a message.
                     </p>
                   </div>
@@ -584,7 +584,7 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
                                   key={link.platform}
                                   platform={link.platform}
                                   url={link.url}
-                                  className="text-foreground/60 transition-colors hover:text-primary"
+                                  className="text-foreground/80 transition-colors hover:text-primary"
                                 />
                               )
                             )}
@@ -593,7 +593,7 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
                     {profile?.email && (
                       <a
                         href={`mailto:${profile.email}`}
-                        className="inline-flex items-center gap-2 font-mono text-xs text-foreground/60 transition-colors hover:text-primary"
+                        className="inline-flex items-center gap-2 font-mono text-xs text-foreground/80 transition-colors hover:text-primary"
                       >
                         <span className="h-1.5 w-1.5 rounded-full bg-primary/60" />
                         {profile.email}

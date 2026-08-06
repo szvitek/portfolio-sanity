@@ -21,19 +21,19 @@ export function Chip({
 }: ChipProps) {
   const variants: Record<string, { base: string; active: string }> = {
     default: {
-      base: "border-primary/15 text-foreground/40 hover:border-primary/30 hover:text-foreground/60",
+      base: "border-primary/15 text-foreground/60 hover:border-primary/30 hover:text-foreground/80",
       active: "border-primary/40 bg-primary/10 text-primary shadow-[0_0_6px_rgba(var(--primary-rgb,0,180,255),0.1)]",
     },
     success: {
-      base: "border-emerald-500/15 text-foreground/40 hover:border-emerald-500/30 hover:text-emerald-400/70",
+      base: "border-emerald-500/15 text-foreground/60 hover:border-emerald-500/30 hover:text-emerald-400/70",
       active: "border-emerald-500/40 bg-emerald-500/10 text-emerald-400",
     },
     warning: {
-      base: "border-amber-500/15 text-foreground/40 hover:border-amber-500/30 hover:text-amber-400/70",
+      base: "border-amber-500/15 text-foreground/60 hover:border-amber-500/30 hover:text-amber-400/70",
       active: "border-amber-500/40 bg-amber-500/10 text-amber-400",
     },
     danger: {
-      base: "border-red-500/15 text-foreground/40 hover:border-red-500/30 hover:text-red-400/70",
+      base: "border-red-500/15 text-foreground/60 hover:border-red-500/30 hover:text-red-400/70",
       active: "border-red-500/40 bg-red-500/10 text-red-400",
     },
   }

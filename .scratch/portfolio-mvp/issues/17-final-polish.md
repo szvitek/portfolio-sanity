@@ -24,6 +24,7 @@
 - [x] Hero + contact GitHub/LinkedIn links as outline buttons
 - [x] Outline buttons glow only on hover (plain border at rest)
 - [x] Navbar: active item keeps a bottom border, other items animate one in on hover
+- [x] Brighter text — raised `text-foreground` opacity levels across the page (incl. nav items)
 - [ ] Finalise the footer
 - [ ] Background music feature — store 1+ audio files in Sanity, add the GridCN waveform component
 
@@ -42,6 +43,8 @@
 **Outline button glow (hover-only):** The generic "Button glow" rule in `globals.css` gives *every* `[data-slot="button"]` `box-shadow: var(--tron-border-glow)` at rest. Outline buttons therefore glowed constantly despite the outline rule defining only their border. Added `box-shadow: none` to `[data-variant="outline"]`'s default state so outline buttons keep their border but glow only on hover (the outline `:hover` rule already had its own glow). Confirmed in the compiled production CSS.
 
 **Navbar active/hover underline (gridcn pattern):** The nav section items now follow the gridcn navbar behaviour — each link is `group relative` with an absolutely-positioned `h-px bg-primary` underline span (`absolute inset-x-2 bottom-0 transition-transform`). The active section keeps it visible (`scale-x-100`); the others hide it (`scale-x-0`) and animate it in on hover (`group-hover:scale-x-100`, 150ms transform transition). Pure Tailwind scaleX animation, no custom keyframes — matches the gridcn site exactly (confirmed by inspecting the gridcn homepage markup). TDD: new test asserts every section link carries the underline span, the active (profile) link is `scale-x-100`, and the rest are `scale-x-0 group-hover:scale-x-100`.
+
+**Brighter text (global opacity lift):** Secondary text across the page was too dim. `--foreground` itself is near-white (`oklch(0.95 …)`), but most text used low-opacity `text-foreground/40-60` utilities, so the apparent darkness came from the alpha values, not the base color. Remapped the opacity ladder across all `apps/nextjs/src` TSX: `/40→/60`, `/50→/70`, `/60→/80`, `/70→/90`, `/80→/90`, plus `/10→/20`, `/20→/30`, `/30→/50` for the subtlest labels. Nav items went `text-foreground/50 hover:text-foreground/80` → `text-foreground/70 hover:text-foreground/90`. Applied as a single-pass remap (hash map, so no re-matching), counts verified post-change, 86/86 tests + typecheck + build green. Styling-only — no test seam (same as the outline-glow tweak); can be fine-tuned per-element if any spot ends up too bright.
 
 
 Implemented via commit `f4a0ea0`.

@@ -56,7 +56,7 @@ export function CTABanner({
           {title}
         </h3>
         {description && (
-          <p className="mx-auto mt-2 max-w-md text-sm text-foreground/60">
+          <p className="mx-auto mt-2 max-w-md text-sm text-foreground/80">
             {description}
           </p>
         )}
@@ -75,7 +75,7 @@ export function CTABanner({
             {secondaryAction && (
               <button
                 onClick={secondaryAction.onClick}
-                className="rounded border border-primary/30 px-5 py-2 font-mono text-[10px] uppercase tracking-widest text-foreground/60 transition-colors hover:border-primary/50 hover:text-primary"
+                className="rounded border border-primary/30 px-5 py-2 font-mono text-[10px] uppercase tracking-widest text-foreground/80 transition-colors hover:border-primary/50 hover:text-primary"
               >
                 {secondaryAction.label}
               </button>
