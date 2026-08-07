@@ -512,6 +512,31 @@ describe("Home page", () => {
     expect(jobCards.length).toBe(2)
   })
 
+  it("keeps job card corner decorations at the card corners", async () => {
+    const props = await getPageProps()
+    const { container } = renderWithTheme(<HomePage {...props} />)
+
+    const jobCard = container.querySelector(
+      '[data-slot="job-card"]'
+    ) as HTMLElement
+    expect(jobCard).not.toHaveClass("p-6")
+
+    const contentDiv = Array.from(jobCard.children).find((el) =>
+      el.classList.contains("z-10")
+    ) as HTMLElement
+    expect(contentDiv).toBeDefined()
+
+    const cornerDecorations = Array.from(contentDiv.children).filter((el) =>
+      el.classList.contains("pointer-events-none")
+    )
+    expect(cornerDecorations.length).toBe(4)
+
+    const contentWrapper = Array.from(contentDiv.children).find((el) =>
+      el.classList.contains("p-6")
+    )
+    expect(contentWrapper).toBeDefined()
+  })
+
   it("renders jobs section in correct position", async () => {
     const props = await getPageProps()
     const { container } = renderWithTheme(<HomePage {...props} />)

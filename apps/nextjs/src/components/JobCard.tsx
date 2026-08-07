@@ -49,12 +49,14 @@ export function JobCard({
       data-slot="job-card"
       animated={true}
       opacity={0.06}
-      className="relative rounded border border-border/30 bg-card/50 p-6"
+      className="relative rounded border border-border/30 bg-card/50"
     >
       <div className="pointer-events-none absolute left-0 top-0 h-4 w-4 border-l-2 border-t-2 border-primary/50" />
       <div className="pointer-events-none absolute right-0 top-0 h-4 w-4 border-r-2 border-t-2 border-primary/50" />
       <div className="pointer-events-none absolute bottom-0 left-0 h-4 w-4 border-b-2 border-l-2 border-primary/50" />
       <div className="pointer-events-none absolute bottom-0 right-0 h-4 w-4 border-b-2 border-r-2 border-primary/50" />
+
+      <div className="p-6">
 
       <div className="flex items-start justify-between gap-4">
         <div className="flex items-start gap-3">
@@ -155,6 +157,7 @@ export function JobCard({
           />
         </div>
       )}
+      </div>
     </CircuitBackground>
   )
 }
