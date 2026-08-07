@@ -437,7 +437,8 @@ h1, h2, h3, h4, h5, h6 {
 [data-tron-intensity] [data-slot="study-card"],
 [data-tron-intensity] [data-slot="certification-card"],
 [data-tron-intensity] [data-slot="tron-bento-card"],
-[data-tron-intensity] [data-slot="tron-contact"] {
+[data-tron-intensity] [data-slot="tron-contact"],
+[data-tron-intensity] [data-slot="theme-controls"] {
   box-shadow: var(--tron-border-glow);
   transition: box-shadow var(--tron-transition);
 }
