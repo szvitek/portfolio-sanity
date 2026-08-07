@@ -93,13 +93,13 @@ export function ProjectCard({
 
       <div className="mt-3 flex flex-1 flex-col pb-4">
         {description && description.length > 0 && (
-          <div className="prose-invert font-mono text-xs leading-relaxed text-foreground/70">
+          <div className="prose-invert pb-4 text-justify font-mono text-xs leading-relaxed text-foreground/70">
             <PortableText value={description} />
           </div>
         )}
 
         {skills && skills.length > 0 && (
-          <div className="mt-4 flex flex-wrap gap-1.5">
+          <div className="mt-auto flex flex-wrap gap-1.5">
             {groupSkillsByCategory(skills).map((group) => (
               <div key={group.category} className="flex flex-wrap gap-1.5">
                 {group.skills.map((skill) => {
