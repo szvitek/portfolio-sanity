@@ -78,9 +78,7 @@ export function Changelog({
                   )}
                   style={{ backgroundColor: "currentColor" }}
                 />
-                {i < items.length - 1 && (
-                  <div className="mt-1 w-px flex-1 bg-primary/20" />
-                )}
+                <div className="mt-1 w-px flex-1 bg-primary/20" />
               </div>
 
               <div className="-mt-0.5 flex-1">

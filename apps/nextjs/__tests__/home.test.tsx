@@ -512,6 +512,19 @@ describe("Home page", () => {
     expect(jobCards.length).toBe(2)
   })
 
+  it("draws a system highlights connector line for every entry", async () => {
+    const props = await getPageProps()
+    const { container } = renderWithTheme(<HomePage {...props} />)
+
+    const changelog = container.querySelector(
+      '[data-slot="tron-changelog"]'
+    ) as HTMLElement
+    expect(changelog).toBeInTheDocument()
+
+    const connectorLines = changelog.querySelectorAll('[class*="w-px"]')
+    expect(connectorLines.length).toBe(2)
+  })
+
   it("keeps job card corner decorations at the card corners", async () => {
     const props = await getPageProps()
     const { container } = renderWithTheme(<HomePage {...props} />)
