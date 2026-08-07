@@ -1,7 +1,9 @@
 import { fireEvent, render, screen } from "@testing-library/react"
 import { describe, it, expect, vi, beforeEach } from "vitest"
 import type { GetStaticPropsResult } from "next"
+import type { PortableTextBlock } from "@portabletext/react"
 import HomePage, { getStaticProps } from "@/pages/index"
+import { ProjectCard } from "@/components/ProjectCard"
 import { mockHomePageData } from "./fixtures/homePage"
 import type { ProfileData, SkillData, JobData, StudyData, CertificationData, ProjectData } from "@/lib/sanity"
 import type { GroupedStudy } from "@/pages/index"
@@ -681,6 +683,77 @@ describe("Home page", () => {
 
     const nodeBadges = screen.getAllByText("Node.js")
     expect(nodeBadges.length).toBeGreaterThan(0)
+  })
+
+  it("separates skill badge category groups without leading whitespace", async () => {
+    const props = await getPageProps()
+    const { container } = renderWithTheme(<HomePage {...props} />)
+
+    const projectCards = container.querySelectorAll('[data-slot="project-card"]')
+    for (const card of Array.from(projectCards)) {
+      const leadingMarginBadges = card.querySelectorAll('[class*="ml-3"]')
+      expect(leadingMarginBadges.length).toBe(0)
+    }
+  })
+
+  it("truncates long project descriptions with a read more toggle", () => {
+    const description: PortableTextBlock[] = [
+      {
+        _type: "block",
+        _key: "long-desc",
+        style: "normal",
+        children: [
+          {
+            _type: "span",
+            _key: "long-span",
+            text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+            marks: [],
+          },
+        ],
+      },
+    ]
+
+    renderWithTheme(<ProjectCard title="Long Project" description={description} />)
+
+    const excerpt = screen
+      .getAllByText(/Lorem ipsum dolor sit amet, consectetur/)
+      .find((el) => el.textContent?.includes("…"))
+    expect(excerpt).toBeDefined()
+    expect(excerpt).toHaveTextContent(/lorem ipsum dolor sit amet, consectetur.*…/i)
+
+    const readMore = screen.getByRole("button", { name: /read more/i })
+    expect(readMore).toBeInTheDocument()
+    expect(readMore).toHaveAttribute("aria-expanded", "false")
+    expect(screen.queryByRole("button", { name: /read less/i })).not.toBeInTheDocument()
+
+    fireEvent.click(readMore)
+
+    const readLess = screen.getByRole("button", { name: /read less/i })
+    expect(readLess).toHaveAttribute("aria-expanded", "true")
+  })
+
+  it("keeps short project descriptions untruncated without a read more button", async () => {
+    const props = await getPageProps()
+    renderWithTheme(<HomePage {...props} />)
+
+    expect(screen.queryByRole("button", { name: /read more/i })).not.toBeInTheDocument()
+  })
+
+  it("renders project cards as equal-height columns with bottom-anchored buttons", async () => {
+    const props = await getPageProps()
+    const { container } = renderWithTheme(<HomePage {...props} />)
+
+    const projectCard = container.querySelector('[data-slot="project-card"]')
+    expect(projectCard).toHaveClass("h-full", "flex", "flex-col")
+
+    const liveDemo = screen.getAllByText("Live Demo")[0].closest("a")
+    expect(liveDemo).toHaveClass("flex-1")
+
+    const githubLink = screen
+      .getAllByText("GitHub")
+      .map((el) => el.closest("a"))
+      .find((el) => el !== null && el.getAttribute("href")?.includes("johndoe/portfolio"))
+    expect(githubLink).toHaveClass("flex-1")
   })
 
   it("renders project featured badges for featured projects", async () => {

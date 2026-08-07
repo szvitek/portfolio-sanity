@@ -1,3 +1,4 @@
+import { useState } from "react"
 import type { PortableTextBlock } from "@portabletext/react"
 import { PortableText } from "@portabletext/react"
 import type { SanityImageSource } from "@sanity/image-url/lib/types/types"
@@ -6,6 +7,16 @@ import { cn } from "@/lib/utils"
 import { skillBadgeClasses } from "@/lib/skill-colors"
 import { groupSkillsByCategory } from "@/lib/skill-groups"
 import { Button } from "@/components/ui/button"
+
+const DESCRIPTION_EXCERPT_WORDS = 30
+
+function descriptionText(blocks: PortableTextBlock[]): string {
+  return blocks
+    .flatMap((block) => (block.children ?? []).map((child) => ("text" in child ? child.text : "")))
+    .join(" ")
+    .replace(/\s+/g, " ")
+    .trim()
+}
 
 interface SkillRef {
   _id: string
@@ -41,11 +52,17 @@ export function ProjectCard({
     ? urlFor(thumbnail).width(600).height(340).url()
     : undefined
 
+  const fullText = description ? descriptionText(description) : ""
+  const words = fullText ? fullText.split(" ") : []
+  const isTruncated = words.length > DESCRIPTION_EXCERPT_WORDS
+  const excerpt = words.slice(0, DESCRIPTION_EXCERPT_WORDS).join(" ")
+  const [expanded, setExpanded] = useState(false)
+
   return (
     <div
       data-slot="project-card"
       className={cn(
-        "relative overflow-hidden rounded border border-border/30 bg-card/50 p-6",
+        "relative flex h-full flex-col overflow-hidden rounded border border-border/30 bg-card/50 p-6",
         className
       )}
       style={style}
@@ -91,51 +108,92 @@ export function ProjectCard({
         )}
       </div>
 
-      {description && description.length > 0 && (
-        <div className="prose-invert mt-3 font-mono text-xs leading-relaxed text-foreground/70">
-          <PortableText value={description} />
-        </div>
-      )}
-
-      {skills && skills.length > 0 && (
-        <div className="mt-4 flex flex-wrap gap-1.5">
-          {groupSkillsByCategory(skills).map((group, groupIndex) =>
-            group.skills.map((skill, skillIndex) => {
-              const colors = skillBadgeClasses(skill.category)
-              return (
-                <span
-                  key={skill._id}
-                    className={cn(
-                      "inline-flex items-center gap-1.5 rounded border px-2 py-0.5 font-mono text-[9px] uppercase tracking-widest",
-                      groupIndex > 0 && skillIndex === 0 ? "ml-3" : "",
-                      colors.border,
-                      colors.bg,
-                      colors.text
-                    )}
+      <div className="mt-3 flex flex-1 flex-col pb-4">
+        {description && description.length > 0 && (
+          <div className="prose-invert font-mono text-xs leading-relaxed text-foreground/70">
+            {isTruncated && !expanded && <p>{excerpt}&#8230;</p>}
+            {isTruncated ? (
+              <div
+                className="grid transition-[grid-template-rows,opacity] duration-500 ease-out"
+                style={{
+                  gridTemplateRows: expanded ? "1fr" : "0fr",
+                  opacity: expanded ? 1 : 0,
+                }}
+              >
+                <div className="overflow-hidden">
+                  <PortableText value={description} />
+                </div>
+              </div>
+            ) : (
+              <PortableText value={description} />
+            )}
+            {isTruncated && (
+              <button
+                type="button"
+                onClick={() => setExpanded((value) => !value)}
+                aria-expanded={expanded}
+                className="mt-1 inline-flex cursor-pointer items-center gap-1 text-primary transition-colors hover:text-primary/80"
+              >
+                <span>Read {expanded ? "less" : "more"}</span>
+                <svg
+                  className={cn("h-3 w-3 transition-transform", expanded && "rotate-180")}
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
                 >
-                  {skill.image ? (
-                    <img
-                      src={urlFor(skill.image).width(16).height(16).url()}
-                      alt=""
-                      className="h-3 w-3 object-contain"
-                    />
-                  ) : null}
-                  {skill.name}
-                </span>
-              )
-            })
-          )}
-        </div>
-      )}
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="m19.5 8.25-7.5 7.5-7.5-7.5"
+                  />
+                </svg>
+              </button>
+            )}
+          </div>
+        )}
+
+        {skills && skills.length > 0 && (
+          <div className="mt-4 flex flex-wrap gap-1.5">
+            {groupSkillsByCategory(skills).map((group) => (
+              <div key={group.category} className="flex flex-wrap gap-1.5">
+                {group.skills.map((skill) => {
+                  const colors = skillBadgeClasses(skill.category)
+                  return (
+                    <span
+                      key={skill._id}
+                      className={cn(
+                        "inline-flex items-center gap-1.5 rounded border px-2 py-0.5 font-mono text-[9px] uppercase tracking-widest",
+                        colors.border,
+                        colors.bg,
+                        colors.text
+                      )}
+                    >
+                      {skill.image ? (
+                        <img
+                          src={urlFor(skill.image).width(16).height(16).url()}
+                          alt=""
+                          className="h-3 w-3 object-contain"
+                        />
+                      ) : null}
+                      {skill.name}
+                    </span>
+                  )
+                })}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
 
       {(liveUrl || githubUrl) && (
-        <div className="mt-4 flex items-center gap-4 border-t border-border/30 pt-3">
+        <div className="flex gap-4 border-t border-border/30 pt-3">
           {liveUrl && (
             <Button
               asChild
               variant="default"
               size="sm"
-              className="font-mono text-[10px] uppercase tracking-widest"
+              className="flex-1 font-mono text-[10px] uppercase tracking-widest"
             >
               <a href={liveUrl} target="_blank" rel="noopener noreferrer">
                 <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -150,7 +208,7 @@ export function ProjectCard({
               asChild
               variant="default"
               size="sm"
-              className="font-mono text-[10px] uppercase tracking-widest"
+              className="flex-1 font-mono text-[10px] uppercase tracking-widest"
             >
               <a href={githubUrl} target="_blank" rel="noopener noreferrer">
                 <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 24 24">
