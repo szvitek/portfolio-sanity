@@ -46,6 +46,8 @@
 
 **Brighter text (CSS-variable lift):** Secondary text across the page read too dim against the near-black background. Initially tried remapping the `text-foreground/XX` opacity ladder class-by-class (~32 files), but that's a lot of diff for a purely aesthetic change, so it was reverted in favour of a one-file tweak: brightened `--foreground` (`oklch(0.95 …)` → `oklch(0.98 …)`) and `--muted-foreground` (`oklch(0.65 0 0)` → `oklch(0.75 0 0)`, ares `0.6` → `0.7`) in `globals.css`. `--foreground` was already ~95% white, so the headroom is small — the lift is subtler than the class remap would have been (a 50%-alpha utility over L0.06 background can't reach the same composite as raising alpha to 70% even with pure white). Can be fine-tuned per-element afterwards if any spot still reads too dim. Styling-only — no test seam.
 
+**Project card polish (commits `b9de1a0`, `7c64cba`, `07b2409`, `7344406`):** The Projects section cards now fill their grid row (`flex h-full flex-col`) so all cards in a row are equal height, and the action-button row is bottom-anchored with the buttons growing to fill it (`flex-1` — one button spans full width, two split evenly). Description text is `text-justify`. The category-colored skill badges render inside the existing `@thegridcn/marquee` component (`variant="subtle"`, `speed="fast"`, pauses on hover) so they stay on a single line and auto-scroll with fade edges. The earlier word-count clamp with a Read more/less toggle was reverted per user request (`fcf8fd7`) — descriptions render in full.
+
 
 Implemented via commit `f4a0ea0`.
 

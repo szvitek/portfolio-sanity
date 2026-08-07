@@ -99,7 +99,7 @@ export function ProjectCard({
         )}
 
         {skills && skills.length > 0 && (
-          <Marquee variant="default" speed="slow" className="mt-auto">
+          <Marquee variant="subtle" speed="fast" className="mt-auto">
             {skills.map((skill) => {
               const colors = skillBadgeClasses(skill.category)
               return (
