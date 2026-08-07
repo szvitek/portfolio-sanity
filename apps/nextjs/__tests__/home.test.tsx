@@ -5,6 +5,7 @@ import HomePage, { getStaticProps } from "@/pages/index"
 import { mockHomePageData } from "./fixtures/homePage"
 import type { ProfileData, SkillData, JobData, StudyData, CertificationData, ProjectData } from "@/lib/sanity"
 import type { GroupedStudy } from "@/pages/index"
+import { SKILL_CATEGORY_COLORS } from "@/lib/skill-colors"
 import { ThemeProvider } from "@portfolio/ui"
 
 function renderWithTheme(ui: React.ReactElement) {
@@ -347,6 +348,39 @@ describe("Home page", () => {
     }
   })
 
+  it("gives each skill category filter button a glow matching its category color", async () => {
+    const props = await getPageProps()
+    const { container } = renderWithTheme(<HomePage {...props} />)
+
+    const skillsSection = container.querySelector("#skills")
+    const ghostButtons = Array.from(
+      skillsSection?.querySelectorAll<HTMLButtonElement>('button[data-slot="button"][data-variant="ghost"]') ?? []
+    )
+    expect(ghostButtons.length).toBeGreaterThan(0)
+
+    const categoryButtons = ghostButtons.filter((btn) => {
+      const text = btn.textContent ?? ""
+      return text !== "All" && text !== "Featured" && text in SKILL_CATEGORY_COLORS
+    })
+    expect(categoryButtons.length).toBeGreaterThan(0)
+
+    for (const btn of categoryButtons) {
+      const category = btn.textContent as string
+      expect(btn).toHaveAttribute("data-category-glow")
+      expect(btn.style.getPropertyValue("--glow")).toBe(SKILL_CATEGORY_COLORS[category].glow)
+    }
+
+    for (const btn of ghostButtons) {
+      if (btn.textContent === "All" || btn.textContent === "Featured") {
+        expect(btn).not.toHaveAttribute("data-category-glow")
+      }
+    }
+
+    const labels = ghostButtons.map((btn) => btn.textContent)
+    expect(labels[labels.length - 1]).toBe("All")
+    expect(labels.indexOf("Featured")).toBeLessThan(labels.indexOf("All"))
+  })
+
   it("renders category filter buttons and filters skills on click", async () => {
     const props = await getPageProps()
     const { container } = renderWithTheme(<HomePage {...props} />)
@@ -377,9 +411,10 @@ describe("Home page", () => {
     const { container } = renderWithTheme(<HomePage {...props} />)
 
     const skillsSection = container.querySelector("#skills")
-    const allButton = skillsSection?.querySelector('[data-slot="button"]')
+    const allButton = Array.from(
+      skillsSection?.querySelectorAll<HTMLButtonElement>('[data-slot="button"]') ?? []
+    ).find((btn) => btn.textContent === "All")
     expect(allButton).toBeInTheDocument()
-    expect(allButton).toHaveTextContent("All")
     expect(allButton).toHaveAttribute("data-variant", "ghost")
   })
 

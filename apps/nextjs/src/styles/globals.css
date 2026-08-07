@@ -466,6 +466,34 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: var(--tron-hover-glow);
 }
 
+/* Category filter button glow (skills) — recompute the composite glow vars on the
+   button itself so var(--glow) resolves to the inline category color instead of the
+   theme primary that the inherited values lock in at the root */
+[data-tron-intensity="light"] [data-slot="button"][data-variant="ghost"][data-category-glow] {
+  --tron-border-glow: 0 0 var(--tron-glow-spread-sm) color-mix(in oklch, var(--glow) 40%, transparent);
+  --tron-hover-glow: 0 0 var(--tron-glow-spread-md) color-mix(in oklch, var(--glow) 60%, transparent);
+}
+
+[data-tron-intensity="medium"] [data-slot="button"][data-variant="ghost"][data-category-glow] {
+  --tron-border-glow:
+    0 0 var(--tron-glow-spread-sm) var(--glow),
+    0 0 var(--tron-glow-spread-md) color-mix(in oklch, var(--glow) 50%, transparent);
+  --tron-hover-glow:
+    0 0 var(--tron-glow-spread-md) var(--glow),
+    0 0 var(--tron-glow-spread-lg) color-mix(in oklch, var(--glow) 60%, transparent);
+}
+
+[data-tron-intensity="heavy"] [data-slot="button"][data-variant="ghost"][data-category-glow] {
+  --tron-border-glow:
+    0 0 var(--tron-glow-spread-sm) var(--glow),
+    0 0 var(--tron-glow-spread-md) var(--glow),
+    0 0 var(--tron-glow-spread-lg) color-mix(in oklch, var(--glow) 40%, transparent);
+  --tron-hover-glow:
+    0 0 var(--tron-glow-spread-md) var(--glow),
+    0 0 var(--tron-glow-spread-lg) var(--glow),
+    0 0 var(--tron-glow-spread-xl) color-mix(in oklch, var(--glow) 50%, transparent);
+}
+
 /* Scrollbar */
 * {
   scrollbar-width: thin;

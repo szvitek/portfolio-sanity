@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react"
+import type { CSSProperties } from "react"
 import type { GetStaticProps, InferGetStaticPropsType } from "next"
 import type { PortableTextBlock } from "@portabletext/react"
 import { getHomePageData, urlFor, cvUrlFor } from "@/lib/sanity"
@@ -25,7 +26,7 @@ import { Timeline } from "@/components/thegridcn/timeline"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
-import { skillCategoryClasses } from "@/lib/skill-colors"
+import { skillCategoryClasses, categoryGlowColor } from "@/lib/skill-colors"
 import { dateRange, formatYear } from "@/lib/date-utils"
 import { MOCK_PROJECTS } from "@/lib/mock-data"
 
@@ -306,17 +307,6 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
                   <Button
                     type="button"
                     variant="ghost"
-                    onClick={() => setActiveFilter("all")}
-                    className={cn(
-                      FILTER_BTN,
-                      activeFilter === "all" ? FILTER_ACTIVE : FILTER_INACTIVE
-                    )}
-                  >
-                    All
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="ghost"
                     onClick={() => setActiveFilter("featured")}
                     className={cn(
                       FILTER_BTN,
@@ -332,6 +322,8 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
                         key={cat}
                         type="button"
                         variant="ghost"
+                        data-category-glow
+                        style={{ "--glow": categoryGlowColor(cat) } as CSSProperties}
                         onClick={() => setActiveFilter(cat)}
                         className={cn(
                           FILTER_BTN,
@@ -344,6 +336,17 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
                       </Button>
                     )
                   })}
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    onClick={() => setActiveFilter("all")}
+                    className={cn(
+                      FILTER_BTN,
+                      activeFilter === "all" ? FILTER_ACTIVE : FILTER_INACTIVE
+                    )}
+                  >
+                    All
+                  </Button>
                 </div>
                 <LogoCloud
                   key={activeFilter}
