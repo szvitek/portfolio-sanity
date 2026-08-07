@@ -105,6 +105,23 @@ describe("Home page", () => {
     expect(cvLinks[0]).toHaveAttribute("download")
   })
 
+  it("copies the contact email to the clipboard on click", async () => {
+    const writeText = vi.fn().mockResolvedValue(undefined)
+    Object.defineProperty(navigator, "clipboard", {
+      value: { writeText },
+      configurable: true,
+    })
+
+    const props = await getPageProps()
+    renderWithTheme(<HomePage {...props} />)
+
+    const emailButton = screen.getByRole("button", { name: /john@example\.com/i })
+    fireEvent.click(emailButton)
+
+    expect(writeText).toHaveBeenCalledWith("john@example.com")
+    expect(await screen.findByText(/copied!/i)).toBeInTheDocument()
+  })
+
   it("renders avatar image with correct alt text", async () => {
     const props = await getPageProps()
     renderWithTheme(<HomePage {...props} />)

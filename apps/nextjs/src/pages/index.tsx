@@ -16,6 +16,7 @@ import { CertificationCard } from "@/components/CertificationCard"
 import { ProjectCard } from "@/components/ProjectCard"
 import { NavBar } from "@/components/NavBar"
 import { StatusBar } from "@/components/thegridcn/status-bar"
+import { ClipboardCopy, Download, FileUser } from "lucide-react"
 import { SocialIcon, SocialLinkIcon } from "@portfolio/ui"
 import { ThemeControls } from "@/components/ThemeControls"
 import { GridBackground } from "@/components/GridBackground"
@@ -140,6 +141,18 @@ function extractText(blocks: PortableTextBlock[] | undefined | null): string {
 export default function HomePage({ profile, skills, jobs, studies, groupedStudies, certifications, projects }: Props) {
   const [activeFilter, setActiveFilter] = useState<string>("featured")
   const [showAllProjects, setShowAllProjects] = useState(false)
+  const [emailCopied, setEmailCopied] = useState(false)
+
+  const copyEmailToClipboard = async () => {
+    if (!profile?.email) return
+    try {
+      await navigator.clipboard.writeText(profile.email)
+      setEmailCopied(true)
+      window.setTimeout(() => setEmailCopied(false), 2000)
+    } catch {
+      /* clipboard unavailable — ignore */
+    }
+  }
   const avatarUrl = profile?.avatar ? urlFor(profile.avatar).width(120).height(120).url() : undefined
   const cvUrl = profile?.cv ? cvUrlFor(profile.cv) : undefined
   const bioText = profile?.bio ? extractText(profile.bio) : ""
@@ -283,9 +296,13 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
                     <Button
                       asChild
                       variant="default"
-                      className={cn(CV_BTN, "px-5 py-2 text-xs")}
+                      className={cn(CV_BTN, "group/cv px-5 py-2 text-xs")}
                     >
                       <a href={cvUrl} download>
+                        <span className="grid shrink-0 place-items-center">
+                          <FileUser className="col-start-1 row-start-1 size-3.5 transition-opacity group-hover/cv:opacity-0" />
+                          <Download className="col-start-1 row-start-1 size-3.5 opacity-0 transition-opacity group-hover/cv:opacity-100" />
+                        </span>
                         Download CV
                       </a>
                     </Button>
@@ -541,8 +558,8 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
               {/* Scanline overlay */}
               <div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.03)_2px,rgba(0,0,0,0.03)_4px)]" />
 
-              <div className="relative grid gap-8 lg:grid-cols-[5fr_7fr]">
-                <div className="flex h-full flex-col items-center justify-between lg:items-start">
+              <div className="relative grid gap-8 lg:grid-cols-[2fr_3fr]">
+                <div className="relative flex h-full flex-col items-center justify-between rounded border border-primary/20 p-6 lg:items-start">
                   <div className="flex flex-col gap-4">
                     <h3 className="font-mono text-sm font-bold uppercase tracking-wider text-foreground/90">
                       //GET IN TOUCH
@@ -561,58 +578,77 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
                       { x: 75, y: 50, label: "Email" },
                     ]}
                   />
-                  <div className="flex flex-wrap items-center gap-3">
-                        {profile?.socialLinks && profile.socialLinks.length > 0 && (
-                          <div className="flex flex-wrap gap-3">
-                            {profile.socialLinks.map((link) =>
-                              link.platform === "github" || link.platform === "linkedin" ? (
-                                <Button
-                                  key={link.platform}
-                                  asChild
-                                  variant="outline"
-                                  className="px-4 py-2 text-[10px]"
-                                >
-                                    <a
-                                      href={link.url}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      aria-label={link.platform}
-                                    >
-                                      <SocialIcon platform={link.platform} className="h-4 w-4" />
-                                      <span>{SOCIAL_LABELS[link.platform]}</span>
-                                    </a>
-                                  </Button>
-                              ) : (
-                                <SocialLinkIcon
-                                  key={link.platform}
-                                  platform={link.platform}
-                                  url={link.url}
-                                  className="text-foreground/60 transition-colors hover:text-primary"
-                                />
-                              )
-                            )}
-                          </div>
+                  <div className="flex w-full flex-col gap-3">
+                    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                      {profile?.socialLinks &&
+                        profile.socialLinks.length > 0 &&
+                        profile.socialLinks.map((link) =>
+                          link.platform === "github" || link.platform === "linkedin" ? (
+                            <Button
+                              key={link.platform}
+                              asChild
+                              variant="outline"
+                              className="w-full px-4 py-2 text-[10px]"
+                            >
+                              <a
+                                href={link.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label={link.platform}
+                              >
+                                <SocialIcon platform={link.platform} className="h-4 w-4" />
+                                <span>{SOCIAL_LABELS[link.platform]}</span>
+                              </a>
+                            </Button>
+                          ) : null
                         )}
+                      {cvUrl && (
+                        <Button
+                          asChild
+                          variant="outline"
+                          className={cn(CV_BTN, "group/cv w-full px-4 py-2 text-[10px]")}
+                        >
+                          <a href={cvUrl} download>
+                            <span className="grid shrink-0 place-items-center">
+                              <FileUser className="col-start-1 row-start-1 size-3.5 transition-opacity group-hover/cv:opacity-0" />
+                              <Download className="col-start-1 row-start-1 size-3.5 opacity-0 transition-opacity group-hover/cv:opacity-100" />
+                            </span>
+                            Download CV
+                          </a>
+                        </Button>
+                      )}
+                    </div>
                     {profile?.email && (
-                      <a
-                        href={`mailto:${profile.email}`}
-                        className="inline-flex items-center gap-2 font-mono text-xs text-foreground/60 transition-colors hover:text-primary"
-                      >
-                        <span className="h-1.5 w-1.5 rounded-full bg-primary/60" />
-                        {profile.email}
-                      </a>
-                    )}
-                    {cvUrl && (
                       <Button
-                        asChild
                         variant="default"
-                        className={cn(CV_BTN, "px-4 py-2 text-[10px]")}
+                        onClick={copyEmailToClipboard}
+                        className={cn(CV_BTN, "group w-full px-4 py-2 text-[10px]")}
                       >
-                        <a href={cvUrl} download>
-                          Download CV
-                        </a>
+                        <SocialIcon platform="email" className="size-4" />
+                        <span>{emailCopied ? "COPIED!" : profile.email}</span>
+                        <ClipboardCopy className="size-3.5 opacity-0 transition-opacity group-hover:opacity-100" />
                       </Button>
                     )}
+                    {profile?.socialLinks &&
+                      profile.socialLinks.some(
+                        (link) => link.platform !== "github" && link.platform !== "linkedin"
+                      ) && (
+                        <div className="flex flex-wrap gap-3">
+                          {profile.socialLinks
+                            .filter(
+                              (link) =>
+                                link.platform !== "github" && link.platform !== "linkedin"
+                            )
+                            .map((link) => (
+                              <SocialLinkIcon
+                                key={link.platform}
+                                platform={link.platform}
+                                url={link.url}
+                                className="text-foreground/60 transition-colors hover:text-primary"
+                              />
+                            ))}
+                        </div>
+                      )}
                   </div>
                 </div>
                 <ContactForm />
