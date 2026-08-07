@@ -99,9 +99,7 @@ export function Timeline({
                     </svg>
                   ) : null}
                 </div>
-                {i < items.length - 1 && (
-                  <div className={cn("mt-1 w-px flex-1", config.line)} />
-                )}
+                <div className={cn("mt-1 w-px flex-1", config.line)} />
               </div>
 
               {/* Content */}

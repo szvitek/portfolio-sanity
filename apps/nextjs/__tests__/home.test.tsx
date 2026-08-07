@@ -598,8 +598,13 @@ describe("Home page", () => {
     const props = await getPageProps()
     const { container } = renderWithTheme(<HomePage {...props} />)
 
-    const timeline = container.querySelector('[data-slot="tron-timeline"]')
+    const timeline = container.querySelector(
+      '[data-slot="tron-timeline"]'
+    ) as HTMLElement
     expect(timeline).toBeInTheDocument()
+
+    const connectorLines = timeline.querySelectorAll('[class*="w-px"]')
+    expect(connectorLines.length).toBe(2)
   })
 
   it("renders studies section in correct position", async () => {
