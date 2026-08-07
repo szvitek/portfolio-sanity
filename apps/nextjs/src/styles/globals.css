@@ -444,6 +444,9 @@ h1, h2, h3, h4, h5, h6 {
 
 [data-tron-intensity] [data-slot="tron-data-card"]:hover,
 [data-tron-intensity] [data-slot="tron-feature-card"]:hover,
+[data-tron-intensity] [data-slot="tron-hero-section"]:hover,
+[data-tron-intensity] [data-slot="tron-timeline"]:hover,
+[data-tron-intensity] [data-slot="tron-logo-cloud"]:hover,
 [data-tron-intensity] [data-slot="project-card"]:hover,
 [data-tron-intensity] [data-slot="job-card"]:hover,
 [data-tron-intensity] [data-slot="study-card"]:hover,
