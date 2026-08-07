@@ -7,6 +7,21 @@ import { skillBadgeClasses } from "@/lib/skill-colors"
 import { Button } from "@/components/ui/button"
 import { Marquee } from "@/components/thegridcn/marquee"
 
+const portableTextComponents = {
+  marks: {
+    link: ({ children, value }: { children: React.ReactNode; value?: { href?: string } }) => (
+      <a
+        href={value?.href ?? "#"}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="underline decoration-primary/60 underline-offset-2 transition-colors hover:text-primary hover:decoration-primary"
+      >
+        {children}
+      </a>
+    ),
+  },
+}
+
 interface SkillRef {
   _id: string
   name: string
@@ -94,7 +109,7 @@ export function ProjectCard({
       <div className="mt-3 flex flex-1 flex-col pb-4">
         {description && description.length > 0 && (
           <div className="prose-invert pb-4 text-justify font-mono text-xs leading-relaxed text-foreground/70">
-            <PortableText value={description} />
+            <PortableText value={description} components={portableTextComponents} />
           </div>
         )}
 

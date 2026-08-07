@@ -2,6 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react"
 import { describe, it, expect, vi, beforeEach } from "vitest"
 import type { GetStaticPropsResult } from "next"
 import HomePage, { getStaticProps } from "@/pages/index"
+import { ProjectCard } from "@/components/ProjectCard"
 import { mockHomePageData } from "./fixtures/homePage"
 import type { ProfileData, SkillData, JobData, StudyData, CertificationData, ProjectData } from "@/lib/sanity"
 import type { GroupedStudy } from "@/pages/index"
@@ -696,6 +697,35 @@ describe("Home page", () => {
       expect(marquees[0].textContent).toMatch(/React|Node\.js/)
       expect(card.querySelectorAll('[class*="ml-3"]').length).toBe(0)
     }
+  })
+
+  it("renders links in project descriptions as styled clickable anchors", () => {
+    const description = [
+      {
+        _type: "block",
+        _key: "link-desc",
+        style: "normal",
+        markDefs: [
+          { _type: "link", _key: "link-1", href: "https://example.com/docs" },
+        ],
+        children: [
+          {
+            _type: "span",
+            _key: "link-span",
+            text: "See the docs",
+            marks: ["link-1"],
+          },
+        ],
+      },
+    ]
+
+    renderWithTheme(<ProjectCard title="Linked Project" description={description} />)
+
+    const link = screen.getByRole("link", { name: "See the docs" })
+    expect(link).toHaveAttribute("href", "https://example.com/docs")
+    expect(link).toHaveAttribute("target", "_blank")
+    expect(link).toHaveAttribute("rel", "noopener noreferrer")
+    expect(link).toHaveClass("underline")
   })
 
   it("renders project cards as equal-height columns with bottom-anchored buttons", async () => {
