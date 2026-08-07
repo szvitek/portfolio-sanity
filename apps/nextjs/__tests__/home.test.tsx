@@ -683,14 +683,18 @@ describe("Home page", () => {
     expect(nodeBadges.length).toBeGreaterThan(0)
   })
 
-  it("separates skill badge category groups without leading whitespace", async () => {
+  it("renders project skill badges in a single-line scrolling marquee", async () => {
     const props = await getPageProps()
     const { container } = renderWithTheme(<HomePage {...props} />)
 
     const projectCards = container.querySelectorAll('[data-slot="project-card"]')
+    expect(projectCards.length).toBeGreaterThan(0)
+
     for (const card of Array.from(projectCards)) {
-      const leadingMarginBadges = card.querySelectorAll('[class*="ml-3"]')
-      expect(leadingMarginBadges.length).toBe(0)
+      const marquees = card.querySelectorAll('[data-slot="tron-marquee"]')
+      expect(marquees.length).toBe(1)
+      expect(marquees[0].textContent).toMatch(/React|Node\.js/)
+      expect(card.querySelectorAll('[class*="ml-3"]').length).toBe(0)
     }
   })
 

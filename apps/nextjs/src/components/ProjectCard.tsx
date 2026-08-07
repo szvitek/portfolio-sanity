@@ -4,8 +4,8 @@ import type { SanityImageSource } from "@sanity/image-url/lib/types/types"
 import { urlFor } from "@/lib/sanity"
 import { cn } from "@/lib/utils"
 import { skillBadgeClasses } from "@/lib/skill-colors"
-import { groupSkillsByCategory } from "@/lib/skill-groups"
 import { Button } from "@/components/ui/button"
+import { Marquee } from "@/components/thegridcn/marquee"
 
 interface SkillRef {
   _id: string
@@ -99,35 +99,31 @@ export function ProjectCard({
         )}
 
         {skills && skills.length > 0 && (
-          <div className="mt-auto flex flex-wrap gap-1.5">
-            {groupSkillsByCategory(skills).map((group) => (
-              <div key={group.category} className="flex flex-wrap gap-1.5">
-                {group.skills.map((skill) => {
-                  const colors = skillBadgeClasses(skill.category)
-                  return (
-                    <span
-                      key={skill._id}
-                      className={cn(
-                        "inline-flex items-center gap-1.5 rounded border px-2 py-0.5 font-mono text-[9px] uppercase tracking-widest",
-                        colors.border,
-                        colors.bg,
-                        colors.text
-                      )}
-                    >
-                      {skill.image ? (
-                        <img
-                          src={urlFor(skill.image).width(16).height(16).url()}
-                          alt=""
-                          className="h-3 w-3 object-contain"
-                        />
-                      ) : null}
-                      {skill.name}
-                    </span>
-                  )
-                })}
-              </div>
-            ))}
-          </div>
+          <Marquee variant="default" speed="slow" className="mt-auto">
+            {skills.map((skill) => {
+              const colors = skillBadgeClasses(skill.category)
+              return (
+                <span
+                  key={skill._id}
+                  className={cn(
+                    "inline-flex shrink-0 items-center gap-1.5 rounded border px-2 py-0.5 font-mono text-[9px] uppercase tracking-widest",
+                    colors.border,
+                    colors.bg,
+                    colors.text
+                  )}
+                >
+                  {skill.image ? (
+                    <img
+                      src={urlFor(skill.image).width(16).height(16).url()}
+                      alt=""
+                      className="h-3 w-3 object-contain"
+                    />
+                  ) : null}
+                  {skill.name}
+                </span>
+              )
+            })}
+          </Marquee>
         )}
       </div>
 
