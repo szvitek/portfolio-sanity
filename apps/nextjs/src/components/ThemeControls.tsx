@@ -3,7 +3,9 @@
 import { useTheme } from "@portfolio/ui"
 import type { ThemeName, Intensity } from "@portfolio/ui"
 import { cn } from "@/lib/utils"
+import { Pause, Play, SkipBack, SkipForward } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { useMusicPlayer } from "@/components/MusicPlayerProvider"
 
 const THEME_DOT_COLORS: Record<ThemeName, string> = {
   tron: "bg-cyan-400",
@@ -27,6 +29,7 @@ const INTENSITY_PRIMARY_STYLES: Record<Intensity, string> = {
 
 export function ThemeControls() {
   const { state, setTheme, setIntensity } = useTheme()
+  const { playing, toggle, next, previous, trackCount, musicUrl } = useMusicPlayer()
 
   return (
     <div
@@ -77,6 +80,58 @@ export function ThemeControls() {
           )}
         />
       ))}
+
+      {musicUrl && (
+        <>
+          <div className="my-1 h-px w-4 bg-border/30" />
+
+          <span className="font-mono text-[8px] uppercase tracking-widest text-foreground/40 [writing-mode:vertical-lr]">
+            Audio
+          </span>
+          <Button
+            type="button"
+            variant="outline"
+            size="icon"
+            onClick={toggle}
+            title={playing ? "Pause music" : "Play music"}
+            aria-label={playing ? "Pause music" : "Play music"}
+            className="h-6 w-6 rounded-full p-0"
+          >
+            {playing ? (
+              <Pause className="size-3" />
+            ) : (
+              <Play className="size-3 animate-pulse" />
+            )}
+          </Button>
+
+          {trackCount > 1 && (
+            <>
+              <Button
+                type="button"
+                variant="outline"
+                size="icon"
+                onClick={next}
+                title="Next track"
+                aria-label="Next track"
+                className="h-6 w-6 rounded-full p-0"
+              >
+                <SkipForward className="size-3" />
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                size="icon"
+                onClick={previous}
+                title="Previous track"
+                aria-label="Previous track"
+                className="h-6 w-6 rounded-full p-0"
+              >
+                <SkipBack className="size-3" />
+              </Button>
+            </>
+          )}
+        </>
+      )}
     </div>
   )
 }

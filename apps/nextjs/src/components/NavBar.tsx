@@ -2,6 +2,8 @@
 
 import * as React from "react"
 import { cn } from "@/lib/utils"
+import { Waveform } from "@/components/thegridcn/waveform"
+import { useMusicPlayer } from "@/components/MusicPlayerProvider"
 
 const SECTIONS = [
   { id: "profile", label: "Profile" },
@@ -14,6 +16,7 @@ const SECTIONS = [
 ]
 
 export function NavBar() {
+  const { playing, musicUrl, title } = useMusicPlayer()
   const [activeSection, setActiveSection] = React.useState("profile")
 
   React.useEffect(() => {
@@ -48,18 +51,18 @@ export function NavBar() {
       data-testid="navbar"
       className="sticky top-0 z-40 border-b border-border/50 bg-background/80 backdrop-blur-md"
     >
-      <div className="mx-auto flex max-w-5xl items-center justify-between gap-1 px-4 py-2">
+      <div className="mx-auto grid max-w-6xl grid-cols-[auto_1fr_auto] items-center gap-4 px-4 py-3">
         <a href="#profile" className="flex shrink-0 items-center gap-2">
           <img
             src="/swytech-dev-logo.png"
             alt="swytech.dev logo"
-            className="h-6 w-6 object-contain"
+            className="h-7 w-7 object-contain"
           />
           <span className="font-mono text-xs font-bold uppercase tracking-[0.3em] text-primary">
             swytech.dev
           </span>
         </a>
-        <div className="flex items-center justify-end gap-1">
+        <div data-slot="nav-links" className="flex items-center justify-center gap-1">
           {SECTIONS.map(({ id, label }) => (
             <a
               key={id}
@@ -81,6 +84,17 @@ export function NavBar() {
               />
             </a>
           ))}
+        </div>
+        <div data-slot="nav-audio" className="hidden shrink-0 items-center gap-1.5 md:flex">
+          {musicUrl && (
+            <Waveform
+              bare
+              playing={playing}
+              bars={16}
+              intensity="medium"
+              title={title}
+            />
+          )}
         </div>
       </div>
     </nav>

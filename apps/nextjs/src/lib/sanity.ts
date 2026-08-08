@@ -95,6 +95,12 @@ export interface ProjectData {
   publishedAt: string
 }
 
+export interface BackgroundMusicData {
+  _id: string
+  title?: string
+  audioUrl?: string
+}
+
 export interface HomePageData {
   profile: ProfileData | null
   skills: SkillData[]
@@ -102,6 +108,7 @@ export interface HomePageData {
   studies: StudyData[]
   certifications: CertificationData[]
   projects: ProjectData[]
+  backgroundMusic: BackgroundMusicData[]
 }
 
 function getConfig() {

@@ -3,7 +3,7 @@ import type { CSSProperties } from "react"
 import type { GetStaticProps, InferGetStaticPropsType } from "next"
 import type { PortableTextBlock } from "@portabletext/react"
 import { getHomePageData, urlFor, cvUrlFor } from "@/lib/sanity"
-import type { ProfileData, SkillData, JobData, StudyData, CertificationData, ProjectData } from "@/lib/sanity"
+import type { ProfileData, SkillData, JobData, StudyData, CertificationData, ProjectData, BackgroundMusicData } from "@/lib/sanity"
 import { HeroSection } from "@/components/thegridcn/hero-section"
 import { AvailabilityIndicator } from "@/components/thegridcn/availability-indicator"
 import { AgentAvatar } from "@/components/thegridcn/agent-avatar"
@@ -15,6 +15,7 @@ import { JobCard } from "@/components/JobCard"
 import { CertificationCard } from "@/components/CertificationCard"
 import { ProjectCard } from "@/components/ProjectCard"
 import { NavBar } from "@/components/NavBar"
+import { MusicPlayerProvider } from "@/components/MusicPlayerProvider"
 import { StatusBar } from "@/components/thegridcn/status-bar"
 import { ClipboardCopy, Download, FileUser } from "lucide-react"
 import { SocialIcon, SocialLinkIcon } from "@portfolio/ui"
@@ -73,6 +74,7 @@ export const getStaticProps: GetStaticProps<{
   groupedStudies: GroupedStudy[]
   certifications: CertificationData[]
   projects: ProjectData[]
+  backgroundMusic: BackgroundMusicData[]
 }> = async () => {
   const data = await getHomePageData()
   const sortByDateDesc = <T extends { startDate?: string; date?: string }>(items: T[]): T[] =>
@@ -93,6 +95,7 @@ export const getStaticProps: GetStaticProps<{
       groupedStudies: groupStudiesByInstitution(allStudies),
       certifications: sortByDateDesc(data.certifications ?? []),
       projects: data.projects?.length ? data.projects : MOCK_PROJECTS,
+      backgroundMusic: data.backgroundMusic ?? [],
     },
   }
 }
@@ -138,7 +141,7 @@ function extractText(blocks: PortableTextBlock[] | undefined | null): string {
   return firstBlock.children.map((c) => ("text" in c ? c.text ?? "" : "")).join(" ")
 }
 
-export default function HomePage({ profile, skills, jobs, studies, groupedStudies, certifications, projects }: Props) {
+export default function HomePage({ profile, skills, jobs, studies, groupedStudies, certifications, projects, backgroundMusic }: Props) {
   const [activeFilter, setActiveFilter] = useState<string>("featured")
   const [showAllProjects, setShowAllProjects] = useState(false)
   const [emailCopied, setEmailCopied] = useState(false)
@@ -191,7 +194,7 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
   const visibleProjects = showAllProjects ? projects : projects.filter((p) => p.featured)
 
   return (
-    <>
+    <MusicPlayerProvider tracks={backgroundMusic}>
       <GridBackground />
 
       <StatusBar
@@ -677,6 +680,6 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
       />
 
       <ThemeControls />
-    </>
+    </MusicPlayerProvider>
   )
 }

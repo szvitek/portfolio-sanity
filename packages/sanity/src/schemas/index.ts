@@ -7,6 +7,7 @@ import { certification } from "./certification"
 import { project } from "./project"
 import { socialLink } from "./socialLink"
 import { blockContent } from "./blockContent"
+import { backgroundMusic } from "./backgroundMusic"
 
 export const schemaTypes: SchemaTypeDefinition[] = [
   profile,
@@ -17,6 +18,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   project,
   socialLink,
   blockContent,
+  backgroundMusic,
 ]
 
 export {
@@ -28,4 +30,5 @@ export {
   project,
   socialLink,
   blockContent,
+  backgroundMusic,
 }

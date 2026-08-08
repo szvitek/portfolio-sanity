@@ -4,7 +4,7 @@ import type { GetStaticPropsResult } from "next"
 import HomePage, { getStaticProps } from "@/pages/index"
 import { ProjectCard } from "@/components/ProjectCard"
 import { mockHomePageData } from "./fixtures/homePage"
-import type { ProfileData, SkillData, JobData, StudyData, CertificationData, ProjectData } from "@/lib/sanity"
+import type { ProfileData, SkillData, JobData, StudyData, CertificationData, ProjectData, BackgroundMusicData } from "@/lib/sanity"
 import type { GroupedStudy } from "@/pages/index"
 import { SKILL_CATEGORY_COLORS } from "@/lib/skill-colors"
 import { ThemeProvider } from "@portfolio/ui"
@@ -21,6 +21,7 @@ type PageProps = {
   groupedStudies: GroupedStudy[]
   certifications: CertificationData[]
   projects: ProjectData[]
+  backgroundMusic: BackgroundMusicData[]
 }
 
 async function getPageProps(): Promise<PageProps> {
@@ -28,7 +29,7 @@ async function getPageProps(): Promise<PageProps> {
   if ("props" in result) {
     return result.props as PageProps
   }
-  return { profile: null, skills: [], jobs: [], studies: [], groupedStudies: [], certifications: [], projects: [] }
+  return { profile: null, skills: [], jobs: [], studies: [], groupedStudies: [], certifications: [], projects: [], backgroundMusic: [] }
 }
 
 const mockFetch = vi.hoisted(() => vi.fn())
@@ -271,12 +272,110 @@ describe("Home page", () => {
     expect(brandLink).toHaveTextContent("swytech.dev")
   })
 
-  it("pushes the menu items to the right of the header brand", async () => {
+  it("lays out brand left, nav links centered, and audio controls right", async () => {
     const props = await getPageProps()
     renderWithTheme(<HomePage {...props} />)
 
     const nav = screen.getByTestId("navbar")
-    expect(nav.firstElementChild).toHaveClass("justify-between")
+    const header = nav.firstElementChild
+    expect(header).toHaveClass("grid", "grid-cols-[auto_1fr_auto]")
+
+    const linksWrap = header?.querySelector('[data-slot="nav-links"]')
+    expect(linksWrap).toHaveClass("justify-center")
+
+    const audioBlock = header?.querySelector('[data-slot="nav-audio"]')
+    expect(audioBlock).toHaveClass("md:flex")
+    expect(audioBlock?.querySelector('[data-slot="tron-waveform"]')).toBeInTheDocument()
+  })
+
+  it("renders header music waveform without its own play/stop button", async () => {
+    const props = await getPageProps()
+    renderWithTheme(<HomePage {...props} />)
+
+    const nav = screen.getByTestId("navbar")
+    const waveform = nav.querySelector('[data-slot="tron-waveform"]')
+    expect(waveform).toBeInTheDocument()
+    expect(waveform).toHaveAttribute("data-playing", "false")
+    expect(screen.queryByRole("button", { name: "Play background music" })).not.toBeInTheDocument()
+  })
+
+  it("keeps the sidebar audio control in sync with the header waveform", async () => {
+    const props = await getPageProps()
+    renderWithTheme(<HomePage {...props} />)
+
+    const nav = screen.getByTestId("navbar")
+    const waveform = nav.querySelector('[data-slot="tron-waveform"]')
+    expect(waveform).toHaveAttribute("data-playing", "false")
+
+    const sidebarPlay = screen.getByRole("button", { name: "Play music" })
+    expect(sidebarPlay).toBeInTheDocument()
+
+    fireEvent.click(sidebarPlay)
+    expect(waveform).toHaveAttribute("data-playing", "true")
+    expect(screen.getByRole("button", { name: "Pause music" })).toBeInTheDocument()
+
+    const sidebarPause = screen.getByRole("button", { name: "Pause music" })
+    fireEvent.click(sidebarPause)
+    expect(waveform).toHaveAttribute("data-playing", "false")
+  })
+
+  it("shows previous/next controls and switches between tracks", async () => {
+    const props = await getPageProps()
+    renderWithTheme(<HomePage {...props} />)
+
+    const audio = document.querySelector("audio")
+    expect(audio).toHaveAttribute(
+      "src",
+      "https://cdn.sanity.io/files/test-project/production/ambient-loop.mp3"
+    )
+
+    const nextButton = screen.getByRole("button", { name: "Next track" })
+    const previousButton = screen.getByRole("button", { name: "Previous track" })
+    expect(nextButton).toBeInTheDocument()
+    expect(previousButton).toBeInTheDocument()
+
+    fireEvent.click(nextButton)
+    expect(document.querySelector("audio")).toHaveAttribute(
+      "src",
+      "https://cdn.sanity.io/files/test-project/production/cyber-sunset.mp3"
+    )
+
+    fireEvent.click(previousButton)
+    expect(document.querySelector("audio")).toHaveAttribute(
+      "src",
+      "https://cdn.sanity.io/files/test-project/production/ambient-loop.mp3"
+    )
+  })
+
+  it("wraps the track list when skipping past the end", async () => {
+    const props = await getPageProps()
+    renderWithTheme(<HomePage {...props} />)
+
+    const nextButton = screen.getByRole("button", { name: "Next track" })
+
+    fireEvent.click(nextButton)
+    fireEvent.click(nextButton)
+    expect(document.querySelector("audio")).toHaveAttribute(
+      "src",
+      "https://cdn.sanity.io/files/test-project/production/ambient-loop.mp3"
+    )
+  })
+
+  it("shows the song title in a tooltip over the header waveform", async () => {
+    const props = await getPageProps()
+    renderWithTheme(<HomePage {...props} />)
+
+    const waveform = screen
+      .getByTestId("navbar")
+      .querySelector('[data-slot="tron-waveform"]')
+    expect(waveform).toBeInTheDocument()
+    expect(screen.queryByText("Ambient Loop")).not.toBeInTheDocument()
+
+    fireEvent.mouseEnter(waveform!)
+    await screen.findByText("Ambient Loop")
+
+    const tooltip = screen.getByText("Ambient Loop").closest('[data-slot="tron-tooltip"]')
+    expect(tooltip).toBeInTheDocument()
   })
 
   it("renders top status bar", async () => {
@@ -929,7 +1028,7 @@ describe("Home page", () => {
 
     const themeControls = screen.getByTestId("theme-controls")
     const swatches = themeControls.querySelectorAll('[data-slot="button"]')
-    expect(swatches.length).toBe(10)
+    expect(swatches.length).toBe(13)
   })
 
   it("toggles back to featured only when Show Featured is clicked", async () => {

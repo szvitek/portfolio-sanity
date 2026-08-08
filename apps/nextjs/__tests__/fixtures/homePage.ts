@@ -284,4 +284,16 @@ export const mockHomePageData: HomePageData = {
       publishedAt: "2024-01-10T00:00:00Z",
     },
   ],
+  backgroundMusic: [
+    {
+      _id: "bgm-1",
+      title: "Ambient Loop",
+      audioUrl: "https://cdn.sanity.io/files/test-project/production/ambient-loop.mp3",
+    },
+    {
+      _id: "bgm-2",
+      title: "Cyber Sunset",
+      audioUrl: "https://cdn.sanity.io/files/test-project/production/cyber-sunset.mp3",
+    },
+  ],
 }

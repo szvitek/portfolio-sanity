@@ -74,11 +74,18 @@ export const projectsQuery = groq`*[_type == "project"] | order(featured desc, o
   publishedAt
 }`
 
+export const backgroundMusicQuery = groq`*[_type == "backgroundMusic" && enabled != false] | order(order asc){
+  _id,
+  title,
+  "audioUrl": audioFile.asset->url
+}`
+
 export const homePageQuery = groq`{
   "profile": ${profileQuery},
   "skills": ${skillsQuery},
   "jobs": ${jobsQuery},
   "studies": ${studiesQuery},
   "certifications": ${certificationsQuery},
-  "projects": ${projectsQuery}
+  "projects": ${projectsQuery},
+  "backgroundMusic": ${backgroundMusicQuery}
 }`
