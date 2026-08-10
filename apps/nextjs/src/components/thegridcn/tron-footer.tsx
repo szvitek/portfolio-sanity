@@ -3,15 +3,9 @@
 import * as React from "react"
 import { cn } from "@/lib/utils"
 
-interface FooterLink {
-  label: string
-  href: string
-}
-
 interface TronFooterProps extends React.HTMLAttributes<HTMLElement> {
   brand?: string
   tagline?: string
-  links?: FooterLink[]
   logo?: string
   copyright?: string
 }
@@ -19,7 +13,6 @@ interface TronFooterProps extends React.HTMLAttributes<HTMLElement> {
 export function TronFooter({
   brand = "PORTFOLIO",
   tagline = "END OF LINE",
-  links = [],
   logo,
   copyright,
   className,
@@ -42,37 +35,22 @@ export function TronFooter({
         <div className="grid gap-8 md:grid-cols-3">
           {/* Brand */}
           <div>
-            <div className="mb-3 flex items-center gap-2">
-              {logo && (
-                <img
-                  src={logo}
-                  alt="swytech.dev logo"
-                  className="h-6 w-6 object-contain"
-                />
-              )}
-              <span className="font-mono text-xs font-bold uppercase tracking-[0.3em] text-primary">
-                //{brand}
-              </span>
-            </div>
-            <p className="font-mono text-[10px] uppercase tracking-widest text-foreground/40">
+            <span className="font-mono text-xs font-bold uppercase tracking-[0.3em] text-primary">
+              //{brand}
+            </span>
+            <p className="mt-2 font-mono text-[10px] uppercase tracking-widest text-foreground/40">
               {tagline}
             </p>
           </div>
 
-          {/* Links */}
-          {links.length > 0 && (
-            <div className="flex flex-col gap-2">
-              {links.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-mono text-[10px] uppercase tracking-widest text-foreground/50 transition-colors hover:text-primary"
-                >
-                  {link.label}
-                </a>
-              ))}
+          {/* Logo */}
+          {logo && (
+            <div className="flex items-center justify-center">
+              <img
+                src={logo}
+                alt="swytech.dev logo"
+                className="h-24 w-24 object-contain drop-shadow-[0_0_14px_rgba(var(--primary-rgb,0,180,255),0.45)]"
+              />
             </div>
           )}
 

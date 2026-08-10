@@ -18,7 +18,7 @@ import { NavBar } from "@/components/NavBar"
 import { MusicPlayerProvider } from "@/components/MusicPlayerProvider"
 import { StatusBar } from "@/components/thegridcn/status-bar"
 import { ClipboardCopy, Download, FileUser } from "lucide-react"
-import { SocialIcon, SocialLinkIcon } from "@portfolio/ui"
+import { SocialIcon, SocialLinkIcon, useTheme, type ThemeName } from "@portfolio/ui"
 import { ThemeControls } from "@/components/ThemeControls"
 import { GridBackground } from "@/components/GridBackground"
 import { TronFooter } from "@/components/thegridcn/tron-footer"
@@ -141,10 +141,20 @@ function extractText(blocks: PortableTextBlock[] | undefined | null): string {
   return firstBlock.children.map((c) => ("text" in c ? c.text ?? "" : "")).join(" ")
 }
 
+const THEME_AVATAR_HUES: Record<ThemeName, number> = {
+  tron: 198,
+  ares: 12,
+  clu: 39,
+  athena: 51,
+  aphrodite: 328,
+  poseidon: 216,
+}
+
 export default function HomePage({ profile, skills, jobs, studies, groupedStudies, certifications, projects, backgroundMusic }: Props) {
   const [activeFilter, setActiveFilter] = useState<string>("featured")
   const [showAllProjects, setShowAllProjects] = useState(false)
   const [emailCopied, setEmailCopied] = useState(false)
+  const { state } = useTheme()
 
   const copyEmailToClipboard = async () => {
     if (!profile?.email) return
@@ -233,6 +243,7 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
                   <AgentAvatar
                     seed={profile.title}
                     size={240}
+                    hue={THEME_AVATAR_HUES[state.theme]}
                     ring={false}
                     animated
                     className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 opacity-40 mix-blend-screen"
@@ -320,7 +331,7 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
 
         <section id="skills" className="scroll-mt-16 px-4 py-16">
           <div className="mx-auto max-w-5xl">
-            <Divider label="SKILLS" variant="circuit" className="mb-8" />
+            <Divider label="SKILLS" variant="circuit" reverse className="mb-8" />
             {skills.length > 0 ? (
               <>
                 <div className="mb-6 flex flex-wrap gap-2">
@@ -462,7 +473,7 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
 
         <section id="jobs" className="scroll-mt-16 px-4 py-16">
           <div className="mx-auto max-w-5xl">
-            <Divider label="EXPERIENCE" variant="circuit" className="mb-8" />
+            <Divider label="EXPERIENCE" variant="circuit" reverse className="mb-8" />
             {jobs.length > 0 ? (
               <div className="space-y-6">
                 {jobs.map((job) => (
@@ -523,7 +534,7 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
 
         <section id="certifications" className="scroll-mt-16 px-4 py-16">
           <div className="mx-auto max-w-5xl">
-            <Divider label="CERTIFICATIONS" variant="circuit" className="mb-8" />
+            <Divider label="CERTIFICATIONS" variant="circuit" reverse className="mb-8" />
             {certifications.length > 0 ? (
               <BentoGrid
                 columns={3}
@@ -616,7 +627,7 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
                               <FileUser className="col-start-1 row-start-1 size-3.5 transition-opacity group-hover/cv:opacity-0" />
                               <Download className="col-start-1 row-start-1 size-3.5 opacity-0 transition-opacity group-hover/cv:opacity-100" />
                             </span>
-                            Download CV
+                            CV
                           </a>
                         </Button>
                       )}
@@ -672,11 +683,6 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
         brand="swytech.dev"
         tagline="END OF LINE"
         logo="/swytech-dev-logo.png"
-        links={[
-          { label: "GitHub", href: "https://github.com/johndoe" },
-          { label: "LinkedIn", href: "https://linkedin.com/in/johndoe" },
-          { label: "Email", href: `mailto:${profile?.email || ""}` },
-        ]}
       />
 
       <ThemeControls />

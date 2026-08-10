@@ -7,12 +7,15 @@ interface DividerProps extends React.HTMLAttributes<HTMLDivElement> {
   label?: string
   variant?: "default" | "glow" | "dashed" | "circuit"
   orientation?: "horizontal" | "vertical"
+  /** Reverse the direction of the animated dot */
+  reverse?: boolean
 }
 
 export function Divider({
   label,
   variant = "default",
   orientation = "horizontal",
+  reverse = false,
   className,
   ...props
 }: DividerProps) {
@@ -35,7 +38,11 @@ export function Divider({
         {variant === "circuit" && (
           <div
             className="absolute left-1/2 top-0 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-primary/60"
-            style={{ animation: "dividerDot 3s ease-in-out infinite" }}
+            style={{
+              animation: reverse
+                ? "dividerDotReverse 3s ease-in-out infinite"
+                : "dividerDot 3s ease-in-out infinite",
+            }}
           />
         )}
       </div>
@@ -64,7 +71,11 @@ export function Divider({
             <div className="absolute left-0 top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-primary-400" />
             <div
               className="absolute top-1/2 h-1 w-1 -translate-y-1/2 rounded-full bg-primary-700"
-              style={{ animation: "dividerDot 3s ease-in-out infinite" }}
+              style={{
+                animation: reverse
+                  ? "dividerDotReverse 3s ease-in-out infinite"
+                  : "dividerDot 3s ease-in-out infinite",
+              }}
             />
           </>
         )}
@@ -95,6 +106,11 @@ export function Divider({
           0% { left: 0%; }
           50% { left: calc(100% - 4px); }
           100% { left: 0%; }
+        }
+        @keyframes dividerDotReverse {
+          0% { left: calc(100% - 4px); }
+          50% { left: 0%; }
+          100% { left: calc(100% - 4px); }
         }
       `}</style>
     </div>
