@@ -97,6 +97,7 @@ export const getStaticProps: GetStaticProps<{
       projects: data.projects?.length ? data.projects : MOCK_PROJECTS,
       backgroundMusic: data.backgroundMusic ?? [],
     },
+    revalidate: 300,
   }
 }
 

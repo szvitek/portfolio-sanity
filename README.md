@@ -80,6 +80,21 @@ The frontend (`apps/nextjs`) deploys to Vercel; the Sanity Studio is hosted sepa
 | `RESEND_API_KEY` | yes (contact form) | Resend API key for `/api/contact` |
 | `CONTACT_EMAIL` | yes (contact form) | Where contact submissions are sent |
 | `RESEND_FROM` | no | Defaults to `Portfolio Contact <onboarding@resend.dev>` |
+| `REVALIDATE_SECRET` | yes (instant content updates) | Guards `/api/revalidate`; also used in the Sanity webhook URL |
+
+### Instant content updates (Sanity webhook)
+
+The home page is statically generated with a 5-minute fallback revalidation. To have Sanity edits appear immediately, add a webhook that pings the revalidation endpoint:
+
+1. Generate a secret and set it as `REVALIDATE_SECRET` in Vercel (e.g. `openssl rand -hex 24`).
+2. In the [Sanity Manage Console](https://manage.sanity.io) → your project → **API** → **Webhooks**, create a webhook:
+   - **URL:** `https://<your-site>/api/revalidate?secret=<REVALIDATE_SECRET>`
+   - **Dataset:** the dataset the frontend reads
+   - **Trigger on:** create, update, delete
+   - **HTTP method:** POST
+   - **Filter (optional):** scope to the document types the page reads (`profile`, `skill`, `project`, `job`, `study`, `certification`, `backgroundMusic`)
+
+When the webhook fires, the cached page is invalidated and the next visitor request regenerates it.
 
 ## Issue tracker
 
