@@ -226,7 +226,7 @@ describe("Home page", () => {
     const navLinks = nav.querySelectorAll("a")
     const linkTexts = Array.from(navLinks).map((link) => link.textContent)
     expect(linkTexts).toEqual([
-      "swytech.dev", "Profile", "Skills", "Projects", "Jobs", "Studies", "Certifications", "Contact",
+      "// swytech.dev", "Profile", "Skills", "Projects", "Jobs", "Studies", "Certifications", "Contact",
     ])
   })
 
@@ -236,7 +236,7 @@ describe("Home page", () => {
 
     const nav = screen.getByTestId("navbar")
     const sectionLinks = Array.from(nav.querySelectorAll<HTMLAnchorElement>('a[href^="#"]')).filter(
-      (link) => link.querySelector("span") && !link.querySelector("img")
+      (link) => link.querySelector('span[aria-hidden]')
     )
     expect(sectionLinks.length).toBeGreaterThanOrEqual(7)
 
@@ -265,11 +265,7 @@ describe("Home page", () => {
     const nav = screen.getByTestId("navbar")
     const brandLink = nav.querySelector('a[href="#profile"]')
     expect(brandLink).toBeInTheDocument()
-
-    const logo = brandLink?.querySelector('img[alt="swytech.dev logo"]')
-    expect(logo).toBeInTheDocument()
-    expect(logo).toHaveAttribute("src", "/swytech-dev-logo.png")
-    expect(brandLink).toHaveTextContent("swytech.dev")
+    expect(brandLink).toHaveTextContent("// swytech.dev")
   })
 
   it("lays out brand left, nav links centered, and audio controls right", async () => {
@@ -388,19 +384,19 @@ describe("Home page", () => {
 
   it("renders footer section", async () => {
     const props = await getPageProps()
-    renderWithTheme(<HomePage {...props} />)
+    const { container } = renderWithTheme(<HomePage {...props} />)
 
-    expect(screen.getByText("//swytech.dev")).toBeInTheDocument()
-    expect(screen.getByText("END OF LINE")).toBeInTheDocument()
+    const footer = container.querySelector('[data-slot="tron-footer"]')
+    expect(footer).toHaveTextContent("// swytech.dev")
+    expect(footer).toHaveTextContent("END OF LINE")
   })
 
-  it("renders the swytech.dev logo in the footer", async () => {
+  it("does not render the swytech.dev logo in the footer", async () => {
     const props = await getPageProps()
     const { container } = renderWithTheme(<HomePage {...props} />)
 
     const logo = container.querySelector('[data-slot="tron-footer"] img[alt="swytech.dev logo"]')
-    expect(logo).toBeInTheDocument()
-    expect(logo).toHaveAttribute("src", "/swytech-dev-logo.png")
+    expect(logo).not.toBeInTheDocument()
   })
 
   it("renders the SWYTECH.DEV badge in the hero", async () => {

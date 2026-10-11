@@ -67,7 +67,7 @@ export function JobCard({
               className="h-12 w-12 rounded border border-border/30 bg-background/80 object-contain"
             />
           ) : (
-            <div className="flex h-12 w-12 items-center justify-center rounded border border-border/30 bg-background/50 font-mono text-sm font-bold uppercase text-foreground/60">
+            <div className="flex h-12 w-12 items-center justify-center rounded border border-border/30 bg-background/50 font-mono text-sm font-bold uppercase text-foreground/80">
               {company.charAt(0)}
             </div>
           )}
@@ -76,7 +76,7 @@ export function JobCard({
               {company}
             </h3>
             {location && (
-              <p className="mt-0.5 font-mono text-[10px] uppercase tracking-widest text-foreground/50">
+              <p className="mt-0.5 font-mono text-[10px] uppercase tracking-widest text-foreground/70">
                 {location}
               </p>
             )}
@@ -84,7 +84,7 @@ export function JobCard({
         </div>
 
         <div className="shrink-0 text-right">
-          <p className="font-mono text-[10px] uppercase tracking-widest text-foreground/50">
+          <p className="font-mono text-[10px] uppercase tracking-widest text-foreground/70">
             {dateRange(startDate, endDate)}
           </p>
         </div>
@@ -109,7 +109,7 @@ export function JobCard({
       )}
 
       {description && description.length > 0 && (
-        <div className="prose-invert mt-4 font-mono text-xs leading-relaxed text-foreground/70">
+        <div className="prose-invert mt-4 font-mono text-xs leading-relaxed text-foreground">
           <PortableText value={description} />
         </div>
       )}

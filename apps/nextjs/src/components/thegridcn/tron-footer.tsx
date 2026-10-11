@@ -6,14 +6,12 @@ import { cn } from "@/lib/utils"
 interface TronFooterProps extends React.HTMLAttributes<HTMLElement> {
   brand?: string
   tagline?: string
-  logo?: string
   copyright?: string
 }
 
 export function TronFooter({
   brand = "PORTFOLIO",
   tagline = "END OF LINE",
-  logo,
   copyright,
   className,
   ...props
@@ -32,37 +30,26 @@ export function TronFooter({
       <div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.02)_2px,rgba(0,0,0,0.02)_4px)]" />
 
       <div className="relative mx-auto max-w-5xl px-4 py-12">
-        <div className="grid gap-8 md:grid-cols-3">
+        <div className="grid gap-8 md:grid-cols-2">
           {/* Brand */}
           <div>
             <span className="font-mono text-xs font-bold uppercase tracking-[0.3em] text-primary">
-              //{brand}
+              // {brand}
             </span>
-            <p className="mt-2 font-mono text-[10px] uppercase tracking-widest text-foreground/40">
+            <p className="mt-2 font-mono text-[10px] uppercase tracking-widest text-foreground/70">
               {tagline}
             </p>
           </div>
-
-          {/* Logo */}
-          {logo && (
-            <div className="flex items-center justify-center">
-              <img
-                src={logo}
-                alt="swytech.dev logo"
-                className="h-24 w-24 object-contain drop-shadow-[0_0_14px_rgba(var(--primary-rgb,0,180,255),0.45)]"
-              />
-            </div>
-          )}
 
           {/* Status */}
           <div className="flex flex-col items-start gap-2 md:items-end">
             <div className="flex items-center gap-2">
               <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
-              <span className="font-mono text-[10px] uppercase tracking-widest text-foreground/50">
+              <span className="font-mono text-[10px] uppercase tracking-widest text-foreground/80">
                 SYSTEM OPERATIONAL
               </span>
             </div>
-            <span className="font-mono text-[10px] text-foreground/30">
+            <span className="font-mono text-[10px] text-foreground/60">
               {copyright || `© ${new Date().getFullYear()} ${brand}`}
             </span>
           </div>
@@ -70,7 +57,7 @@ export function TronFooter({
 
         {/* Bottom bar */}
         <div className="mt-8 border-t border-border/30 pt-4">
-          <div className="flex items-center justify-between font-mono text-[9px] uppercase tracking-widest text-foreground/30">
+          <div className="flex items-center justify-between font-mono text-[9px] uppercase tracking-widest text-foreground/60">
             <span>BUILD: {process.env.NEXT_PUBLIC_BUILD_ID || "DEV"}</span>
             <span>NODE: REACT</span>
             <span>STATUS: ONLINE</span>

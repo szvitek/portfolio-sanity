@@ -80,7 +80,7 @@ export function ProjectCard({
       ) : (
         <div className="mb-4 flex h-40 items-center justify-center rounded border border-border/30 bg-background/50">
           <svg
-            className="h-10 w-10 text-foreground/30"
+            className="h-10 w-10 text-foreground/60"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -108,7 +108,7 @@ export function ProjectCard({
 
       <div className="mt-3 flex flex-1 flex-col pb-4">
         {description && description.length > 0 && (
-          <div className="prose-invert pb-4 text-justify font-mono text-xs leading-relaxed text-foreground/70">
+          <div className="prose-invert pb-4 text-justify font-mono text-xs leading-relaxed text-foreground">
             <PortableText value={description} components={portableTextComponents} />
           </div>
         )}

@@ -63,7 +63,7 @@ export function Timeline({
       <div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.03)_2px,rgba(0,0,0,0.03)_4px)]" />
 
       {label && (
-        <div className="mb-4 text-[10px] uppercase tracking-widest text-foreground/50">
+        <div className="mb-4 text-[10px] uppercase tracking-widest text-foreground/80">
           {label}
         </div>
       )}
@@ -105,7 +105,7 @@ export function Timeline({
               {/* Content */}
               <div className="flex-1">
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  <h4 className="font-mono text-sm font-medium text-foreground/90">
+                  <h4 className="font-mono text-sm font-medium text-foreground">
                     {item.title}
                   </h4>
                   {item.date && (
@@ -120,7 +120,7 @@ export function Timeline({
                   )}
                 </div>
                 {item.description && (
-                  <div className="mt-1 text-xs leading-relaxed text-foreground/50">
+                  <div className="mt-1 text-xs leading-relaxed text-foreground/80">
                     {item.description}
                   </div>
                 )}

@@ -41,7 +41,7 @@ export function AvailabilityIndicator({
       {...props}
     >
       <div className="flex items-center justify-center gap-2">
-        <span className="font-mono text-[10px] uppercase tracking-widest text-foreground/60">
+        <span className="font-mono text-[10px] uppercase tracking-widest text-foreground/80">
           Status:
         </span>
         <span className={cn("h-2 w-2 shrink-0 animate-pulse rounded-full", config.dot)} />

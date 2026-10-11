@@ -54,7 +54,7 @@ export function Changelog({
       <div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.03)_2px,rgba(0,0,0,0.03)_4px)]" />
 
       {label && (
-        <div className="mb-4 font-mono text-[10px] uppercase tracking-widest text-foreground/50">
+        <div className="mb-4 font-mono text-[10px] uppercase tracking-widest text-foreground/80">
           // {label}
         </div>
       )}
@@ -93,12 +93,12 @@ export function Changelog({
                   >
                     {item.category}
                   </span>
-                  <h4 className="font-mono text-sm font-medium text-foreground/90">
+                  <h4 className="font-mono text-sm font-medium text-foreground">
                     {item.title}
                   </h4>
                 </div>
                 {item.description && (
-                  <p className="mt-1 text-xs leading-relaxed text-foreground/50">
+                  <p className="mt-1 text-xs leading-relaxed text-foreground/80">
                     {item.description}
                   </p>
                 )}

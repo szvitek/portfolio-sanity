@@ -140,7 +140,7 @@ describe("ContactForm component", () => {
     expect(screen.getByPlaceholderText("your@email.com")).toBeInTheDocument()
     expect(screen.getByPlaceholderText("Subject")).toBeInTheDocument()
     expect(screen.getByPlaceholderText("Your message...")).toBeInTheDocument()
-    expect(screen.getByText("//SEND TRANSMISSION")).toBeInTheDocument()
+    expect(screen.getByText("// SEND TRANSMISSION")).toBeInTheDocument()
   })
 
   it("renders the submit button using the GridCN button component", () => {

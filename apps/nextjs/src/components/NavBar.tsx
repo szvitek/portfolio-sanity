@@ -53,13 +53,8 @@ export function NavBar() {
     >
       <div className="mx-auto grid max-w-6xl grid-cols-[auto_1fr_auto] items-center gap-4 px-4 py-3">
         <a href="#profile" className="flex shrink-0 items-center gap-2">
-          <img
-            src="/swytech-dev-logo.png"
-            alt="swytech.dev logo"
-            className="h-7 w-7 object-contain"
-          />
           <span className="font-mono text-xs font-bold uppercase tracking-[0.3em] text-primary">
-            swytech.dev
+            // swytech.dev
           </span>
         </a>
         <div data-slot="nav-links" className="flex items-center justify-center gap-1">
@@ -71,7 +66,7 @@ export function NavBar() {
                 "group relative px-3 py-1.5 font-mono text-[11px] uppercase tracking-widest transition-colors",
                 activeSection === id
                   ? "text-primary"
-                  : "text-foreground/50 hover:text-foreground/80"
+                  : "text-foreground/80 hover:text-foreground"
               )}
             >
               {label}

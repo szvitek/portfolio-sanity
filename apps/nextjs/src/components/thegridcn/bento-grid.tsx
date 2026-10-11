@@ -64,11 +64,11 @@ export function BentoGrid({
                   {item.icon}
                 </div>
               )}
-              <h3 className="font-mono text-sm font-medium uppercase tracking-wider text-foreground/90">
+              <h3 className="font-mono text-sm font-medium uppercase tracking-wider text-foreground">
                 {item.title}
               </h3>
               {item.description && (
-                <p className="mt-1.5 text-xs leading-relaxed text-foreground/50">
+                <p className="mt-1.5 text-xs leading-relaxed text-foreground/80">
                   {item.description}
                 </p>
               )}

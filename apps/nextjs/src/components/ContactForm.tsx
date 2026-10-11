@@ -63,10 +63,10 @@ export function ContactForm() {
       className="relative rounded border border-primary/20 p-6"
     >
       <div className="relative">
-        <h3 className="mb-2 font-mono text-sm font-bold uppercase tracking-wider text-foreground/90">
-          //SEND TRANSMISSION
+        <h3 className="mb-2 font-mono text-sm font-bold uppercase tracking-wider text-foreground">
+          // SEND TRANSMISSION
         </h3>
-        <p className="mb-4 font-mono text-[10px] uppercase tracking-widest text-foreground/40">
+        <p className="mb-4 font-mono text-[10px] uppercase tracking-widest text-foreground/70">
           Fill out the form below to get in touch.
         </p>
 

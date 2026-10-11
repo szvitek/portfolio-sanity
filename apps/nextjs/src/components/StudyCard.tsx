@@ -29,7 +29,7 @@ export function StudyCard({
         <div className="flex items-start gap-3">
           <div className="flex h-12 w-12 items-center justify-center rounded border border-border/30 bg-muted/50">
             <svg
-              className="h-6 w-6 text-foreground/60"
+              className="h-6 w-6 text-foreground/80"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -50,7 +50,7 @@ export function StudyCard({
         </div>
 
         <div className="shrink-0 text-right">
-          <p className="font-mono text-[10px] uppercase tracking-widest text-foreground/50">
+          <p className="font-mono text-[10px] uppercase tracking-widest text-foreground/70">
             {dateRange(startDate, endDate)}
           </p>
         </div>
@@ -61,7 +61,7 @@ export function StudyCard({
       </p>
 
       {description && (
-        <p className="mt-3 font-mono text-xs leading-relaxed text-foreground/70">
+        <p className="mt-3 font-mono text-xs leading-relaxed text-foreground">
           {description}
         </p>
       )}

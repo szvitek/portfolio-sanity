@@ -49,7 +49,7 @@ export function FeatureCard({
       </h3>
 
       {/* Description */}
-      <p className="mt-1.5 text-xs leading-relaxed text-foreground/60">
+      <p className="mt-1.5 text-xs leading-relaxed text-foreground">
         {description}
       </p>
 

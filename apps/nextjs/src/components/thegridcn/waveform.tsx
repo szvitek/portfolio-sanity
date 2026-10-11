@@ -100,13 +100,13 @@ export function Waveform({
 
       {label && !bare ? (
         <div className="mb-1 flex items-center justify-between">
-          <span className="text-[9px] uppercase tracking-widest text-foreground/80">
+          <span className="text-[9px] uppercase tracking-widest text-foreground">
             {label}
           </span>
           <span
             className={cn(
               "text-[8px] uppercase tracking-widest",
-              playing ? "animate-pulse text-green-500" : "text-foreground/40"
+              playing ? "animate-pulse text-green-500" : "text-foreground/60"
             )}
           >
             {playing ? "LIVE" : "IDLE"}
