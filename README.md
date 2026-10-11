@@ -63,6 +63,22 @@ Opens the frontend at `http://localhost:3000`.
 | `pnpm test` | Run tests (Next.js app) |
 | `pnpm test:watch` | Run tests in watch mode |
 
+## Deploying to Vercel
+
+The frontend (`apps/nextjs`) deploys to Vercel; the Sanity Studio is hosted separately (see ["Running the Studio"](#running-the-studio)).
+
+1. Import the repository into Vercel and create a project. The [`vercel.json`](vercel.json) at the repo root sets the framework to Next.js and the root directory to `apps/nextjs`, so no per-project build settings are needed.
+2. Configure the environment variables below in the Vercel project (Project → Settings → Environment Variables), using the same values as `apps/nextjs/.env.local`.
+
+| Variable | Required | Notes |
+|---|---|---|
+| `NEXT_PUBLIC_SANITY_PROJECT_ID` | yes | Sanity project ID |
+| `NEXT_PUBLIC_SANITY_DATASET` | yes | Dataset the frontend reads |
+| `SANITY_API_TOKEN` | only if the dataset is private | Server-side, never exposed to the browser |
+| `RESEND_API_KEY` | yes (contact form) | Resend API key for `/api/contact` |
+| `CONTACT_EMAIL` | yes (contact form) | Where contact submissions are sent |
+| `RESEND_FROM` | no | Defaults to `Portfolio Contact <onboarding@resend.dev>` |
+
 ## Issue tracker
 
 This project uses a local Markdown-based issue tracker. See [`docs/agents/issue-tracker.md`](docs/agents/issue-tracker.md) for conventions.
