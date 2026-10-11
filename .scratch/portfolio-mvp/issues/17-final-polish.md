@@ -4,7 +4,7 @@
 
 **Blocked by:** 13 — Schema additions, 14 — Hero section upgrade, 15 — Sections polish, 16 — Contact form with Resend
 
-**Status:** in progress
+**Status:** resolved
 
 **Branding (swytech.dev):**
 - [x] Set the `swytech-dev-logo` icon (added to the root of `apps/nextjs`) as the site favicon
@@ -25,8 +25,8 @@
 - [x] Outline buttons glow only on hover (plain border at rest)
 - [x] Navbar: active item keeps a bottom border, other items animate one in on hover
 - [x] Brighter text — raised `--foreground` / `--muted-foreground` lightness in `globals.css`
-- [ ] Finalise the footer
-- [ ] Background music feature — store 1+ audio files in Sanity, add the GridCN waveform component
+- [x] Finalise the footer
+- [x] Background music feature — store 1+ audio files in Sanity, add the GridCN waveform component
 
 ## Comments
 
