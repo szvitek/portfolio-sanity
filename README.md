@@ -90,7 +90,7 @@ The home page is statically generated with a 5-minute fallback revalidation. To 
 2. In the [Sanity Manage Console](https://manage.sanity.io) → your project → **API** → **Webhooks**, create a webhook:
    - **URL:** `https://<your-site>/api/revalidate?secret=<REVALIDATE_SECRET>`
    - **Dataset:** the dataset the frontend reads
-   - **Trigger on:** create, update, delete
+   - **Trigger on:** create, update, delete (for Studio-authored edits you can instead use the *publish* action + delete)
    - **HTTP method:** POST
    - **Filter (optional):** scope to the document types the page reads (`profile`, `skill`, `project`, `job`, `study`, `certification`, `backgroundMusic`)
 
