@@ -46,6 +46,8 @@ pnpm dev
 
 Opens Sanity Studio at `http://localhost:3333`. You must have a Sanity project with the matching dataset to see content.
 
+To publish the Studio for production editing, deploy it to Sanity's hosting with `sanity deploy` (`pnpm --filter @portfolio/studio deploy`). It is then served at a `*.sanity.studio` URL, independent of the Vercel-hosted frontend.
+
 ## Running the Next.js app
 
 ```bash
@@ -67,7 +69,7 @@ Opens the frontend at `http://localhost:3000`.
 
 The frontend (`apps/nextjs`) deploys to Vercel; the Sanity Studio is hosted separately (see ["Running the Studio"](#running-the-studio)).
 
-1. Import the repository into Vercel and create a project. The [`vercel.json`](vercel.json) at the repo root sets the framework to Next.js and the root directory to `apps/nextjs`, so no per-project build settings are needed.
+1. Import the repository into Vercel and create a project. The [`vercel.json`](vercel.json) at the repo root sets the framework to Next.js and the root directory to `apps/nextjs`. (You can equally set it manually under Project → Settings → Root Directory.)
 2. Configure the environment variables below in the Vercel project (Project → Settings → Environment Variables), using the same values as `apps/nextjs/.env.local`.
 
 | Variable | Required | Notes |
