@@ -69,7 +69,7 @@ Opens the frontend at `http://localhost:3000`.
 
 The frontend (`apps/nextjs`) deploys to Vercel; the Sanity Studio is hosted separately (see ["Running the Studio"](#running-the-studio)).
 
-1. Import the repository into Vercel and create a project. The [`vercel.json`](vercel.json) at the repo root sets the framework to Next.js and the root directory to `apps/nextjs`. (You can equally set it manually under Project → Settings → Root Directory.)
+1. Import the repository into Vercel and create a project. During import, set the project's **Root Directory** to `apps/nextjs` (or set it later under Project → Settings → Root Directory). Vercel auto-detects the Next.js framework, so no `vercel.json` is required. If the build can't resolve the workspace packages (`@portfolio/ui`, `@portfolio/sanity`), enable **Include source files outside of the Root Directory in the Build Step** on the same settings page.
 2. Configure the environment variables below in the Vercel project (Project → Settings → Environment Variables), using the same values as `apps/nextjs/.env.local`.
 
 | Variable | Required | Notes |
