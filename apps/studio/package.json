@@ -10,14 +10,14 @@
   },
   "dependencies": {
     "@portfolio/sanity": "workspace:*",
-    "react": "^18.3.0",
-    "react-dom": "^18.3.0",
+    "react": "^19.2.2",
+    "react-dom": "^19.2.2",
     "sanity": "^3.68.0",
     "styled-components": "^6.1.15"
   },
   "devDependencies": {
     "@types/node": "^26.1.1",
-    "@types/react": "^18.3.0",
+    "@types/react": "^19.2.2",
     "typescript": "^5.4.0"
   }
 }
