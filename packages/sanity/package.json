@@ -16,7 +16,7 @@
     "groq": "^3.68.0"
   },
   "devDependencies": {
-    "sanity": "^3.68.0",
+    "sanity": "^6.19.0",
     "typescript": "^5.4.0"
   },
   "peerDependencies": {
