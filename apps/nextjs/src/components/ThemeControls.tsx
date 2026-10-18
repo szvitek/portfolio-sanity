@@ -1,9 +1,10 @@
 "use client"
 
+import { useState } from "react"
 import { useTheme } from "@portfolio/ui"
 import type { ThemeName, Intensity } from "@portfolio/ui"
 import { cn } from "@/lib/utils"
-import { Pause, Play, SkipBack, SkipForward } from "lucide-react"
+import { Pause, Play, SkipBack, SkipForward, SlidersHorizontal, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useMusicPlayer } from "@/components/MusicPlayerProvider"
 
@@ -30,13 +31,30 @@ const INTENSITY_PRIMARY_STYLES: Record<Intensity, string> = {
 export function ThemeControls() {
   const { state, setTheme, setIntensity } = useTheme()
   const { playing, toggle, next, previous, trackCount, musicUrl } = useMusicPlayer()
+  const [open, setOpen] = useState(false)
 
   return (
-    <div
-      data-testid="theme-controls"
-      data-slot="theme-controls"
-      className="fixed right-4 top-1/2 z-50 flex -translate-y-1/2 flex-col items-center gap-3 rounded border border-border/30 bg-background/80 p-2 backdrop-blur-md"
-    >
+    <>
+      <button
+        type="button"
+        aria-label="Toggle theme and audio controls"
+        className="fixed bottom-4 right-4 z-50 flex h-10 w-10 items-center justify-center rounded-full border border-border/30 bg-background/80 backdrop-blur-md md:hidden"
+        onClick={() => setOpen((value) => !value)}
+      >
+        {open ? (
+          <X className="h-5 w-5 text-primary" />
+        ) : (
+          <SlidersHorizontal className="h-5 w-5 text-primary" />
+        )}
+      </button>
+      <div
+        data-testid="theme-controls"
+        data-slot="theme-controls"
+        className={cn(
+          "fixed right-4 top-1/2 z-50 flex -translate-y-1/2 flex-col items-center gap-3 rounded border border-border/30 bg-background/80 p-2 backdrop-blur-md",
+          open ? "flex" : "hidden md:flex"
+        )}
+      >
       <span className="font-mono text-[8px] uppercase tracking-widest text-foreground/60 [writing-mode:vertical-lr]">
         Theme
       </span>
@@ -133,5 +151,6 @@ export function ThemeControls() {
         </>
       )}
     </div>
+    </>
   )
 }
