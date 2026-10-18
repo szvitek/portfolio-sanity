@@ -226,7 +226,9 @@ describe("Home page", () => {
     const navLinks = nav.querySelectorAll("a")
     const linkTexts = Array.from(navLinks).map((link) => link.textContent)
     expect(linkTexts).toEqual([
-      "// swytech.dev", "Profile", "Skills", "Projects", "Jobs", "Studies", "Certifications", "Contact",
+      "// swytech.dev",
+      "Profile", "Skills", "Projects", "Jobs", "Studies", "Certifications", "Contact",
+      "Profile", "Skills", "Projects", "Jobs", "Studies", "Certifications", "Contact",
     ])
   })
 
