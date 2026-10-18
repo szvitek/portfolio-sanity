@@ -111,7 +111,7 @@ export function NavBar() {
               bars={16}
               intensity="medium"
               title={title}
-              className="scale-50 md:scale-100"
+              className="origin-right scale-50 md:scale-100 md:origin-center"
             />
           )}
         </div>
