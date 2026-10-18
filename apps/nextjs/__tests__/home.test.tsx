@@ -268,7 +268,7 @@ describe("Home page", () => {
     expect(brandLink).toHaveTextContent("// swytech.dev")
   })
 
-  it("lays out brand left, nav links centered, and audio controls right", async () => {
+  it("lays out brand left, desktop nav links, and audio controls right", async () => {
     const props = await getPageProps()
     renderWithTheme(<HomePage {...props} />)
 
@@ -277,7 +277,7 @@ describe("Home page", () => {
     expect(header).toHaveClass("grid", "grid-cols-[auto_1fr_auto]")
 
     const linksWrap = header?.querySelector('[data-slot="nav-links"]')
-    expect(linksWrap).toHaveClass("justify-center")
+    expect(linksWrap).toHaveClass("hidden", "items-center", "gap-6", "md:flex")
 
     const audioBlock = header?.querySelector('[data-slot="nav-audio"]')
     expect(audioBlock).toHaveClass("md:flex")

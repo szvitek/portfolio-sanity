@@ -4,18 +4,18 @@
 
 **Blocked by:** (none)
 
-**Status:** ready-for-agent
+**Status:** completed
 
 ## Checklist
 
-- [ ] `NavBar.tsx`: add `const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)`.
-- [ ] Desktop links container: `hidden items-center gap-6 md:flex` (replacing the always-visible `flex ... justify-center`).
-- [ ] Hamburger button: `md:hidden`, `aria-label="Toggle menu"`, toggles state, renders `X` when open / `Menu` when closed.
-- [ ] Mobile panel: `{mobileMenuOpen && (<div className="border-primary/10 border-t ... md:hidden"> ... links with onClick close ... </div>)}`
-- [ ] Each mobile link calls `setMobileMenuOpen(false)` on click (anchor navigation).
-- [ ] Keep the active-section underline, the tracked brand, and the Waveform audio control desktop-only (`hidden md:flex` — already the case for audio).
-- [ ] Verify the overflow fix: in a mobile viewport (≤430px), `document.documentElement.scrollWidth === window.innerWidth` (no horizontal scroll). Check the production build or dev server.
-- [ ] Verify: `pnpm --filter @portfolio/nextjs typecheck && pnpm --filter @portfolio/nextjs test` green; NavBar tests (if any) updated.
+- [x] `NavBar.tsx`: add `const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)`.
+- [x] Desktop links container: `hidden items-center gap-6 md:flex` (replacing the always-visible `flex ... justify-center`).
+- [x] Hamburger button: `md:hidden`, `aria-label="Toggle menu"`, toggles state, renders `X` when open / `Menu` when closed.
+- [x] Mobile panel: `{mobileMenuOpen && (<div className="border-primary/10 border-t ... md:hidden"> ... links with onClick close ... </div>)}`
+- [x] Each mobile link calls `setMobileMenuOpen(false)` on click (anchor navigation).
+- [x] Keep the active-section underline, the tracked brand, and the Waveform audio control desktop-only (`hidden md:flex` — already the case for audio).
+- [x] Verify the overflow fix: in a mobile viewport (≤430px), `document.documentElement.scrollWidth === window.innerWidth` (no horizontal scroll). Check the production build or dev server.
+- [x] Verify: `pnpm --filter @portfolio/nextjs typecheck && pnpm --filter @portfolio/nextjs test` green; NavBar tests (if any) updated.
 
 ## Notes
 

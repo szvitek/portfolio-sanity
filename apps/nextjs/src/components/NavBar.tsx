@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { Menu, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Waveform } from "@/components/thegridcn/waveform"
 import { useMusicPlayer } from "@/components/MusicPlayerProvider"
@@ -18,6 +19,7 @@ const SECTIONS = [
 export function NavBar() {
   const { playing, musicUrl, title } = useMusicPlayer()
   const [activeSection, setActiveSection] = React.useState("profile")
+  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
 
   React.useEffect(() => {
     const observers: IntersectionObserver[] = []
@@ -57,7 +59,7 @@ export function NavBar() {
             // swytech.dev
           </span>
         </a>
-        <div data-slot="nav-links" className="flex items-center justify-center gap-1">
+        <div data-slot="nav-links" className="hidden items-center gap-6 md:flex">
           {SECTIONS.map(({ id, label }) => (
             <a
               key={id}
@@ -80,18 +82,58 @@ export function NavBar() {
             </a>
           ))}
         </div>
-        <div data-slot="nav-audio" className="hidden shrink-0 items-center gap-1.5 md:flex">
-          {musicUrl && (
-            <Waveform
-              bare
-              playing={playing}
-              bars={16}
-              intensity="medium"
-              title={title}
-            />
-          )}
+        <div className="flex shrink-0 items-center gap-1.5">
+          <div data-slot="nav-audio" className="hidden shrink-0 items-center gap-1.5 md:flex">
+            {musicUrl && (
+              <Waveform
+                bare
+                playing={playing}
+                bars={16}
+                intensity="medium"
+                title={title}
+              />
+            )}
+          </div>
+          <button
+            type="button"
+            aria-label="Toggle menu"
+            className="md:hidden"
+            onClick={() => setMobileMenuOpen((open) => !open)}
+          >
+            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
         </div>
       </div>
+      {mobileMenuOpen && (
+        <div
+          data-slot="mobile-nav"
+          data-testid="mobile-menu"
+          className="border-primary/10 border-t md:hidden"
+        >
+          {SECTIONS.map(({ id, label }) => (
+            <a
+              key={id}
+              href={`#${id}`}
+              onClick={() => setMobileMenuOpen(false)}
+              className={cn(
+                "group relative block px-4 py-2 font-mono text-[11px] uppercase tracking-widest transition-colors",
+                activeSection === id
+                  ? "text-primary"
+                  : "text-foreground/80 hover:text-foreground"
+              )}
+            >
+              {label}
+              <span
+                aria-hidden
+                className={cn(
+                  "absolute inset-x-2 bottom-0 h-px bg-primary transition-transform",
+                  activeSection === id ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+                )}
+              />
+            </a>
+          ))}
+        </div>
+      )}
     </nav>
   )
 }
