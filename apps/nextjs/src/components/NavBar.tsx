@@ -53,7 +53,7 @@ export function NavBar() {
       data-testid="navbar"
       className="sticky top-0 z-40 border-b border-border/50 bg-background/80 backdrop-blur-md"
     >
-      <div className="mx-auto grid max-w-6xl grid-cols-[1fr_auto_1fr] items-center gap-4 px-4 py-3 md:grid-cols-[auto_1fr_auto]">
+      <div className="mx-auto grid max-w-6xl grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-4 px-4 py-3 md:grid-cols-[auto_1fr_auto]">
         <button
           type="button"
           aria-label="Toggle menu"

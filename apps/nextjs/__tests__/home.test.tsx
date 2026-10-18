@@ -274,7 +274,7 @@ describe("Home page", () => {
 
     const nav = screen.getByTestId("navbar")
     const header = nav.firstElementChild
-    expect(header).toHaveClass("grid", "grid-cols-[1fr_auto_1fr]", "md:grid-cols-[auto_1fr_auto]")
+    expect(header).toHaveClass("grid", "grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]", "md:grid-cols-[auto_1fr_auto]")
 
     const linksWrap = header?.querySelector('[data-slot="nav-links"]')
     expect(linksWrap).toHaveClass("hidden", "items-center", "gap-6", "md:flex")
