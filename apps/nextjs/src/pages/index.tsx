@@ -137,9 +137,14 @@ const CV_BTN =
 
 function extractText(blocks: PortableTextBlock[] | undefined | null): string {
   if (!blocks) return ""
-  const firstBlock = blocks[0]
-  if (!firstBlock?.children) return ""
-  return firstBlock.children.map((c) => ("text" in c ? c.text ?? "" : "")).join(" ")
+  return blocks
+    .map((block) =>
+      block?.children
+        ? block.children.map((c) => ("text" in c ? c.text ?? "" : "")).join("")
+        : ""
+    )
+    .filter(Boolean)
+    .join("\n\n")
 }
 
 const THEME_AVATAR_HUES: Record<ThemeName, number> = {
@@ -273,7 +278,7 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
                 animated={false}
               />
               {bioText && (
-                <p className="max-w-2xl text-center text-sm leading-relaxed text-foreground md:text-base">
+                <p className="max-w-2xl whitespace-pre-line text-center text-sm leading-relaxed text-foreground md:text-base">
                   {bioText}
                 </p>
               )}
