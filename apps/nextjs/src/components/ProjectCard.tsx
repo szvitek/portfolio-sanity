@@ -1,6 +1,6 @@
 import type { PortableTextBlock } from "@portabletext/react"
 import { PortableText } from "@portabletext/react"
-import type { SanityImageSource } from "@sanity/image-url/lib/types/types"
+import type { SanityImageSource } from "@sanity/image-url"
 import { urlFor } from "@/lib/sanity"
 import { cn } from "@/lib/utils"
 import { skillBadgeClasses } from "@/lib/skill-colors"

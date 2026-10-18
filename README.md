@@ -16,7 +16,7 @@ packages/
 
 ## Prerequisites
 
-- **Node.js** >= 18
+- **Node.js** >= 22.12
 - **pnpm** — install via `npm install -g pnpm` or [corepack](https://nodejs.org/api/corepack.html)
 
 ## Setup

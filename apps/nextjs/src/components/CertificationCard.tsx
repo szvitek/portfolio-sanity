@@ -1,4 +1,4 @@
-import type { SanityImageSource } from "@sanity/image-url/lib/types/types"
+import type { SanityImageSource } from "@sanity/image-url"
 import { urlFor } from "@/lib/sanity"
 import { formatYear } from "@/lib/date-utils"
 import { FeatureCard } from "@/components/thegridcn/feature-card"
