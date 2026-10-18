@@ -137,9 +137,14 @@ const CV_BTN =
 
 function extractText(blocks: PortableTextBlock[] | undefined | null): string {
   if (!blocks) return ""
-  const firstBlock = blocks[0]
-  if (!firstBlock?.children) return ""
-  return firstBlock.children.map((c) => ("text" in c ? c.text ?? "" : "")).join(" ")
+  return blocks
+    .map((block) =>
+      block?.children
+        ? block.children.map((c) => ("text" in c ? c.text ?? "" : "")).join("")
+        : ""
+    )
+    .filter(Boolean)
+    .join("\n\n")
 }
 
 const THEME_AVATAR_HUES: Record<ThemeName, number> = {
@@ -226,7 +231,7 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
       <NavBar />
 
       <main>
-        <section id="profile" className="scroll-mt-16 flex min-h-screen items-center px-4">
+        <section id="profile" className="scroll-mt-16 flex min-h-screen items-center px-4 pt-16 md:pt-20">
           <div className="mx-auto w-full max-w-5xl">
           {!hasProfile ? (
             <div className="flex min-h-[40vh] w-full items-center justify-center">
@@ -240,7 +245,7 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
             rightContent={
             <>
               {avatarUrl && (
-                <div className="relative h-48 w-48 md:h-56 md:w-56">
+                <div className="relative mt-6 h-48 w-48 md:mt-0 md:h-56 md:w-56">
                   <AgentAvatar
                     seed={profile.title}
                     size={240}
@@ -273,7 +278,7 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
                 animated={false}
               />
               {bioText && (
-                <p className="max-w-2xl text-center text-sm leading-relaxed text-foreground md:text-base">
+                <p className="max-w-2xl whitespace-pre-line text-center text-sm leading-relaxed text-foreground md:text-base">
                   {bioText}
                 </p>
               )}
@@ -574,7 +579,7 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
               <div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.03)_2px,rgba(0,0,0,0.03)_4px)]" />
 
               <div className="relative grid gap-8 lg:grid-cols-[2fr_3fr]">
-                <div className="relative flex h-full flex-col items-center justify-between rounded border border-primary/20 p-6 lg:items-start">
+                <div className="relative flex h-full flex-col items-center justify-between gap-6 rounded border border-primary/20 p-6 lg:items-start">
                   <div className="flex flex-col gap-4">
                     <h3 className="font-mono text-sm font-bold uppercase tracking-wider text-foreground">
                       // GET IN TOUCH
@@ -621,7 +626,7 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
                         <Button
                           asChild
                           variant="outline"
-                          className={cn(CV_BTN, "group/cv w-full px-4 py-2 text-[10px]")}
+                          className={cn(CV_BTN, "group/cv col-span-2 w-full px-4 py-2 text-[10px] sm:col-span-1")}
                         >
                           <a href={cvUrl} download>
                             <span className="grid shrink-0 place-items-center">

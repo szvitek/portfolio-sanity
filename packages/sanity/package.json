@@ -12,14 +12,14 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@sanity/client": "^6.24.0",
-    "groq": "^3.68.0"
+    "@sanity/client": "^8.9.0",
+    "groq": "^6.19.0"
   },
   "devDependencies": {
-    "sanity": "^3.68.0",
+    "sanity": "^6.19.0",
     "typescript": "^5.4.0"
   },
   "peerDependencies": {
-    "sanity": "^3.68.0"
+    "sanity": "^6.0.0"
   }
 }

@@ -1,6 +1,7 @@
 {
   "name": "portfolio-sanity",
   "private": true,
+  "packageManager": "pnpm@11.15.1",
   "scripts": {
     "dev": "pnpm --filter @portfolio/studio dev",
     "dev:nextjs": "pnpm --filter @portfolio/nextjs dev",
@@ -10,6 +11,6 @@
     "test:watch": "pnpm --filter @portfolio/nextjs test:watch"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=22.12"
   }
 }

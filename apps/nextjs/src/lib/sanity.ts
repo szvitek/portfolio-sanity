@@ -1,7 +1,7 @@
 import { getClient } from "@portfolio/sanity/client"
 import { homePageQuery } from "@portfolio/sanity/queries"
-import imageUrlBuilder from "@sanity/image-url"
-import type { SanityImageSource } from "@sanity/image-url/lib/types/types"
+import { createImageUrlBuilder } from "@sanity/image-url"
+import type { SanityImageSource } from "@sanity/image-url"
 import type { PortableTextBlock } from "@portabletext/react"
 
 export interface SocialLinkData {
@@ -126,7 +126,7 @@ function createClient() {
 
 const client = createClient()
 
-const builder = imageUrlBuilder(client)
+const builder = createImageUrlBuilder(client)
 
 export function urlFor(source: SanityImageSource) {
   return builder.image(source)
