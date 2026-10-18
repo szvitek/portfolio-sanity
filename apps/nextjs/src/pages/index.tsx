@@ -579,7 +579,7 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
               <div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.03)_2px,rgba(0,0,0,0.03)_4px)]" />
 
               <div className="relative grid gap-8 lg:grid-cols-[2fr_3fr]">
-                <div className="relative flex h-full flex-col items-center justify-between rounded border border-primary/20 p-6 lg:items-start">
+                <div className="relative flex h-full flex-col items-center justify-between gap-6 rounded border border-primary/20 p-6 lg:items-start">
                   <div className="flex flex-col gap-4">
                     <h3 className="font-mono text-sm font-bold uppercase tracking-wider text-foreground">
                       // GET IN TOUCH
