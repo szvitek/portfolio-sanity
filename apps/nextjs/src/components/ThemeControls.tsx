@@ -51,8 +51,10 @@ export function ThemeControls() {
         data-testid="theme-controls"
         data-slot="theme-controls"
         className={cn(
-          "fixed right-4 top-1/2 z-50 flex -translate-y-1/2 flex-col items-center gap-3 rounded border border-border/30 bg-background/80 p-2 backdrop-blur-md",
-          open ? "flex" : "hidden md:flex"
+          "fixed right-4 top-1/2 z-50 flex -translate-y-1/2 flex-col items-center gap-3 rounded border border-border/30 bg-background/80 p-2 backdrop-blur-md transition-all duration-300 ease-in-out",
+          open
+            ? "translate-x-0 opacity-100"
+            : "translate-x-full opacity-0 pointer-events-none md:translate-x-0 md:opacity-100 md:pointer-events-auto"
         )}
       >
       <span className="font-mono text-[8px] uppercase tracking-widest text-foreground/60 [writing-mode:vertical-lr]">
