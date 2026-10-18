@@ -114,7 +114,7 @@ export function HeroSection({
         </div>
 
         {rightContent && (
-          <div className="flex flex-col items-center gap-4">
+          <div className="flex flex-col items-center gap-8 md:gap-4">
             {rightContent}
           </div>
         )}
