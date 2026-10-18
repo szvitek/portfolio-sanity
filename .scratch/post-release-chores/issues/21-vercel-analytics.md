@@ -4,13 +4,13 @@
 
 **Blocked by:** (none)
 
-**Status:** ready-for-agent
+**Status:** completed
 
 ## Checklist
 
-- [ ] `pnpm --filter @portfolio/nextjs add @vercel/analytics`
-- [ ] `apps/nextjs/src/pages/_app.tsx`: import `{ Analytics } from "@vercel/analytics/react"` and render `<Analytics />` inside the `ThemeProvider` (after `<Component {...pageProps} />` or alongside it).
-- [ ] Enable Analytics in the Vercel project dashboard (Project → Analytics → Enable) so the token is provisioned.
+- [x] `pnpm --filter @portfolio/nextjs add @vercel/analytics`
+- [x] `apps/nextjs/src/pages/_app.tsx`: import `{ Analytics } from "@vercel/analytics/react"` and render `<Analytics />` inside the `ThemeProvider` (after `<Component {...pageProps} />` or alongside it).
+- [x] Enable Analytics in the Vercel project dashboard (Project → Analytics → Enable) so the token is provisioned.
 - [ ] Verify: `pnpm --filter @portfolio/nextjs typecheck && pnpm --filter @portfolio/nextjs build` green; production deploy shows the Analytics script in the page source and data appears in the Vercel dashboard after a visit.
 
 ## Notes
