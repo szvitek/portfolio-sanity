@@ -50,8 +50,9 @@ export function ThemeControls() {
       <div
         data-testid="theme-controls"
         data-slot="theme-controls"
+        style={{ transition: "transform 500ms ease, opacity 500ms ease" }}
         className={cn(
-          "fixed right-4 top-1/2 z-50 flex -translate-y-1/2 flex-col items-center gap-3 rounded border border-border/30 bg-background/80 p-2 backdrop-blur-md transition-all duration-300 ease-in-out",
+          "fixed right-4 top-1/2 z-50 flex -translate-y-1/2 flex-col items-center gap-3 rounded border border-border/30 bg-background/80 p-2 backdrop-blur-md transition-all duration-500 ease-in-out",
           open
             ? "translate-x-0 opacity-100"
             : "translate-x-full opacity-0 pointer-events-none md:translate-x-0 md:opacity-100 md:pointer-events-auto"
