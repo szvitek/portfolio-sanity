@@ -53,13 +53,31 @@ export function NavBar() {
       data-testid="navbar"
       className="sticky top-0 z-40 border-b border-border/50 bg-background/80 backdrop-blur-md"
     >
-      <div className="mx-auto grid max-w-6xl grid-cols-[auto_1fr_auto] items-center gap-4 px-4 py-3">
-        <a href="#profile" className="flex shrink-0 items-center gap-2">
+      <div className="mx-auto grid max-w-6xl grid-cols-[1fr_auto_1fr] items-center gap-4 px-4 py-3 md:grid-cols-[auto_1fr_auto]">
+        <button
+          type="button"
+          aria-label="Toggle menu"
+          className="justify-self-start md:hidden"
+          onClick={() => setMobileMenuOpen((open) => !open)}
+        >
+          {mobileMenuOpen ? (
+            <X className="h-5 w-5 text-primary" />
+          ) : (
+            <Menu className="h-5 w-5 text-primary" />
+          )}
+        </button>
+        <a
+          href="#profile"
+          className="flex shrink-0 items-center gap-2 justify-self-center md:justify-self-start"
+        >
           <span className="font-mono text-xs font-bold uppercase tracking-[0.3em] text-primary">
             // swytech.dev
           </span>
         </a>
-        <div data-slot="nav-links" className="hidden items-center gap-6 md:flex">
+        <div
+          data-slot="nav-links"
+          className="hidden items-center gap-6 md:flex md:justify-self-center"
+        >
           {SECTIONS.map(({ id, label }) => (
             <a
               key={id}
@@ -82,26 +100,19 @@ export function NavBar() {
             </a>
           ))}
         </div>
-        <div className="flex shrink-0 items-center gap-1.5">
-          <div data-slot="nav-audio" className="hidden shrink-0 items-center gap-1.5 md:flex">
-            {musicUrl && (
-              <Waveform
-                bare
-                playing={playing}
-                bars={16}
-                intensity="medium"
-                title={title}
-              />
-            )}
-          </div>
-          <button
-            type="button"
-            aria-label="Toggle menu"
-            className="md:hidden"
-            onClick={() => setMobileMenuOpen((open) => !open)}
-          >
-            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
+        <div
+          data-slot="nav-audio"
+          className="flex shrink-0 items-center gap-1.5 justify-self-end md:flex"
+        >
+          {musicUrl && (
+            <Waveform
+              bare
+              playing={playing}
+              bars={16}
+              intensity="medium"
+              title={title}
+            />
+          )}
         </div>
       </div>
       {mobileMenuOpen && (

@@ -274,13 +274,13 @@ describe("Home page", () => {
 
     const nav = screen.getByTestId("navbar")
     const header = nav.firstElementChild
-    expect(header).toHaveClass("grid", "grid-cols-[auto_1fr_auto]")
+    expect(header).toHaveClass("grid", "grid-cols-[1fr_auto_1fr]", "md:grid-cols-[auto_1fr_auto]")
 
     const linksWrap = header?.querySelector('[data-slot="nav-links"]')
     expect(linksWrap).toHaveClass("hidden", "items-center", "gap-6", "md:flex")
 
     const audioBlock = header?.querySelector('[data-slot="nav-audio"]')
-    expect(audioBlock).toHaveClass("md:flex")
+    expect(audioBlock).toHaveClass("flex", "md:flex")
     expect(audioBlock?.querySelector('[data-slot="tron-waveform"]')).toBeInTheDocument()
   })
 
