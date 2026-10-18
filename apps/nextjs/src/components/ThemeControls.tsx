@@ -38,7 +38,7 @@ export function ThemeControls() {
       <button
         type="button"
         aria-label="Toggle theme and audio controls"
-        className="fixed bottom-4 right-4 z-50 flex h-10 w-10 items-center justify-center rounded-full border border-border/30 bg-background/80 backdrop-blur-md md:hidden"
+        className="fixed bottom-4 right-4 z-50 flex h-12 w-12 items-center justify-center rounded-full border-2 border-primary/60 bg-background/80 shadow-[0_0_16px_var(--primary)] backdrop-blur-md md:hidden"
         onClick={() => setOpen((value) => !value)}
       >
         {open ? (
