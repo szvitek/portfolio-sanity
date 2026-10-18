@@ -4,19 +4,19 @@
 
 **Blocked by:** (none)
 
-**Status:** ready-for-human
+**Status:** completed
 
 ## Checklist (human)
 
-- [ ] Generate a secret: `openssl rand -hex 24`.
-- [ ] Set it as `REVALIDATE_SECRET` in the Vercel project (Project → Settings → Environment Variables).
-- [ ] In Sanity Manage Console → your project → API → Webhooks, create a webhook:
+- [x] Generate a secret: `openssl rand -hex 24`.
+- [x] Set it as `REVALIDATE_SECRET` in the Vercel project (Project → Settings → Environment Variables).
+- [x] In Sanity Manage Console → your project → API → Webhooks, create a webhook:
   - URL: `https://<your-site>/api/revalidate?secret=<REVALIDATE_SECRET>`
   - Dataset: the dataset the frontend reads
   - Trigger: create, update, delete (or publish-action + delete)
   - HTTP method: POST
   - Filter (optional): scope to `profile`, `skill`, `project`, `job`, `study`, `certification`, `backgroundMusic`
-- [ ] Verify end-to-end: publish an edit in Sanity Studio, then confirm the site reflects it on the next request (and that a missed webhook still self-heals via the 5-minute `revalidate: 300` fallback).
+- [x] Verify end-to-end: publish an edit in Sanity Studio, then confirm the site reflects it on the next request (and that a missed webhook still self-heals via the 5-minute `revalidate: 300` fallback).
 
 ## Notes
 
