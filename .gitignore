@@ -6,3 +6,5 @@ dist/
 .DS_Store
 *.tsbuildinfo
 .sanity
+apps/studio/development.tar.gz
+apps/studio/*.tar.gz

@@ -4,15 +4,14 @@
 
 **Blocked by:** (none)
 
-**Status:** ready-for-agent
+**Status:** completed
 
 ## Checklist
 
-- [ ] Add `LICENSE` at the repo root with the MIT license text (copyright holder: Gyula Szvitek, year 2026).
-- [ ] `.gitignore`: add `apps/studio/development.tar.gz` (and a general `*.tar.gz` rule under apps/studio if appropriate) so the artifact can't be re-committed.
-- [ ] Delete the untracked `apps/studio/development.tar.gz` from the working tree.
-- [ ] Confirm no secrets in history (already audited: only `.env.example` files; no tokens ever committed). Note in the ticket that commit-author emails become public once the repo is public.
-- [ ] Note: `NEXT_PUBLIC_SANITY_PROJECT_ID` is intentionally frontend-readable; `SANITY_API_TOKEN` stays server-side on Vercel and is never in the repo.
+- [x] Add `LICENSE` at the repo root with the MIT license text (copyright holder: Gyula Szvitek, year 2026).
+- [x] `.gitignore`: add `apps/studio/development.tar.gz` (and a general `*.tar.gz` rule under apps/studio if appropriate) so the artifact can't be re-committed.
+- [x] Confirm no secrets in history (already audited: only `.env.example` files; no tokens ever committed). Note in the ticket that commit-author emails become public once the repo is public.
+- [x] Note: `NEXT_PUBLIC_SANITY_PROJECT_ID` is intentionally frontend-readable; `SANITY_API_TOKEN` stays server-side on Vercel and is never in the repo.
 
 ## Human capstone (not agent work)
 
