@@ -626,7 +626,7 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
                         <Button
                           asChild
                           variant="outline"
-                          className={cn(CV_BTN, "group/cv w-full px-4 py-2 text-[10px]")}
+                          className={cn(CV_BTN, "group/cv col-span-2 w-full px-4 py-2 text-[10px] sm:col-span-1")}
                         >
                           <a href={cvUrl} download>
                             <span className="grid shrink-0 place-items-center">
