@@ -226,7 +226,7 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
       <NavBar />
 
       <main>
-        <section id="profile" className="scroll-mt-16 flex min-h-screen items-center px-4">
+        <section id="profile" className="scroll-mt-16 flex min-h-screen items-center px-4 pt-16 md:pt-20">
           <div className="mx-auto w-full max-w-5xl">
           {!hasProfile ? (
             <div className="flex min-h-[40vh] w-full items-center justify-center">
