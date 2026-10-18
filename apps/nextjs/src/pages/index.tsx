@@ -245,7 +245,7 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
             rightContent={
             <>
               {avatarUrl && (
-                <div className="relative h-48 w-48 md:h-56 md:w-56">
+                <div className="relative mt-6 h-48 w-48 md:mt-0 md:h-56 md:w-56">
                   <AgentAvatar
                     seed={profile.title}
                     size={240}
