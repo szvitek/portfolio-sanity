@@ -1,28 +1,17 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest"
-import handler from "@/pages/api/revalidate"
-import type { NextApiRequest, NextApiResponse } from "next"
+import { NextRequest } from "next/server"
+import { POST } from "@/app/api/revalidate/route"
 
-function createMockReqRes({
-  method = "POST",
-  secret,
-}: {
-  method?: string
-  secret?: string
-} = {}) {
-  const req = {
-    method,
-    query: { secret },
-  } as unknown as NextApiRequest
+vi.mock("next-sanity/webhook", () => ({
+  parseBody: vi.fn(),
+}))
 
-  const res = {
-    status: vi.fn().mockReturnThis(),
-    json: vi.fn().mockReturnThis(),
-    setHeader: vi.fn().mockReturnThis(),
-    revalidate: vi.fn().mockResolvedValue(undefined),
-  } as unknown as NextApiResponse
+vi.mock("next/cache", () => ({
+  revalidatePath: vi.fn(),
+}))
 
-  return { req, res }
-}
+import { parseBody } from "next-sanity/webhook"
+import { revalidatePath } from "next/cache"
 
 describe("Revalidate API route", () => {
   beforeEach(() => {
@@ -34,63 +23,50 @@ describe("Revalidate API route", () => {
     vi.unstubAllEnvs()
   })
 
+  function makeReq(method = "POST") {
+    return new NextRequest("http://localhost/api/revalidate", { method })
+  }
+
   it("rejects non-POST methods", async () => {
-    const { req, res } = createMockReqRes({ method: "GET", secret: "test-secret" })
-
-    await handler(req, res)
-
-    expect(res.setHeader).toHaveBeenCalledWith("Allow", "POST")
-    expect(res.status).toHaveBeenCalledWith(405)
-    expect(res.json).toHaveBeenCalledWith({ error: "Method not allowed" })
-    expect(res.revalidate).not.toHaveBeenCalled()
+    const res = await POST(makeReq("GET"))
+    expect(res.status).toBe(405)
   })
 
-  it("returns 401 when the secret query param is missing", async () => {
-    const { req, res } = createMockReqRes()
-
-    await handler(req, res)
-
-    expect(res.status).toHaveBeenCalledWith(401)
-    expect(res.revalidate).not.toHaveBeenCalled()
+  it("returns 401 when the signature is invalid", async () => {
+    vi.mocked(parseBody).mockResolvedValue({ isValidSignature: false, body: null })
+    const res = await POST(makeReq())
+    expect(res.status).toBe(401)
+    expect(revalidatePath).not.toHaveBeenCalled()
   })
 
-  it("returns 401 when the secret is incorrect", async () => {
-    const { req, res } = createMockReqRes({ secret: "wrong-secret" })
-
-    await handler(req, res)
-
-    expect(res.status).toHaveBeenCalledWith(401)
-    expect(res.revalidate).not.toHaveBeenCalled()
-  })
-
-  it("returns 401 when REVALIDATE_SECRET is not configured", async () => {
+  it("returns 401 when the secret is not configured", async () => {
     vi.stubEnv("REVALIDATE_SECRET", "")
-
-    const { req, res } = createMockReqRes({ secret: "test-secret" })
-
-    await handler(req, res)
-
-    expect(res.status).toHaveBeenCalledWith(401)
-    expect(res.revalidate).not.toHaveBeenCalled()
+    vi.stubEnv("SANITY_REVALIDATE_SECRET", "")
+    vi.mocked(parseBody).mockResolvedValue({ isValidSignature: null, body: null })
+    const res = await POST(makeReq())
+    expect(res.status).toBe(500)
+    expect(revalidatePath).not.toHaveBeenCalled()
   })
 
-  it("revalidates the home page when the secret is valid", async () => {
-    const { req, res } = createMockReqRes({ secret: "test-secret" })
-
-    await handler(req, res)
-
-    expect(res.revalidate).toHaveBeenCalledWith("/")
-    expect(res.status).toHaveBeenCalledWith(200)
-    expect(res.json).toHaveBeenCalledWith({ revalidated: true })
+  it("revalidates the home page when the signature is valid", async () => {
+    vi.mocked(parseBody).mockResolvedValue({
+      isValidSignature: true,
+      body: { path: "/" },
+    })
+    const res = await POST(makeReq())
+    expect(revalidatePath).toHaveBeenCalledWith("/")
+    expect(res.status).toBe(200)
   })
 
   it("returns 500 when revalidation throws", async () => {
-    const { req, res } = createMockReqRes({ secret: "test-secret" })
-    vi.mocked(res.revalidate).mockRejectedValueOnce(new Error("boom"))
-
-    await handler(req, res)
-
-    expect(res.status).toHaveBeenCalledWith(500)
-    expect(res.json).toHaveBeenCalledWith({ error: "Failed to revalidate" })
+    vi.mocked(parseBody).mockResolvedValue({
+      isValidSignature: true,
+      body: { path: "/" },
+    })
+    vi.mocked(revalidatePath).mockImplementation(() => {
+      throw new Error("boom")
+    })
+    const res = await POST(makeReq())
+    expect(res.status).toBe(500)
   })
 })
