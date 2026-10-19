@@ -1,4 +1,4 @@
-import { createClient } from "next-sanity"
+import { getClient } from "@portfolio/sanity/client"
 import { homePageQuery } from "@portfolio/sanity/queries"
 import { createImageUrlBuilder } from "@sanity/image-url"
 import type { SanityImageSource } from "@sanity/image-url"
@@ -119,13 +119,12 @@ function getConfig() {
   }
 }
 
-const client = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ?? "",
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET ?? "production",
-  apiVersion: "2024-01-01",
-  useCdn: !process.env.SANITY_API_TOKEN,
-  token: process.env.SANITY_API_TOKEN,
-})
+function createClient() {
+  const { projectId, dataset, token } = getConfig()
+  return getClient({ projectId, dataset, token })
+}
+
+const client = createClient()
 
 const builder = createImageUrlBuilder(client)
 

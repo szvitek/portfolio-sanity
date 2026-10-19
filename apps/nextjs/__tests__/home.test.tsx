@@ -34,8 +34,8 @@ async function getPageProps(): Promise<PageProps> {
 
 const mockFetch = vi.hoisted(() => vi.fn())
 
-vi.mock("next-sanity", () => ({
-  createClient: () => ({
+vi.mock("@portfolio/sanity/client", () => ({
+  getClient: () => ({
     fetch: mockFetch,
   }),
 }))
