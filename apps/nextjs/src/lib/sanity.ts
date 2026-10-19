@@ -142,6 +142,6 @@ export function cvUrlFor(cv: { asset: { _ref: string } }): string | undefined {
 }
 
 export async function getHomePageData(): Promise<HomePageData> {
-  const data = await client.fetch<HomePageData>(homePageQuery, {}, { next: { revalidate: 300 } })
+  const data = await client.fetch<HomePageData>(homePageQuery, {}, { cache: "no-store" })
   return data
 }
