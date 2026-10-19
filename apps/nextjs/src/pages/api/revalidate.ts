@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next"
-import crypto from "crypto"
+import { isValidSignature, SIGNATURE_HEADER_NAME } from "@sanity/webhook"
 
 export const config = { api: { bodyParser: false } }
 
@@ -14,32 +14,6 @@ async function readRawBody(req: NextApiRequest): Promise<string> {
     chunks.push(typeof chunk === "string" ? Buffer.from(chunk) : chunk)
   }
   return Buffer.concat(chunks).toString("utf8")
-}
-
-function verifySignature(secret: string, rawBody: string, header: string): boolean {
-  const parts = Object.fromEntries(
-    header.split(",").map((p) => {
-      const [k, v] = p.split("=")
-      return [k, v]
-    })
-  )
-  const timestamp = parts.t
-  const signature = parts.v1
-  if (!timestamp || !signature) return false
-
-  const expected = crypto
-    .createHmac("sha256", secret)
-    .update(`${timestamp}.${rawBody}`)
-    .digest("hex")
-
-  try {
-    return crypto.timingSafeEqual(
-      Buffer.from(expected, "hex"),
-      Buffer.from(signature, "hex")
-    )
-  } catch {
-    return false
-  }
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -63,13 +37,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (querySecret) {
     authorized = configuredSecrets.includes(querySecret)
   } else {
-    const signatureHeader = req.headers["sanity-webhook-signature"]
+    const signatureHeader = req.headers[SIGNATURE_HEADER_NAME]
     const header = Array.isArray(signatureHeader)
       ? signatureHeader[0]
       : signatureHeader
-    if (header) {
-      authorized = configuredSecrets.some((secret) =>
-        verifySignature(secret, rawBody, header)
+    if (header && typeof header === "string") {
+      authorized = await configuredSecrets.some((secret) =>
+        isValidSignature(rawBody, header, secret)
       )
     }
   }
@@ -77,6 +51,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (!authorized) {
     return res.status(401).json({ error: "Invalid secret" })
   }
+
+  // Wait for Content Lake eventual consistency, as parseBody does
+  await new Promise((resolve) => setTimeout(resolve, 3000))
 
   let body: { path?: string } = {}
   if (rawBody) {
