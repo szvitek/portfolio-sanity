@@ -13,7 +13,7 @@ export function getClient(config: ClientConfig): SanityClient {
     projectId: config.projectId,
     dataset: config.dataset ?? "production",
     apiVersion: config.apiVersion ?? "2024-01-01",
-    useCdn: !config.token,
+    useCdn: false,
     token: config.token,
   })
 }
