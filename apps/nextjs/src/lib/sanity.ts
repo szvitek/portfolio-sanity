@@ -20,6 +20,7 @@ export interface ProfileData {
   cv?: { asset: { _ref: string } }
   socialLinks?: SocialLinkData[]
   availability?: Availability
+  downloads?: number
 }
 
 export interface SkillData {

@@ -11,7 +11,8 @@ export const profileQuery = groq`*[_type == "profile"][0]{
     platform,
     url
   },
-  availability
+  availability,
+  downloads
 }`
 
 export const skillsQuery = groq`*[_type == "skill"] | order(order asc){
