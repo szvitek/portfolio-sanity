@@ -174,6 +174,12 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
   }
   const avatarUrl = profile?.avatar ? urlFor(profile.avatar).width(120).height(120).url() : undefined
   const cvUrl = profile?.cv ? cvUrlFor(profile.cv) : undefined
+
+  const trackCvDownload = () => {
+    void fetch("/api/cv-download", { method: "POST", keepalive: true }).catch(() => {
+      /* ignore tracking failures */
+    })
+  }
   const bioText = profile?.bio ? extractText(profile.bio) : ""
   const hasProfile = !!profile
 
@@ -318,7 +324,7 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
                       variant="default"
                       className={cn(CV_BTN, "group/cv px-5 py-2 text-xs")}
                     >
-                      <a href={cvUrl} download>
+                       <a href={cvUrl} download onClick={trackCvDownload}>
                         <span className="grid shrink-0 place-items-center">
                           <FileUser className="col-start-1 row-start-1 size-3.5 transition-opacity group-hover/cv:opacity-0" />
                           <Download className="col-start-1 row-start-1 size-3.5 opacity-0 transition-opacity group-hover/cv:opacity-100" />
@@ -628,7 +634,7 @@ export default function HomePage({ profile, skills, jobs, studies, groupedStudie
                           variant="outline"
                           className={cn(CV_BTN, "group/cv col-span-2 w-full px-4 py-2 text-[10px] sm:col-span-1")}
                         >
-                          <a href={cvUrl} download>
+                          <a href={cvUrl} download onClick={trackCvDownload}>
                             <span className="grid shrink-0 place-items-center">
                               <FileUser className="col-start-1 row-start-1 size-3.5 transition-opacity group-hover/cv:opacity-0" />
                               <Download className="col-start-1 row-start-1 size-3.5 opacity-0 transition-opacity group-hover/cv:opacity-100" />

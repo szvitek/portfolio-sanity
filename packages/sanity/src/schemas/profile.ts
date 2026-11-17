@@ -43,6 +43,12 @@ export const profile = defineType({
       of: [{ type: "socialLink" }],
     }),
     defineField({
+      name: "downloads",
+      title: "CV Downloads",
+      type: "number",
+      initialValue: 0,
+    }),
+    defineField({
       name: "availability",
       title: "Availability",
       type: "string",
